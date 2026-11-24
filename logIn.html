@@ -13,64 +13,37 @@
     <link href="publics/systemCss/login.css" rel="stylesheet">
 </head>
 <body>
-  <div class="backgroundImage"></div>
+  <div class="backgroundImage" aria-hidden="true"></div>
   <div class="container-fluid logInPanel">
     <div class="row">
-      <!-- DESCRIPTION LEFT SIDE -->
-      <div class="col-md-6 leftSide" style="  margin-top: 30px;">
-        <div class="col-md-12">
-          <img src="images/x.png" id="loginavatar1" class="img-responsive">
-          <div class="description">
-            <h2>Welcome to our borrowing system <span class="reader">READERS</span>!</h2>
-            <p>As part of our final activity in the subject of Web Applications and Technologies, 
-              we created this system to make borrowing books easy and convenient 
-              for students. The main purpose of this system is to allow you, the reader, to 
-              enjoy a hassle-free reading experience from the comfort of your home.</p>
-          </div>
-          <!-- <p style="font-weight: bold;">ADMIN ACCOUNT</p> -->
-          <!-- <p><span style="font-weight: bold; color: #3b7a24;">EMAIL:</span>admin<span style="font-weight: bold; color: #3b7a24;">  PASSWORD:</span>admin</p> -->
+      <div class="col-md-6 leftSide">
+        <div class="login-intro">
+          <img src="images/logo.png" class="login-brand" alt="KLD Keep Learning and Discovering">
+          <p class="login-kicker">Library services</p>
+          <h1>Books for your next chapter</h1>
+          <p>Sign in to browse the collection and manage your borrowing account.</p>
         </div>
       </div>
 
-      <!-- SIGN IN RIGHT SIDE -->
       <div class="col-md-6 rightSide">
-        <div class="panel" id="login">
-          <div class="panel-heading text-center">SIGN IN AS</div>
+        <section class="login-card" id="login" aria-labelledby="login-title">
+          <p class="login-kicker">Book Borrowing System</p>
+          <h2 id="login-title">Sign in</h2>
+          <p class="login-card-intro">Use your username and password to continue.</p>
           <form id="frmLogin" method="POST" action="dashboard.html">
-            <div class="panel-body">
-                <div id="admin-msg"></div>
-
-                <!-- Email Sign In -->
-                <div class="row">
-                    <div class="col-md-12"> <img src="images/KLD__2_-removebg-preview.png" id="loginavatar" class="img-responsive">
-                      <div class="input-group"> <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                        <input type="text" name="username" id="username" placeholder="Enter Email" required="required" class="form-control" data-validation-error-msg="Email is required" data-validation-error-msg-container="#usernamerror"> </div>
-                      <div id="usernamerror"> </div>
-                    </div>
-                  </div>
-                <!-- End Email Sign In -->
-
-                <!-- Password Sign In -->
-                <div class="row">
-                    <div class="col-md-12">
-                      <div class="input-group"> <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                        <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password" required="required" data-validation-length="min8" data-validation-error-msg-length="At least 8 characters are required" data-validation-error-msg-container="#passworderror"> </div>
-                      <div id="passworderror"> </div>
-                    </div>
-                  </div>
-                <!-- End Password Sign In -->
-
-                <!-- Log In Button -->
-                <div class="row">
-                    <div class="col-md-12">
-                      <input type="hidden" name="action" value="isLogin">
-                      <button type="submit" class="btn" id="btnLogin"> Log In </button>
-                    </div>
-                  </div>
-                <!-- Log In Button -->
+            <div id="admin-msg" class="login-message" role="alert" aria-live="assertive" tabindex="-1"></div>
+            <input type="hidden" name="action" value="isLogin">
+            <div class="login-field">
+              <label for="username">Username</label>
+              <input type="text" name="username" id="username" class="form-control" autocomplete="username" required>
             </div>
-        </form>
-        </div>
+            <div class="login-field">
+              <label for="password">Password</label>
+              <input type="password" name="password" id="password" class="form-control" autocomplete="current-password" required>
+            </div>
+            <button type="submit" class="login-submit" id="btnLogin">Sign in</button>
+          </form>
+        </section>
       </div>
     </div>
   </div>
@@ -78,7 +51,6 @@
   <script src="publics/plugins/jquery/jquery-1.9.1.min.js"></script>
   <script src="publics/plugins/bootstrap/js/bootstrap.min.js"></script>
   <script src="publics/plugins/jquery-blockui/js/jquery.blockUI.js"></script>
-  <script src="publics/plugins/form-validator/jquery.form-validator.min.js"></script>
   <script src="scripts/login.js"></script>
 
 
@@ -88,14 +60,5 @@
     });
   </script>
 
-<script>
-  // Check if the page has been loaded from the browser's history
-  window.addEventListener('pageshow', function (event) {
-    if (event.persisted) {
-      // Reload the page if it was loaded from the back/forward cache
-      window.location.reload();
-    }
-  });
-</script>
 </body>
 </html>

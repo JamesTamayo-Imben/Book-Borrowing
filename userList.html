@@ -1,95 +1,119 @@
-<style>
-    /* body {
-        color: #70ee9c;
-    } */
-    .panel-body {
-        background-color:#222;
-        border-radius: 8px;
-        padding: 50px;
-    }
-
-    label {
-        color: #fff;
-    }
-
-    #counter_info.dataTables_in {
-        color: red;
-    }
-    li {
-        color: red;
-    }
-    /* Table Styles */
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        color: #ffffff;
-        background-color: #000000;
-    }
-    
-    /* Header Row */
-    .table thead th {
-        background-color: #70ee9c; /* Dark Green */
-        color: #ffffff;
-        font-weight: bold;
-        text-align: left;
-        padding: 10px;
-        border: 1px solid #70ee9c; /* Darker Green Border */
-    }
-    
-    /* Data Rows */
-    .table tbody td {
-        padding: 8px;
-        border: 1px solid #70ee9c; /* Darker Green Border */
-    }
-    
-    /* Alternating Row Colors */
-    .table tbody tr:nth-child(even) {
-        background-color: #70ee9c; /* Slightly lighter green for contrast */
-    }
-    
-    .table tbody tr:nth-child(odd) {
-        background-color: #000000; /* Black */
-    }
-    
-    /* Hover Effect */
-    .table tbody tr:hover {
-        background-color: #70ee9c; /* Brighter Green on Hover */
-        color: #ffffff;
-    }
-    </style>
-    
-    <body>
-        <div class="col-md-12">
-          
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-12" style="overflow-x:auto">
-                            <table id="encounter" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Student ID</th>
-                                        <th>Gender</th>
-                                        <th>Contact Number</th>
-                                        <th>Email</th>
-                                        <th>Institution</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Table rows will be dynamically added here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-          
+<section class="student-list-page" aria-labelledby="student-list-title">
+    <header class="account-page-heading">
+        <div>
+            <p class="account-eyebrow">Student accounts</p>
+            <h1 id="student-list-title">Student list</h1>
+            <p>Search student records and keep contact details up to date.</p>
         </div>
-    <script src="scripts/studentList.js"></script>
-    <script>
-      $(document).ready(function() {
+        <a href="javascript:;" id="student-register-link" class="account-primary-link">Register a student</a>
+    </header>
+
+    <section class="account-panel" aria-labelledby="student-records-title">
+        <div class="account-panel-heading">
+            <div>
+                <h2 id="student-records-title">Student records</h2>
+                <p>Filter by student, gender, or institution.</p>
+            </div>
+        </div>
+        <div id="student-list-message" class="account-message" role="status" aria-live="polite"></div>
+        <div class="account-filter-bar" aria-label="Filter student records">
+            <div class="account-filter account-filter-search">
+                <label for="student-search">Search records</label>
+                <input id="student-search" class="form-control" type="search" placeholder="Student ID, email, or contact">
+            </div>
+            <div class="account-filter">
+                <label for="student-gender-filter">Gender</label>
+                <select id="student-gender-filter" class="form-control">
+                    <option value="">All genders</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="account-filter">
+                <label for="student-institution-filter">Institution</label>
+                <select id="student-institution-filter" class="form-control">
+                    <option value="">All institutions</option>
+                    <option value="IMACS">IMACS</option>
+                    <option value="ILA">ILA</option>
+                    <option value="IOE">IOE</option>
+                    <option value="ION">ION</option>
+                    <option value="IOM">IOM</option>
+                </select>
+            </div>
+            <button type="button" class="account-secondary-button" id="clear-student-filters">Clear filters</button>
+        </div>
+
+        <div class="account-table-wrap">
+            <table id="encounter" class="table account-table">
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Gender</th>
+                        <th>Contact number</th>
+                        <th>Email</th>
+                        <th>Institution</th>
+                        <th><span class="visually-hidden">Actions</span></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+</section>
+
+<dialog class="student-edit-dialog" id="student-edit-dialog" aria-labelledby="student-edit-title">
+    <form id="student-edit-form">
+        <header class="student-dialog-heading">
+            <div>
+                <p class="account-eyebrow">Student account</p>
+                <h2 id="student-edit-title">Update student</h2>
+            </div>
+            <button type="button" class="student-dialog-close" data-close-student-dialog aria-label="Close dialog">&times;</button>
+        </header>
+        <div class="student-dialog-fields">
+            <div class="account-field account-field-wide">
+                <label for="edit-student-id">Student ID</label>
+                <input class="form-control" id="edit-student-id" name="studentID" readonly>
+            </div>
+            <div class="account-field">
+                <label for="edit-student-gender">Gender</label>
+                <select class="form-control" id="edit-student-gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="account-field">
+                <label for="edit-student-institution">Institution</label>
+                <select class="form-control" id="edit-student-institution" name="institution" required>
+                    <option value="IMACS">IMACS</option>
+                    <option value="ILA">ILA</option>
+                    <option value="IOE">IOE</option>
+                    <option value="ION">ION</option>
+                    <option value="IOM">IOM</option>
+                </select>
+            </div>
+            <div class="account-field account-field-wide">
+                <label for="edit-student-contact">Contact number</label>
+                <input class="form-control" id="edit-student-contact" name="contactNumber" type="tel" inputmode="numeric" pattern="[0-9]{11}" maxlength="11" required aria-describedby="edit-student-contact-hint">
+                <small id="edit-student-contact-hint">Enter 11 digits</small>
+            </div>
+            <div class="account-field account-field-wide">
+                <label for="edit-student-email">Email</label>
+                <input class="form-control" id="edit-student-email" name="email" type="email" autocomplete="email" required>
+            </div>
+        </div>
+        <div class="student-dialog-actions">
+            <button type="button" class="account-secondary-button" data-close-student-dialog>Cancel</button>
+            <button type="submit" class="account-primary-button" id="save-student-button">Save changes</button>
+        </div>
+    </form>
+</dialog>
+
+<script src="scripts/studentList.js"></script>
+<script>
+    $(function () {
         Encounter.init();
-      });
-    </script>
-    </body>
-    
+    });
+</script>

@@ -1,0 +1,473 @@
+.account-page-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 22px;
+}
+
+.account-page-heading h1 {
+    margin: 0 0 8px;
+    color: var(--library-ink);
+    font-size: clamp(28px, 3vw, 36px);
+    font-weight: 500;
+    line-height: 1.15;
+}
+
+.account-page-heading p:last-child {
+    margin: 0;
+    color: var(--library-secondary);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.account-eyebrow {
+    margin: 0 0 8px !important;
+    color: var(--library-accent) !important;
+    font-size: 13px !important;
+    font-weight: 600;
+}
+
+.account-primary-link,
+.account-primary-button {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border: 1px solid var(--library-accent);
+    border-radius: 8px;
+    background: var(--library-accent);
+    color: #fff !important;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
+    text-decoration: none !important;
+    cursor: pointer;
+    transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+
+.account-primary-link:hover,
+.account-primary-button:hover,
+.account-primary-link:focus-visible,
+.account-primary-button:focus-visible {
+    border-color: #105d36;
+    background: #105d36;
+    color: #fff !important;
+}
+
+.account-primary-button:disabled,
+.account-action-button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.account-panel {
+    min-width: 0;
+    padding: clamp(16px, 2.2vw, 24px);
+    border: 1px solid var(--library-border);
+    border-radius: 14px;
+    background: var(--library-surface);
+    box-shadow: 0 1px 3px rgba(26, 34, 27, 0.05);
+}
+
+.account-panel-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.account-panel-heading h2 {
+    margin: 0 0 5px;
+    color: var(--library-ink);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.account-panel-heading p {
+    margin: 0;
+    color: var(--library-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.account-message {
+    margin-bottom: 12px;
+    color: var(--library-secondary);
+    font-size: 14px;
+}
+
+.account-message:empty {
+    display: none;
+}
+
+.account-message--success,
+.account-message--error {
+    padding: 12px 14px;
+    border: 1px solid;
+    border-radius: 8px;
+}
+
+.account-message--success {
+    border-color: #b7d6bf;
+    background: #edf6ef;
+    color: #245c35;
+}
+
+.account-message--error {
+    border-color: #e4b7ac;
+    background: #fbefec;
+    color: #792d1e;
+}
+
+.account-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding: 14px;
+    border: 1px solid rgba(36, 40, 36, 0.11);
+    border-radius: 10px;
+    background: #f7f7f3;
+}
+
+.account-filter,
+.account-field {
+    display: grid;
+    min-width: 0;
+    gap: 6px;
+}
+
+.account-filter {
+    min-width: 160px;
+    flex: 1 1 160px;
+}
+
+.account-filter-search {
+    flex-basis: 240px;
+}
+
+.account-filter label,
+.account-field label {
+    margin: 0;
+    color: #3b433c;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.account-filter .form-control,
+.account-field .form-control {
+    width: 100%;
+    min-height: 42px;
+    margin: 0;
+    padding: 9px 11px;
+    border: 1px solid rgba(36, 40, 36, 0.2);
+    border-radius: 8px;
+    background: #fff;
+    color: #242824;
+    font-size: 14px;
+    box-shadow: none;
+}
+
+.account-filter .form-control:focus,
+.account-field .form-control:focus {
+    border-color: var(--library-accent);
+    outline: 3px solid var(--library-accent-soft);
+    box-shadow: none;
+}
+
+.account-secondary-button {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 13px;
+    border: 1px solid rgba(36, 40, 36, 0.2);
+    border-radius: 8px;
+    background: #fffefa;
+    color: #3b433c;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 140ms ease, background-color 140ms ease, border-color 140ms ease;
+}
+
+.account-secondary-button:hover {
+    border-color: var(--library-accent);
+    background: var(--library-accent-soft);
+    color: var(--library-accent);
+}
+
+.account-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.student-list-page #encounter.account-table {
+    width: 100% !important;
+    margin: 0 !important;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--library-surface);
+    color: var(--library-ink);
+    font-size: 14px;
+}
+
+.student-list-page #encounter.account-table thead th {
+    padding: 12px 14px;
+    border: 0 !important;
+    border-bottom: 1px solid var(--library-border) !important;
+    background: #edf0ea !important;
+    color: #3c463d !important;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.student-list-page #encounter.account-table tbody td {
+    padding: 12px 14px;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(36, 40, 36, 0.09) !important;
+    background: var(--library-surface) !important;
+    color: #424a43 !important;
+    vertical-align: middle;
+}
+
+.student-list-page #encounter.account-table tbody tr:nth-child(even) td {
+    background: #f8f8f5 !important;
+}
+
+.student-list-page #encounter.account-table tbody tr:hover td {
+    background: var(--library-accent-soft) !important;
+}
+
+.student-list-page .dataTables_empty {
+    padding: 28px 14px !important;
+    color: var(--library-secondary) !important;
+    text-align: center !important;
+}
+
+.record-table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 14px;
+    color: var(--library-secondary);
+    font-size: 13px;
+}
+
+.student-row-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.student-action-button {
+    min-width: 56px;
+    min-height: 36px;
+    padding: 7px 10px;
+    border: 1px solid var(--library-border);
+    border-radius: 7px;
+    background: #fffefa;
+    color: #364039;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.student-action-edit:hover {
+    border-color: var(--library-accent);
+    background: var(--library-accent-soft);
+    color: var(--library-accent);
+}
+
+.student-action-delete {
+    border-color: #dfc5bd;
+    color: #853b2b;
+}
+
+.student-action-delete:hover {
+    border-color: #a64b34;
+    background: #f8e9e4;
+    color: #792d1e;
+}
+
+.student-edit-dialog {
+    width: min(92vw, 560px);
+    max-width: 560px;
+    max-height: 90dvh;
+    padding: 24px;
+    overflow-y: auto;
+    border: 1px solid var(--library-border);
+    border-radius: 14px;
+    background: var(--library-surface);
+    color: var(--library-ink);
+    box-shadow: 0 20px 64px rgba(0, 0, 0, 0.22);
+}
+
+.student-edit-dialog::backdrop {
+    background: rgba(18, 24, 19, 0.66);
+}
+
+.student-dialog-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.student-dialog-heading h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.student-dialog-close {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    place-items: center;
+    border: 1px solid var(--library-border);
+    border-radius: 8px;
+    background: var(--library-surface);
+    color: var(--library-secondary);
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.student-dialog-fields,
+.registration-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.account-field-wide {
+    grid-column: 1 / -1;
+}
+
+.account-field small {
+    color: var(--library-secondary);
+    font-size: 12px;
+}
+
+.student-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.student-dialog-error {
+    margin: 0 0 16px;
+    padding: 12px;
+    border: 1px solid #e4b7ac;
+    border-radius: 8px;
+    background: #fbefec;
+    color: #792d1e;
+    font-size: 14px;
+}
+
+.registration-panel {
+    width: min(100%, 1120px);
+}
+
+.registration-section {
+    min-width: 0;
+    margin: 0 0 24px;
+    padding: 20px;
+    border: 1px solid var(--library-border);
+    border-radius: 10px;
+}
+
+.registration-section legend {
+    float: none;
+    width: auto;
+    margin: 0;
+    padding: 0 8px;
+    color: var(--library-ink);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.registration-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 4px;
+}
+
+.registration-actions p {
+    margin: 0;
+    color: var(--library-secondary);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .account-page-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .account-filter {
+        flex-basis: calc(50% - 8px);
+    }
+
+    .record-table-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .registration-section {
+        padding: 16px;
+    }
+
+    .registration-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 520px) {
+    .account-filter,
+    .account-filter-search {
+        flex-basis: 100%;
+    }
+
+    .student-dialog-fields,
+    .registration-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .account-field-wide {
+        grid-column: auto;
+    }
+
+    .student-edit-dialog {
+        padding: 18px;
+    }
+
+    .student-dialog-actions {
+        flex-direction: column-reverse;
+    }
+
+    .student-dialog-actions > button {
+        width: 100%;
+    }
+
+    .student-list-page #encounter.account-table {
+        min-width: 760px;
+    }
+}

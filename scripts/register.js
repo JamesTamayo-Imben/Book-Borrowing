@@ -1,177 +1,88 @@
+(function ($) {
+    'use strict';
 
-var formatBlock = function() {
-    return {
-        message: '<img src="" style="display:inline;width:100px;height:100px;" alt="Loading...">',
-        css: {
-            border: 'none',
-            padding: '15px',
-            backgroundColor: '#000',
-            borderRadius: '10px',
-            opacity: 0.5,
-            color: '#fff'
+    var calculateAge = function (birthdate) {
+        if (!birthdate) {
+            return '';
         }
+
+        var parts = birthdate.split('-').map(Number);
+        var today = new Date();
+        var age = today.getFullYear() - parts[0];
+        if (today.getMonth() + 1 < parts[1] ||
+            (today.getMonth() + 1 === parts[1] && today.getDate() < parts[2])) {
+            age -= 1;
+        }
+        return age >= 0 ? age : '';
     };
-};
 
-var onLogins = function() {
-    $("#frmLogins").submit(function(event) {
-        event.preventDefault(); // Prevent default form submission
-        $('#logins').block(formatBlock()); // Show loading indicator
-        
-        var loginObj = $("#frmLogins").serialize(); // Serialize form data
-        $.post('register.php', loginObj, function(data) {
-            $("#admin-msgs").empty(); // Clear existing messages
-            var msg = data.msg || "An unexpected error occurred."; // Fallback for undefined message
-            var alertType = data.isSuccess ? 'success' : 'danger';
-            
-            var alert = `
-                <div class='alert alert-${alertType} alert-dismissible show' role='alert' id='alert'>
-                    <strong>Message! ${msg}</strong>
-                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                </div>`;
-            
-            $("#admin-msgs").html(alert);
+    var showMessage = function (text, kind) {
+        var message = document.getElementById('admin-msgs');
+        message.replaceChildren();
+        message.className = 'account-message account-message--' + kind;
+        message.textContent = text;
+        message.focus();
+    };
 
-            if (data.isSuccess) {
-                // Clear form fields
-                $('#frmLogins').find('input, select').val('');
-                console.log("Success message logged!");
-            } else {
-                console.log("Error message logged!");
-            }
-            
-            $('#logins').unblock(); // Remove loading indicator
-        }, 'json').fail(function() {
-            // Handle request errors
-            $("#admin-msgs").html(`
-                <div class='alert alert-danger alert-dismissible show' role='alert' id='alert'>
-                    <strong>Message! Server error occurred. Please try again later.</strong>
-                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                </div>`);
-            $('#logins').unblock(); // Remove loading indicator
+    var initialize = function () {
+        var form = document.getElementById('frmLogins');
+        if (!form) {
+            return;
+        }
+
+        var birthdate = document.getElementById('bday');
+        var age = document.getElementById('age');
+        var maxBirthdate = new Date();
+        maxBirthdate.setFullYear(maxBirthdate.getFullYear() - 18);
+        birthdate.max = [
+            maxBirthdate.getFullYear(),
+            String(maxBirthdate.getMonth() + 1).padStart(2, '0'),
+            String(maxBirthdate.getDate()).padStart(2, '0')
+        ].join('-');
+
+        $(birthdate).off('change.registration').on('change.registration', function () {
+            age.value = calculateAge(this.value);
         });
-    });
-};
 
-var register = function() {
-    "use strict";
-    return {
-        init: function() {
-            onLogins();
-        }
+        $(form).off('submit.registration').on('submit.registration', function (event) {
+            event.preventDefault();
+            age.value = calculateAge(birthdate.value);
+            if (!form.reportValidity()) {
+                return;
+            }
+
+            var submitButton = document.getElementById('btnRegister');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Creating account…';
+            form.setAttribute('aria-busy', 'true');
+            $.ajax({
+                url: 'register.php',
+                method: 'POST',
+                data: $(form).serialize(),
+                dataType: 'json'
+            }).done(function (response) {
+                if (!response.isSuccess) {
+                    showMessage(response.msg || 'The account could not be created.', 'error');
+                    return;
+                }
+                form.reset();
+                age.value = '';
+                showMessage(response.msg || 'Student account created.', 'success');
+            }).fail(function (request) {
+                var response = request.responseJSON;
+                showMessage(
+                    response && response.msg ? response.msg : 'The account could not be created. Check your connection and try again.',
+                    'error'
+                );
+            }).always(function () {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Create student account';
+                form.removeAttribute('aria-busy');
+            });
+        });
     };
-}();
 
-
-
-
-
-// var formatBlock = function() {
-//     return {
-//         message: '<img src="" style="display:inline;width:100px;height:100px;" alt="Loading...">',
-//         css: {
-//             border: 'none',
-//             padding: '15px',
-//             backgroundColor: '#000',
-//             borderRadius: '10px', 
-//             opacity: 0.5,
-//             color: '#fff' 
-//         }
-//     };
-// };
-
-// var loadFirst = function() {
-//     setTimeout(function() {
-//         $('#loader').addClass('hidden'); 
-//     }, 400);
-// };
-
-
-// // var checkSession = function() {
-// //     $.get('checksession.php', function(data) {
-// //         var sessiondata = $.parseJSON(data);
-// //         if(sessiondata.isSuccess) {
-// //             $(location).attr('href','dashboard.html');
-// //         } else {
-// //             loadFirst();
-// //         }
-// //     });
-// // };
-
-// // var handleFormEvents = function(){
-// //     $.validate({
-// //        form : '#frmLogin',
-// //        modules: 'security'
-// //     });
-// // };
-
-// var onLogins = function(){
-//     $("#frmLogins").submit(function(event) {
-//         event.preventDefault();
-//         $('#logins').block(formatBlock());
-//         var loginObj = $("#frmLogins").serializeArray();
-
-        
-//         $.post('register.php', loginObj, function(data){
-            
-//             if (data.isSuccess) {
-//                 $("#admin-msgs");
-//                 var msg = data.msg;
-//                 var alert = "<div class='alert alert-success alert-dismissible show' role='alert' id='alert'>" +
-//                "<strong>Message! "+ msg +"</strong> "+
-//                "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>"+
-//                 "</div>";
-
-//                 $("#admin-msgs").html(alert);
-//                 $('#username').val(' ');
-//                $('#lname').val(' ');
-//                $('#mname').val(' ');
-//                $('#fname').val(' ');
-//                $('#bday').val(' ');
-//                $('#age').val(' ');
-//                $('#gender').val(' ');
-//                $('#connum').val(' ');
-//                $('#email').val(' ');
-//                $('#insti').val(' ');
-//                $('#student').val(' ');
-//                $('#province').val(' ');
-//                $('#city').val(' ');
-//                $('#brgy').val(' ');
-//                $('#blk').val(' ');
-// console.log("hahaha");
-//             } else {
-//                 var msg = data.msg;
-//                 var alert = "<div class='alert alert-danger alert-dismissible show' role='alert' id='alert'>" +
-//                "<strong>Message! "+ msg +"</strong> "+
-//                "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>"+
-//                 "</div>";
-
-//                 $('#admin-msgs').html(alert);
-//                 // checkSession();
-//                  console.log("qwert");
-                 
-//             } 
-
-//             $('#logins').unblock();
-//         }, 'json');
-   
-//     });
-// };
-
-
-// var register = function() {
-//     "use strict";
-    
-//     return {
-//         init: function() {
-//             //  checkSession(),
-//             // handleFormEvents()
-//             onLogins()
-   
-//             // btnForgotPass(),
-//             // cancel(),
-//             // onForgotPass()
-//         }
-//     }
-// }()
- 
+    window.register = {
+        init: initialize
+    };
+}(jQuery));

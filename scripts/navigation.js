@@ -6,13 +6,14 @@
         dashboard: { page: 'dashboard.html', reload: true },
         offdashboardUser: { page: 'dashboardUser.html', reload: true },
         dashboardUser: { page: 'dashboardUser.html', reload: true },
-        userList: { page: 'userList.html' },
-        offuserList: { page: 'userList.html' },
-        shortcutUser: { page: 'userList.html' },
-        userRegistration: { page: 'userRegistration.html' },
-        offuserRegistration: { page: 'userRegistration.html' },
-        registeruser: { page: 'userRegistration.html' },
-        offregisteruser: { page: 'userRegistration.html' },
+        userList: { page: 'userList.html', admin: true },
+        offuserList: { page: 'userList.html', admin: true },
+        shortcutUser: { page: 'userList.html', admin: true },
+        userRegistration: { page: 'userRegistration.html', admin: true },
+        offuserRegistration: { page: 'userRegistration.html', admin: true },
+        registeruser: { page: 'userRegistration.html', admin: true },
+        offregisteruser: { page: 'userRegistration.html', admin: true },
+        'student-register-link': { page: 'userRegistration.html', admin: true },
         bookList: { page: 'bookCards.html' },
         bookListUser: { page: 'bookCardsUser.html' },
         shortcutBook: { page: 'bookCards.html' },
@@ -33,7 +34,7 @@
         studentInfo: { page: 'personalInfo.html' },
         offstudentInfo: { page: 'personalInfo.html' },
         'shortcut-book': { page: 'bookCards.html' },
-        'shortcut-user': { page: 'userList.html' }
+        'shortcut-user': { page: 'userList.html', admin: true }
     };
 
     var sessionRole = null;

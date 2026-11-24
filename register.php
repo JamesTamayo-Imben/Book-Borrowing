@@ -4,6 +4,20 @@
 session_start();
 require 'dbconn.php';
 
+header('Content-Type: application/json; charset=utf-8');
+
+if (($_SESSION['role'] ?? '') !== 'admin') {
+    http_response_code(403);
+    echo json_encode(['isSuccess' => false, 'msg' => 'Administrator access is required.']);
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['isSuccess' => false, 'msg' => 'A POST request is required.']);
+    exit;
+}
+
 class RegisterUsers {
 
     public function savePersonalInfoko($username, $lname, $mname, $fname, $bday, $age, $gender, $connum, $email, $insti, $student, $province, $city, $brgy, $blk) {
@@ -132,14 +146,15 @@ class RegisterUsers {
 
 $app = new RegisterUsers();
 
-if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'isLogins') {
+if (isset($_POST['action']) && $_POST['action'] == 'isLogins') {
     echo $app->savePersonalInfoko(
-        $_REQUEST['username'], $_REQUEST['lname'], $_REQUEST['mname'], $_REQUEST['fname'], 
-        $_REQUEST['bday'], $_REQUEST['age'], $_REQUEST['gender'], $_REQUEST['connum'], 
-        $_REQUEST['email'], $_REQUEST['insti'], $_REQUEST['student'], $_REQUEST['province'], 
-        $_REQUEST['city'], $_REQUEST['brgy'], $_REQUEST['blk']
+        $_POST['username'] ?? '', $_POST['lname'] ?? '', $_POST['mname'] ?? '', $_POST['fname'] ?? '',
+        $_POST['bday'] ?? '', $_POST['age'] ?? '', $_POST['gender'] ?? '', $_POST['connum'] ?? '',
+        $_POST['email'] ?? '', $_POST['insti'] ?? '', $_POST['student'] ?? '', $_POST['province'] ?? '',
+        $_POST['city'] ?? '', $_POST['brgy'] ?? '', $_POST['blk'] ?? ''
     );
 } else {
+    http_response_code(400);
     echo json_encode(['isSuccess' => false, 'msg' => 'No direct access']);
 }
 

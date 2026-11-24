@@ -1,80 +1,197 @@
 <?php
-	session_start();
-	require 'dbconn.php';
+session_start();
+require 'dbconn.php';
 
-	class Encounter {
-		public function getcovidEncounter(){
-			error_reporting(E_ERROR);
+header('Content-Type: application/json; charset=utf-8');
 
-			$config = new Config();
-	
-			$response = array();
+function respond($isSuccess, $message, $value = [])
+{
+    echo json_encode([
+        'isSuccess' => $isSuccess,
+        'value' => $value,
+        'msg' => $message
+    ]);
+    exit;
+}
 
-			$conn = $config->conn;
+if (($_SESSION['role'] ?? '') !== 'admin') {
+    http_response_code(403);
+    respond(false, 'Administrator access is required.');
+}
 
-			if($conn->connect_error){
-				return  $conn->connect_error;
+$config = new Config();
+$conn = $config->conn;
+$action = $_POST['action'] ?? '';
 
-			} else {
-				 $query = 'SELECT  studentID, gender, contactNumber, email, institution From student' ;
-					// $query = 'SELECT name FROM userrecord';
-				$data = array();
-				if($stmt = $conn->prepare($query)){
-					
-					$result = array();
-					$data = array();
-					if($stmt->execute()){
-						
-						 $stmt->bind_result($student, $gender, $cnum, $email, $insti);
-								// $stmt->bind_result($name);
-						$stmt->store_result();
-						
-						if($stmt->num_rows > 0){
-							while($stmt->fetch()){
+if ($action === 'updateStudent') {
+    $studentID = trim($_POST['studentID'] ?? '');
+    $gender = trim($_POST['gender'] ?? '');
+    $contactNumber = trim($_POST['contactNumber'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $institution = trim($_POST['institution'] ?? '');
 
-									//if($studentstatus == $studentstatusdynamic) {
-                                        $result['studentID'] = $student;
-										 $result['gender'] = $gender;
-										 $result['contactNumber'] = $cnum;
-									 $result['email'] = $email;
-									 $result['institution'] = $insti;
-									
-									
-										 $data[] = $result;		
-								
+    if ($studentID === '' || !in_array($gender, ['male', 'female', 'other'], true) ||
+        !preg_match('/^\d{11}$/', $contactNumber) || !filter_var($email, FILTER_VALIDATE_EMAIL) ||
+        !in_array($institution, ['IMACS', 'ILA', 'IOE', 'ION', 'IOM'], true)) {
+        http_response_code(400);
+        respond(false, 'Check the student details and try again.');
+    }
 
-								
-								
-							}
-						
-							$response['isSuccess'] = true;
-							$response['value'] = $data;
-							$response['msg'] = 'data fetch successfully';
-						}
-					} else {
-						$response['isSuccess'] = false;
-						$response['value'] = 0;
-						$response['msg'] = $stmt->error;
-					}
-				} else {
-					$response['isSuccess'] = false;
-					$response['value'] = 0;
-					$response['msg'] = $conn->error;
-				}
-				$conn->close();
-			}
+    try {
+        $conn->begin_transaction();
 
-			return json_encode($response);
-		}
-	}
+        foreach ([
+            ['SELECT COUNT(*) FROM student WHERE studentID = ?', $studentID],
+            ['SELECT COUNT(*) FROM loginUsers WHERE studentID = ?', $studentID]
+        ] as [$query, $id]) {
+            $stmt = $conn->prepare($query);
+            if (!$stmt) {
+                throw new RuntimeException('Unable to verify the student record.');
+            }
+            $stmt->bind_param('s', $id);
+            if (!$stmt->execute()) {
+                throw new RuntimeException('Unable to verify the student record.');
+            }
+            $stmt->bind_result($recordCount);
+            $stmt->fetch();
+            $stmt->close();
+            if ((int)$recordCount !== 1) {
+                $conn->rollback();
+                http_response_code(404);
+                respond(false, 'The student account could not be found.');
+            }
+        }
 
-	$app = new Encounter();
-// if(isset($_SESSION['name'])) {
-		echo $app->getcovidEncounter();
+        foreach ([
+            ['email', $email, 'Email address'],
+            ['contactNumber', $contactNumber, 'Contact number']
+        ] as [$column, $value, $label]) {
+            $query = "SELECT COUNT(*) FROM loginUsers WHERE $column = ? AND studentID <> ?";
+            $stmt = $conn->prepare($query);
+            if (!$stmt) {
+                throw new RuntimeException('Unable to verify the updated details.');
+            }
+            $stmt->bind_param('ss', $value, $studentID);
+            if (!$stmt->execute()) {
+                throw new RuntimeException('Unable to verify the updated details.');
+            }
+            $stmt->bind_result($duplicateCount);
+            $stmt->fetch();
+            $stmt->close();
+            if ((int)$duplicateCount > 0) {
+                $conn->rollback();
+                http_response_code(409);
+                respond(false, $label . ' is already used by another account.');
+            }
+        }
 
-// 	} else {
-// 		echo 'ERROR: No direct access';
-// 	}
-	
+        $studentStmt = $conn->prepare(
+            'UPDATE student SET gender = ?, contactNumber = ?, email = ?, institution = ? WHERE studentID = ?'
+        );
+        $loginStmt = $conn->prepare(
+            'UPDATE loginUsers SET gender = ?, contactNumber = ?, email = ?, institution = ? WHERE studentID = ?'
+        );
+        if (!$studentStmt || !$loginStmt) {
+            throw new RuntimeException('Unable to prepare the account update.');
+        }
 
-?>
+        $studentStmt->bind_param('sssss', $gender, $contactNumber, $email, $institution, $studentID);
+        $loginStmt->bind_param('sssss', $gender, $contactNumber, $email, $institution, $studentID);
+        if (!$studentStmt->execute() || !$loginStmt->execute()) {
+            throw new RuntimeException('Unable to save the updated student details.');
+        }
+
+        $studentStmt->close();
+        $loginStmt->close();
+        $conn->commit();
+        respond(true, 'Student details updated.');
+    } catch (Throwable $error) {
+        $conn->rollback();
+        error_log('Student update failed: ' . $error->getMessage());
+        http_response_code(500);
+        respond(false, 'The student details could not be saved. Try again.');
+    }
+}
+
+if ($action === 'deleteStudent') {
+    $studentID = trim($_POST['studentID'] ?? '');
+    if ($studentID === '') {
+        http_response_code(400);
+        respond(false, 'A student ID is required.');
+    }
+
+    try {
+        $activeStmt = $conn->prepare(
+            'SELECT
+                (SELECT COUNT(*) FROM borrowedbook WHERE studentID = ?) +
+                (SELECT COUNT(*) FROM overduebook WHERE studentID = ?)'
+        );
+        if (!$activeStmt) {
+            throw new RuntimeException('Unable to check active loans.');
+        }
+        $activeStmt->bind_param('ss', $studentID, $studentID);
+        if (!$activeStmt->execute()) {
+            throw new RuntimeException('Unable to check active loans.');
+        }
+        $activeStmt->bind_result($activeLoans);
+        $activeStmt->fetch();
+        $activeStmt->close();
+        if ((int)$activeLoans > 0) {
+            http_response_code(409);
+            respond(false, 'This student has active or overdue loans. Resolve them before deleting the account.');
+        }
+
+        $conn->begin_transaction();
+        $loginStmt = $conn->prepare('DELETE FROM loginUsers WHERE studentID = ? AND role = ?');
+        $studentStmt = $conn->prepare('DELETE FROM student WHERE studentID = ?');
+        if (!$loginStmt || !$studentStmt) {
+            throw new RuntimeException('Unable to prepare the account deletion.');
+        }
+
+        $role = 'user';
+        $loginStmt->bind_param('ss', $studentID, $role);
+        $studentStmt->bind_param('s', $studentID);
+        if (!$loginStmt->execute() || !$studentStmt->execute()) {
+            throw new RuntimeException('Unable to delete the student account.');
+        }
+        if ($loginStmt->affected_rows !== 1 || $studentStmt->affected_rows !== 1) {
+            $conn->rollback();
+            http_response_code(404);
+            respond(false, 'The student account could not be found.');
+        }
+
+        $loginStmt->close();
+        $studentStmt->close();
+        $conn->commit();
+        respond(true, 'Student account deleted.');
+    } catch (Throwable $error) {
+        $conn->rollback();
+        error_log('Student deletion failed: ' . $error->getMessage());
+        http_response_code(500);
+        respond(false, 'The student account could not be deleted. Try again.');
+    }
+}
+
+$stmt = $conn->prepare(
+    'SELECT studentID, gender, contactNumber, email, institution FROM student ORDER BY studentID'
+);
+if (!$stmt || !$stmt->execute()) {
+    http_response_code(500);
+    respond(false, 'Student records could not be loaded.');
+}
+
+$stmt->bind_result($studentID, $gender, $contactNumber, $email, $institution);
+$students = [];
+while ($stmt->fetch()) {
+    $students[] = [
+        'studentID' => $studentID,
+        'gender' => $gender,
+        'contactNumber' => $contactNumber,
+        'email' => $email,
+        'institution' => $institution
+    ];
+}
+$stmt->close();
+$conn->close();
+
+respond(true, 'Student records loaded.', $students);
