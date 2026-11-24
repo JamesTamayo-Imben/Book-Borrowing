@@ -310,17 +310,6 @@
     padding-top: 0;
 }
 
-.record-page .dataTables_paginate .paginate_button {
-    border-radius: 6px;
-}
-
-.record-page .dataTables_paginate .paginate_button.current,
-.record-page .dataTables_paginate .paginate_button.current:hover {
-    border: 1px solid var(--record-accent) !important;
-    background: var(--record-accent) !important;
-    color: #fff !important;
-}
-
 .record-page .dataTables_empty {
     padding: 28px 14px !important;
     color: #59615a !important;

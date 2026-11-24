@@ -91,6 +91,25 @@ textarea:focus-visible {
     font-size: 17px;
 }
 
+.sidebar-link > .hover-link {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    align-items: center;
+    gap: 12px;
+}
+
+.library-management-dialog,
+.student-edit-dialog,
+.book-cover-dialog {
+    position: fixed;
+    inset: auto;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    transform: translate(-50%, -50%);
+}
+
 .sidebar-link.has-dropdown::after {
     margin-left: auto;
 }
@@ -810,6 +829,10 @@ textarea:focus-visible {
     padding: 16px 8px 48px;
 }
 
+.library-management .library-page-heading {
+    margin-bottom: 22px;
+}
+
 .library-management-grid {
     display: grid;
     grid-template-columns: minmax(280px, 0.7fr) minmax(0, 1.3fr);
@@ -955,7 +978,7 @@ textarea:focus-visible {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    margin-top: 16px;
+    margin-top: 14px;
 }
 
 .library-management-footer > p {
@@ -978,35 +1001,8 @@ nav.library-management-pagination {
 
 .library-page-button {
     display: inline-flex;
-    min-width: 36px;
-    min-height: 36px;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 10px;
-    border: 1px solid var(--library-border);
-    border-radius: 6px;
-    background: var(--library-surface);
-    color: var(--library-ink);
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
-}
-
-.library-page-button:hover:not(:disabled) {
-    border-color: var(--library-accent);
-    background: var(--library-accent-soft);
-    color: var(--library-accent);
-}
-
-.library-page-button.is-current {
-    border-color: var(--library-accent);
-    background: var(--library-accent);
-    color: #fff;
-}
-
-.library-page-button:disabled {
-    color: var(--library-secondary);
-    opacity: 0.55;
-    cursor: not-allowed;
 }
 
 .library-page-ellipsis {
@@ -1015,9 +1011,14 @@ nav.library-management-pagination {
 }
 
 .library-management-message {
+    display: none;
+    color: var(--library-secondary);
+}
+
+.library-management-message:not(:empty) {
+    display: block;
     min-height: 24px;
     margin: 0 0 12px;
-    color: var(--library-secondary);
 }
 
 .library-management-message[data-state="error"] {
