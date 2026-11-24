@@ -16,7 +16,7 @@ class Config {
 
     public function __construct() {
         // Database connection parameters
-        $host = 'localhost'; // Replace with your DB host
+        $host = '127.0.0.1';
         $username = 'root'; // Replace with your DB username
         $password = ''; // Replace with your DB password
         $dbname = 'borrowing_system'; // Replace with your database name
