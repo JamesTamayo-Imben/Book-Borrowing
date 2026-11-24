@@ -1,164 +1,66 @@
 
-  <style>
-    :root {
-        --primary-color: #02BD52;
-        --forhighlight: #1BF640;
-        --fortext: #FCFCFC;
-        --second-color: #161618;
-    }
-    body {
-        background-color: #000;
-        font-family: 'Arial', sans-serif;
-        height: 100svh;
-        color: var(--fortext);
-      
-    }
-    .h-light {
-     color: var(--forhighlight); 
-     }
-    .prime-color {
-     background-color: var(--primary-color); 
-     }
-    .second-color {
-     background-color: var(--second-color); 
-     }
-    .for-text {
-     color: var(--fortext); 
-     }
-    .basta-card {
-
-        background-color: var(--second-color);
-        border-radius: 20px;
-        height: 250px;
-        width: 100%;
-        max-width: 610px;
-        min-width: 200px;
-        position: relative;
-        overflow: hidden;
-    }
-    img {
-     width: 100%; 
-     }
-    .labas-hover {
-        opacity: 0;
-        position: absolute;
-        right: -100px;
-        height: 100%;
-        width: 64%;
-        transition: .5s ease-in-out;
-        background-color: #fff;
-        padding: .7rem;
-    }
-    .basta-card:hover .labas-hover {
-     opacity: 1; right: 0px; 
-     }
-    .borrow-this-btn {
-        color: #02BD52;
-        border: 1px solid #02BD52;
-        background-color: transparent;
-        font-weight: 500;
-    }
-    .borrow-this-btn:hover {
-     background-color: #02BD52; color: #FCFCFC; 
-     }
-    .borrow-this-btn:focus {
-     background-color: #04b14f; color: #FCFCFC; 
-     }
-     .text-multiline-ellipsis {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;  /* Change to the number of lines you want to display */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-hr{
-  border: 2px solid #8a8a8a;
-}
-.alert {
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .alert.hidden {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-
-    form{
-      transition: all 0.5 ease;
-    }
-
-    /* .hidden {
-  opacity: 0;
-  transform: translateY(-20px);
-} */
-
-  </style>
-<!-- </head> -->
-<body class="d-flex justify-content-center align-items-center">
-   
-  
-   <!-- IS BOOKS category -->
-   <div class="rounded p-3 mb-2 mt-2">
-    <div class="category-title d-flex justify-content-between h2 mt-3 ps-3">
-        Information System Books
-        <span class="ml-auto"><i class="bi bi-arrow-right-square"></i></span>
+<section class="library-catalog" aria-label="Book collections">
+  <header class="library-catalog-heading">
+    <p class="library-eyebrow">Collections</p>
+    <h1>Browse books</h1>
+    <p>Choose a collection to view its books and current availability.</p>
+  </header>
+  <section class="library-catalog-section" aria-labelledby="category-title-1">
+    <div class="library-category-heading">
+      <h2 id="category-title-1">Information System Books</h2>
+      <button class="category-toggle" type="button" aria-expanded="false" aria-controls="category-box-1" aria-label="Show Information System books">
+        <i class="bi bi-arrow-right-square" aria-hidden="true"></i>
+      </button>
     </div>
-    <div class="category-box row py-4 px-1 d-flex justify-content-center align-items-center rounded ">
-      <div id="book-card-container1" class="book-cards row d-flex justify-content-center align-items-center">
-      </div>
-    </div>  
-  </div>   
-<hr>
-  <!-- PSYCH BOOKS category -->
-  <div class="rounded p-3 mb-2">
-    <div class="category-title d-flex justify-content-between h2 mt-3 ps-3">
-        Psychology Books
-        <span class="ml-auto"><i class="bi bi-arrow-right-square"></i></span>
+    <div class="category-box" id="category-box-1" hidden>
+      <div id="book-card-container1" class="book-cards"><p class="library-empty">Loading books…</p></div>
     </div>
-    <div class="category-box row py-4 px-1 d-flex justify-content-center align-items-center rounded ">
-      <div id="book-card-container2" class="book-cards row d-flex justify-content-center align-items-center">
-      </div>
-    </div>  
-  </div> 
-  <hr>
-  <!-- CE BOOKS category -->
-  <div class="rounded p-3 mb-2">
-    <div class="category-title d-flex justify-content-between h2 mt-3 ps-3">
-        Engineering Books
-        <span class="ml-auto"><i class="bi bi-arrow-right-square"></i></span>
+  </section>
+  <section class="library-catalog-section" aria-labelledby="category-title-2">
+    <div class="library-category-heading">
+      <h2 id="category-title-2">Psychology Books</h2>
+      <button class="category-toggle" type="button" aria-expanded="false" aria-controls="category-box-2" aria-label="Show Psychology books">
+        <i class="bi bi-arrow-right-square" aria-hidden="true"></i>
+      </button>
     </div>
-    <div class="category-box row py-4 px-1 d-flex justify-content-center align-items-center rounded ">
-      <div id="book-card-container3" class="book-cards row d-flex justify-content-center align-items-center">
-      </div>
-    </div>  
-  </div> 
-  <hr>
-  <!-- NS BOOKS category -->
-  <div class="rounded p-3 mb-2">
-    <div class="category-title d-flex justify-content-between h2 mt-3 ps-3">
-        Nursing Books
-        <span class="ml-auto"><i class="bi bi-arrow-right-square"></i></span>
+    <div class="category-box" id="category-box-2" hidden>
+      <div id="book-card-container2" class="book-cards"><p class="library-empty">Loading books…</p></div>
     </div>
-    <div class="category-box row py-4 px-1 d-flex justify-content-center align-items-center rounded ">
-      <div id="book-card-container4" class="book-cards row d-flex justify-content-center align-items-center">
-      </div>
-    </div>  
-  </div> 
-  <hr>
-  <!-- MW BOOKS category -->
-  <div class="rounded p-3">
-    <div class="category-title d-flex justify-content-between h2 mt-3 ps-3">
-        Midwifery Books
-        <span class="ml-auto"><i class="bi bi-arrow-right-square"></i></span>
+  </section>
+  <section class="library-catalog-section" aria-labelledby="category-title-3">
+    <div class="library-category-heading">
+      <h2 id="category-title-3">Engineering Books</h2>
+      <button class="category-toggle" type="button" aria-expanded="false" aria-controls="category-box-3" aria-label="Show Engineering books">
+        <i class="bi bi-arrow-right-square" aria-hidden="true"></i>
+      </button>
     </div>
-    <div class="category-box row py-4 px-1 d-flex justify-content-center align-items-center rounded ">
-      <div id="book-card-container5" class="book-cards row d-flex justify-content-center align-items-center">
-      </div>
-    </div>  
-  </div> 
-
-
-
-
+    <div class="category-box" id="category-box-3" hidden>
+      <div id="book-card-container3" class="book-cards"><p class="library-empty">Loading books…</p></div>
+    </div>
+  </section>
+  <section class="library-catalog-section" aria-labelledby="category-title-4">
+    <div class="library-category-heading">
+      <h2 id="category-title-4">Nursing Books</h2>
+      <button class="category-toggle" type="button" aria-expanded="false" aria-controls="category-box-4" aria-label="Show Nursing books">
+        <i class="bi bi-arrow-right-square" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="category-box" id="category-box-4" hidden>
+      <div id="book-card-container4" class="book-cards"><p class="library-empty">Loading books…</p></div>
+    </div>
+  </section>
+  <section class="library-catalog-section" aria-labelledby="category-title-5">
+    <div class="library-category-heading">
+      <h2 id="category-title-5">Midwifery Books</h2>
+      <button class="category-toggle" type="button" aria-expanded="false" aria-controls="category-box-5" aria-label="Show Midwifery books">
+        <i class="bi bi-arrow-right-square" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="category-box" id="category-box-5" hidden>
+      <div id="book-card-container5" class="book-cards"><p class="library-empty">Loading books…</p></div>
+    </div>
+  </section>
+</section>
   <script src="scripts/bookCardUser.js"></script>
 
 <script>
@@ -171,13 +73,12 @@ hr{
   const formattedDate = `${year}-${month}-${day}`;
 
   // Delegate the submit event to the dynamic form element
-  $(document).on("submit", "form[id^='form-borrow-']", function(event) {
+  $(document).off("submit.bookCards", "form[id^='form-borrow-']").on("submit.bookCards", "form[id^='form-borrow-']", function(event) {
     event.preventDefault(); // Prevent the default form submission
 
 
     var formId = $(this).attr('id');
-    // var counter = formId.split('-')[3]; // ID bookID
-    var bookID = formId.split('-')[2];
+    var bookID = formId.slice('form-borrow-'.length);
 
     document.getElementById('borrowedDT-' + bookID).value = formattedDate;
 
@@ -194,7 +95,7 @@ hr{
     // Validate the fields
     if (!bookIDD.val() || !borrowedDT.val() || !returnDate.val() || !adminID.val()) {
       $("#borrow-msg-" + bookID).html(`
-      <div class="alert alert-danger alert-dismissible show" role="alert" id="alert">
+      <div class="alert alert-danger alert-dismissible show" role="alert" id="alert-${bookID}">
         <strong>All fields are required!</strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
@@ -224,7 +125,7 @@ hr{
 
         if (res.isSuccess) {
           $("#borrow-msg-" + bookID).html(`
-          <div class="alert alert-success alert-dismissible show" role="alert" id="alert">
+          <div class="alert alert-success alert-dismissible show" role="alert" id="alert-${bookID}">
               <strong>${res.msg}</strong>
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -233,7 +134,7 @@ hr{
           $("#form-borrow-" + bookID)[0].reset(); //<div class="alert alert-success">${res.msg}</div>
         } else {
           $("#borrow-msg-" + bookID).html(`
-          <div class="alert alert-danger alert-dismissible show" role="alert"  id="alert">
+          <div class="alert alert-danger alert-dismissible show" role="alert" id="alert-${bookID}">
               <div>${res.msg}</div>
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -244,7 +145,7 @@ hr{
       error: function(xhr, status, error) {
         console.error("AJAX Error:", status, error);
         $("#borrow-msg-" + bookID).html(`
-        <div class="alert alert-danger alert-dismissible show" role="alert" id="alert">
+        <div class="alert alert-danger alert-dismissible show" role="alert" id="alert-${bookID}">
               <strong>An error occurred:</strong> ${error}
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -255,7 +156,7 @@ hr{
 
     //mawawala sya after mo sya makita huhuhu ;(
     setTimeout(() => {
-  const alert = document.getElementById(`alert`);
+  const alert = document.getElementById(`alert-${bookID}`);
   if (alert) {
     alert.classList.add('hidden'); 
     alert.addEventListener('transitionend', () => {
@@ -298,30 +199,8 @@ hr{
   }
 </script>
 <!-- 
-<script type="text/javascript">
-  $(document).ready(function() {
-  bookCardInfo1.init();
-});
-</script>
-<script type="text/javascript">
-  $(document).ready(function() {
-  bookCardInfo2.init();
-});
-</script>
-<script type="text/javascript">
-  $(document).ready(function() {
-  bookCardInfo3.init();
-});
-</script>
-<script type="text/javascript">
-  $(document).ready(function() {
-  bookCardInfo4.init();
-});
-</script>
-<script type="text/javascript">
-  $(document).ready(function() {
-  bookCardInfo5.init();
-});
-</script> -->
-</body>
 
+
+
+
+ -->

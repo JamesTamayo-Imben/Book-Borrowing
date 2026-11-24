@@ -20,7 +20,9 @@ if (isset($_SESSION['username'])) {
             'msg' => 'Database connection failed: ' . $conn->connect_error
         );
     } else {
-        $stmt = $conn->prepare("SELECT role FROM loginUsers WHERE username = ?");
+        $stmt = $conn->prepare(
+            "SELECT role, firstName, lastName, studentID, email FROM loginUsers WHERE username = ?"
+        );
         if ($stmt) {
             $stmt->bind_param("s", $sessionUsername);
             $stmt->execute();
@@ -30,7 +32,11 @@ if (isset($_SESSION['username'])) {
                 $row = $result->fetch_assoc();
                 $response = array(
                     'isSuccess' => true,
-                    'role' => $row['role']
+                    'role' => $row['role'],
+                    'firstName' => $row['firstName'],
+                    'lastName' => $row['lastName'],
+                    'studentID' => $row['studentID'],
+                    'email' => $row['email']
                 );
             } else {
                 $response = array(

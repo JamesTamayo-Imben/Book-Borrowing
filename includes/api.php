@@ -41,6 +41,34 @@ function sendBookCards(string $categoryID): void
     }
 }
 
+function sendCatalog(): void
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    header('Content-Type: application/json; charset=utf-8');
+    if (!isset($_SESSION['username'])) {
+        apiError('Sign in to browse the collection.', 401);
+    }
+
+    $conn = apiDatabase();
+    try {
+        $result = $conn->query(
+            'SELECT bookID, categoryID, title, author, image, description,
+                    publishedDate, totalStock, availableStock
+             FROM books
+             ORDER BY title'
+        );
+        echo json_encode(['value' => $result->fetch_all(MYSQLI_ASSOC)]);
+    } catch (mysqli_sql_exception $exception) {
+        error_log($exception->getMessage());
+        apiError('Unable to load the collection.');
+    } finally {
+        $conn->close();
+    }
+}
+
 function sendStockSummary(string $categoryID): void
 {
     header('Content-Type: application/json; charset=utf-8');

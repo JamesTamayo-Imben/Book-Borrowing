@@ -7,10 +7,10 @@
     <title>Document</title> -->
 
     <!-- <meta charset="utf-8" /> -->
-    <title>BOOK BORROWING SYSTEM</title>
+    <title>Browse Books | Book Borrowing System</title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-    <meta content="basta" name="description" />
-    <meta content="JIM" name="author" />
+    <meta content="Browse the library collection and see current availability." name="description" />
+    <meta content="Book Borrowing System" name="author" />
 
     <!-- ================== BEGIN BASE CSS STYLE ================== -->
     <!-- <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" /> -->
@@ -44,6 +44,7 @@
     <link href="publics/systemCss/sidebar.css" rel="stylesheet" />
     <link href="publics/systemCss/main.css" rel="stylesheet" />
     <link href="publics/systemCss/statistics.css" rel="stylesheet" />
+    <link href="publics/systemCss/dashboard-improvements.css" rel="stylesheet" />
 
     <style>
         :root{
@@ -298,9 +299,8 @@
     
                 <!-- user Profile -->
                 <div class="userProfile d-flex justify-content-center align-items-center flex-column">
-                    <div class="userPic">
-                        <img src="AstaChibi.jpg" alt="user">
-                    </div>
+                    <div class="userPic" aria-hidden="true"></div>
+                    <b class="m-2 js-profile-name">Loading profile…</b>
                     <!-- student id -->
                 <div class="for-text m-2 h5" id="studentID">
                     
@@ -332,20 +332,17 @@
     
     
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth1" aria-expanded="true" aria-controls="auth1">
+                        <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#offcanvas-books" aria-expanded="false" aria-controls="offcanvas-books">
                             <i class="bi bi-book"></i>
                             <span>Books</span>
                         </a>
     
-                        <ul id="auth1" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <ul id="offcanvas-books" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#offcanvasExample">
                             <li class="sidebar-item">
                                 <a href="javascript:;" id="offbookList" class="sidebar-link main-color ps-5">List</a>
                             </li>
                             <li class="sidebar-item">
                                 <a href="javascript:;" id="offborrowedBook-User" class="sidebar-link main-color ps-5">Borrowed</a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="javascript:;" id="offoverdueBook" class="sidebar-link main-color ps-5">Overdue</a>
                             </li>
                         </ul>
                     </li>
@@ -384,9 +381,8 @@
 
             <!-- user Profile -->
             <div class="userProfile d-flex justify-content-center align-items-center flex-column">
-                <div class="userPic">
-                    <img src="AstaChibi.jpg" alt="user">
-                </div>
+                <div class="userPic" aria-hidden="true"></div>
+                <b class="m-2 js-profile-name">Loading profile…</b>
                 <!-- student id -->
                 <div class="for-text m-2 h5" id="studentID1">
                     
@@ -420,12 +416,12 @@
 
 
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth1" aria-expanded="true" aria-controls="auth1">
+                    <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#sidebar-books" aria-expanded="false" aria-controls="sidebar-books">
                         <i class="bi bi-book"></i>
                         <span>Books</span>
                     </a>
 
-                    <ul id="auth1" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <ul id="sidebar-books" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#system-sidebar">
                         <li class="sidebar-item">
                             <a href="javascript:;" id="bookListUser" class="sidebar-link main-color ps-5">List</a>
                         </li>
@@ -470,31 +466,18 @@
                     
 
                     <div class="row p-2">
-                        <div class="colloage-frame d-flex justify-content-center flex-column px-3 rnd-20px">
-                            <h2 class="text-center">OUR BOOKS</h2>
-                            <div class="w-100 p-3 collage">
-                              <img src="book-image/book1.jpg" alt="books">
-                              <img src="book-image/book2.jpg" alt="books">
-                              <img src="book-image/book3.jpg" alt="books">
-                              <img src="book-image/book4.jpg" alt="books">
-                              <img src="book-image/book5.jpg" alt="books">
-                              <img src="book-image/book6.jpg" alt="books">
-                              <img src="book-image/book7.jpg" alt="books">
-                              <img src="book-image/book8.jpg" alt="books">
-                              <img src="book-image/book9.jpg" alt="books">
-                              <img src="book-image/book10.jpg" alt="books">
-                              <img src="book-image/book11.jpg" alt="books">
-                              <img src="book-image/book12.jpg" alt="books">
-                              <img src="book-image/book13.jpg" alt="books">
-                              <img src="book-image/book14.jpg" alt="books">
-                              <img src="book-image/book15.jpg" alt="books">
-                              <img src="book-image/book16.jpg" alt="books">
-                              <img src="book-image/book17.jpg" alt="books">
-                              <img src="book-image/book18.jpg" alt="books">
-                              <img src="book-image/book19.jpg" alt="books">
-                              <img src="book-image/book20.jpg" alt="books">
+                        <section class="library-user-catalog">
+                            <header class="library-page-heading">
+                                <div>
+                                    <p class="library-eyebrow">The library collection</p>
+                                    <h1>Browse books</h1>
+                                    <p>Explore the books currently in the library catalog.</p>
+                                </div>
+                            </header>
+                            <div id="user-book-catalog" class="library-book-grid" aria-live="polite" aria-busy="true">
+                                <p class="library-empty">Loading books from the catalog</p>
                             </div>
-                          </div>
+                        </section>
                     </div>
                 </div>
             </div>
@@ -503,171 +486,9 @@
     </div>
             <!-- end dashingboard-->
             <script src="publics/plugins/jquery/jquery-1.9.1.min.js"></script>
-
-
-            <script src="publics/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-            <script src="publics/plugins/bootstrap/js/bootstrap.min.js"></script>
-
-            <script src="publics/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-            <!-- ================== END BASE JS ================== -->
-
-            <!-- ================== BEGIN PAGE LEVEL JS ================== -->
-            <script type="text/javascript" src="publics/plugins/form-validator/jquery.form-validator.min.js"></script>
-            <!-- <script src="publics/plugins/gritter/js/jquery.gritter.js"></script>
-            <script src="publics/plugins/qrcode/jquery.qrcode.js"></script> -->
-    <script src="publics/plugins/qrcode/qrcode.js"></script>
-            <script src="publics/plugins/jquery-blockui/js/jquery.blockUI.js"></script>
-            <script src="publics/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-            <script type="text/javascript" language="javascript" src="publics/plugins/datatable/js/jquery.dataTables.js">
-            </script>
-            <script type="text/javascript" language="javascript" src="publics/plugins/datatable/js/dataTables.bootstrap.js">
-            </script>
-
-            <script src="publics/js/apps.min.js"></script>
-            <script src="scripts/dashboard.js"></script>
-            <script src="scripts/offcanvas.js"></script>
-
-            <!-- ================== END PAGE LEVEL JS ================== -->
-
-            <script>
-                $(document).ready(function() {
-                    App.init();
-                            Index.init();
-                    
-                });
-            </script>
-
-             <!-- puss&bootstarp js -->
-             <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
-             <script src="bootstrap/bootstrap.min.js"></script>
-
-<script src="scripts/totalStock.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-  // Predefined category-to-color mapping
-  const categoryColors = {
-    "CE Books": "rgb(0, 140, 255)", 
-    "IS Books": "rgb(6, 214, 16)", 
-    "MW Books": "rgb(247, 35, 247)",          
-    "NS Books": "rgb(250, 175, 237)",            
-    "PSYCH Books": "rgb(236, 236, 236)"       
-};
-//   KLDCE003
-// Civil Engineering Books
-// KLDIS001
-// Information System Books
-// KLDMW005
-// Midwifery Books
-// KLDNS004
-// Nursing Books
-// KLDPS002
-// Psychology Books
-
-  // Fetch data from the server
-  fetch('piegraph.php')
-      .then(response => response.json())
-      .then(data => {
-          const labels = data.map(item => item.category); // Extract categories
-          const values = data.map(item => item.borrowed); // Extract borrowed counts
-
-          // Get colors for each category
-         const backgroundColors = labels.map(label => categoryColors[label] || 'rgb(200, 200, 200)');
-
-          // Data for the pie chart
-          const chartData = {
-              labels: labels,
-              datasets: [{
-                  data: values,
-                  backgroundColor: backgroundColors,
-                  hoverBackgroundColor: backgroundColors.map(color => color.replace('rgb', 'rgba').replace(')', ', 0.8)')),
-                  borderColor: '#bbb',
-                  borderWidth: .9,
-                  hoverOffset: 20
-              }]
-          };
-
-
-          const config = {
-              type: 'pie',
-              data: chartData,
-              options: {
-                  responsive: true,
-                  plugins: {
-                      legend: {
-                          position: 'top',
-                          labels: {
-                              color: '#333',
-                              font: {
-                                  size: 14
-                              }
-                          }
-                      },
-                      tooltip: {
-                          callbacks: {
-                              label: function(tooltipItem) {
-                                  const value = tooltipItem.raw;
-                                  const total = values.reduce((acc, val) => acc + val, 0);
-                                  const percentage = ((value / total) * 100).toFixed(2);
-                                  return `${tooltipItem.label}: ${value} books (${percentage}%)`;
-                              }
-                          }
-                      },
-                      title: {
-                          display: true,
-                          text: 'Books Borrowed by Category',
-                          font: {
-                              size: 18,
-                              weight: 'bold'
-                          },
-                          color: '#555'
-                      }
-                  },
-                  animation: {
-                      animateScale: true,
-                      animateRotate: true
-                  }
-              }
-          };
-
-          // Render the chart
-          new Chart(
-              document.getElementById('pieChart'),
-              config
-          );
-      })
-      .catch(error => console.error('Error fetching data:', error));
-</script>
-
-
-<script>
-    $(document).ready(function() {
-        $.get('data.php', function(data) {
-            const sessionData = JSON.parse(data);
-            if (sessionData.isSuccess) {
-                $('#studentID').text(sessionData.studentID);
-                $('#studentEmail').text(sessionData.email);
-                $('#studentID1').text(sessionData.studentID);
-                $('#studentEmail1').text(sessionData.email);
-            } else {
-                console.error(sessionData.msg);
-            }
-        });
-    });
-    </script>
-
-<script>
-    // Check if the page has been loaded from the browser's history
-    window.addEventListener('pageshow', function (event) {
-      if (event.persisted) {
-        // Reload the page if it was loaded from the back/forward cache
-        window.location.reload();
-      }
-    });
-  </script>
-
-<script src="scripts/AllBorrow.js"></script>
+<script src="bootstrap/bootstrap.min.js"></script>
+<script src="scripts/navigation.js"></script>
+<script src="scripts/dashboard-data.js"></script>
 
 </body>
 

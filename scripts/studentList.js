@@ -18,6 +18,11 @@ var formatBlock = function() {
       
         "sAjaxSource":  "studentList.php",
         "sAjaxDataProp": "value",
+        "language": {
+            "emptyTable": "No students have been registered yet.",
+            "zeroRecords": "No students match your search.",
+            "loadingRecords": "Loading students…"
+        },
         
              "aoColumns": [
                 {

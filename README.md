@@ -7,7 +7,10 @@ A PHP and MySQL application for managing a library's book inventory, student acc
 ## Features
 
 - Student registration and sign-in, with separate student and administrator dashboards
-- Book browsing by collection and live stock display
+- Book browsing by collection, live stock display, and keyboard-accessible collection toggles
+- Administrator-only book create, update, and delete tools
+- Responsive spacing and a consistent neutral/forest/green 60/30/10 color system
+- Database-backed administrator inventory and circulation summaries, plus a live student catalog
 - Borrowing, returns, overdue tracking, and notifications
 - Student, stock, and borrowing summaries
 
@@ -60,7 +63,14 @@ These are public demo credentials. Do not reuse them outside a local test enviro
 The import files are deliberately separate:
 
 - [`schema.sql`](./schema.sql) creates the `borrowing_system` database and required tables. It also creates the demo administrator account.
-- [`sample-data.sql`](./sample-data.sql) adds example students, books, inventory statuses, borrowing records, and notifications.
+- [`sample-data.sql`](./sample-data.sql) adds example students, 20 books matching `book-image/book1.jpg` through `book20.jpg`, inventory statuses, borrowing records, and notifications.
+- [`book-catalog-update.sql`](./book-catalog-update.sql) updates the previous sample book metadata by cover path, adds any missing cover records, and preserves existing book IDs and stock. Run it once if the older sample data is already in your database:
+
+  ```bash
+  /opt/lampp/bin/mysql -u root borrowing_system < book-catalog-update.sql
+  ```
+
+The migration does not remove existing records. It clears the old sample publication dates rather than guessing which edition the cover represents; an administrator can enter a verified date in **Books → Manage catalog**. Book records with borrowing or return history cannot be deleted, preserving circulation records.
 
 For a MySQL command-line setup with XAMPP's default empty root password:
 
@@ -71,7 +81,7 @@ For a MySQL command-line setup with XAMPP's default empty root password:
 
 In phpMyAdmin, import `schema.sql` first and `sample-data.sql` second. Both files can be imported again without duplicating their sample records. `INSERT IGNORE` preserves rows that already use the sample IDs; it does not overwrite your edits.
 
-The sample book covers refer to the images already in `book-image/`. Student names, accounts, and records are fictional demo data.
+The sample book covers refer to the images already in `book-image/`. Bibliographic details were checked against book records in [Open Library](https://openlibrary.org/), including [The Pragmatic Programmer](https://openlibrary.org/works/OL5748544W), [Clean Code](https://openlibrary.org/works/OL17618370W), [Introduction to Algorithms](https://openlibrary.org/works/OL4781294W), [Why Buildings Fall Down](https://openlibrary.org/works/OL3350803W), [Beyond Failure](https://openlibrary.org/works/OL12220231W), and the [2011 Skill Checklists edition](https://openlibrary.org/books/OL27087807M). The Introduction to Psychology cover does not name an author, so its author is left blank rather than inferred from the publisher. Student names, accounts, and records are fictional demo data.
 
 ## Project layout
 
@@ -79,6 +89,9 @@ The sample book covers refer to the images already in `book-image/`. Student nam
 | --- | --- |
 | `logIn.html`, `dashboard*.html` | Sign-in and dashboard pages |
 | `*.php` | Authentication, registration, book, borrowing, return, and data endpoints |
+| `dashboardOverview.php`, `catalog.php` | Authenticated dashboard summaries and live catalog data |
+| `manageBooks.html`, `manageBooks.php`, `scripts/manageBooks.js` | Administrator-only catalog CRUD and validation |
+| `scripts/dashboard-data.js`, `scripts/navigation.js` | Dashboard rendering and role-aware navigation |
 | `includes/api.php` | Shared handlers used by the category-specific book, stock, student, and borrowing endpoints |
 | `dbconn.php` | MySQL connection settings |
 | `schema.sql` | Database and table definitions |
@@ -91,6 +104,7 @@ The sample book covers refer to the images already in `book-image/`. Student nam
 - **Unknown database or missing table:** Import `schema.sql`, then import `sample-data.sql`.
 - **Blank page or HTTP 500:** Use PHP through XAMPP Apache or the PHP development server; opening the HTML files directly with `file://` will not execute PHP endpoints.
 - **Missing book cover:** Ensure the project is served from its root and that the `book-image/` directory is present.
+- **Old demo titles still appear:** Run [`book-catalog-update.sql`](./book-catalog-update.sql) against the database that already contains the sample records.
 
 ## Security note
 

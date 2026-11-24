@@ -1,0 +1,90 @@
+<section class="library-management" aria-label="Manage books">
+  <header class="library-page-heading">
+    <div>
+      <p class="library-eyebrow">Inventory</p>
+      <h1>Manage books</h1>
+      <p>Create, update, and remove catalog records.</p>
+    </div>
+  </header>
+
+  <p id="book-management-message" class="library-management-message" role="status" aria-live="polite"></p>
+
+  <div class="library-management-grid">
+    <section class="library-panel" aria-labelledby="book-form-heading">
+      <h2 id="book-form-heading">Add a book</h2>
+      <p class="library-panel-intro">Book covers must use an existing image in <code>book-image/</code>.</p>
+      <form id="manage-book-form" class="library-book-form">
+        <div class="form-field">
+          <label for="book-id">Book ID</label>
+          <input class="form-control" id="book-id" name="bookID" maxlength="50" required>
+        </div>
+        <div class="form-field">
+          <label for="book-category">Collection</label>
+          <select class="form-select" id="book-category" name="categoryID" required>
+            <option value="KLDIS001">Information System</option>
+            <option value="KLDPS002">Psychology</option>
+            <option value="KLDCE003">Engineering</option>
+            <option value="KLDNS004">Nursing</option>
+            <option value="KLDMW005">Midwifery</option>
+          </select>
+        </div>
+        <div class="form-field form-field-wide">
+          <label for="book-title">Title</label>
+          <input class="form-control" id="book-title" name="title" maxlength="255" required>
+        </div>
+        <div class="form-field form-field-wide">
+          <label for="book-author">Author</label>
+          <input class="form-control" id="book-author" name="author" maxlength="255">
+        </div>
+        <div class="form-field form-field-wide">
+          <label for="book-image">Cover image path</label>
+          <input class="form-control" id="book-image" name="image" placeholder="book-image/book1.jpg">
+        </div>
+        <div class="form-field">
+          <label for="book-published-date">Publication date</label>
+          <input class="form-control" id="book-published-date" name="publishedDate" type="date">
+        </div>
+        <div class="form-field">
+          <label for="book-total-stock">Total copies</label>
+          <input class="form-control" id="book-total-stock" name="totalStock" type="number" min="0" step="1" value="1" required>
+        </div>
+        <div class="form-field">
+          <label for="book-available-stock">Available copies</label>
+          <input class="form-control" id="book-available-stock" name="availableStock" type="number" min="0" step="1" value="1" required>
+        </div>
+        <div class="form-field form-field-wide">
+          <label for="book-description">Description</label>
+          <textarea class="form-control" id="book-description" name="description" rows="3"></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-success" id="save-book-button" type="submit">Add book</button>
+          <button class="btn btn-outline-secondary" id="cancel-book-edit" type="button" hidden>Cancel edit</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="library-panel" aria-labelledby="book-list-heading">
+      <div class="library-shelf-heading">
+        <h2 id="book-list-heading">Catalog records</h2>
+        <span id="book-count" class="library-stat-note"></span>
+      </div>
+      <div class="library-table-wrap">
+        <table class="library-table">
+          <caption class="visually-hidden">Books available in the catalog</caption>
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Collection</th>
+              <th scope="col">Available</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="book-management-rows">
+            <tr><td class="library-management-empty" colspan="5">Loading books…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</section>

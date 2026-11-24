@@ -1,4 +1,20 @@
+var escapeBookHtml = function(value) {
+    return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+};
 
+var escapeBookFields = function(book) {
+    var safeBook = Object.assign({}, book);
+    ['bookID', 'title', 'author', 'image', 'description', 'publishedDate', 'adminID']
+        .forEach(function(field) {
+            safeBook[field] = escapeBookHtml(book[field]);
+        });
+    return safeBook;
+};
 
 var bookCardInfo1 = function() {
   "use strict";
@@ -20,6 +36,7 @@ var bookCardInfo1 = function() {
         <h4 class="h-light mb-3">${book.title}</h4>
         <h6>Author: <span class="h-light h6 mb-3">${book.author}</span></h6>
         <h6>Publish Date: <strong>${book.publishedDate || "N/A"}</strong></h6>
+        <h6>Available copies: <strong>${Number(book.availableStock) || 0}</strong></h6>
         <p class="text-multiline-ellipsis" style="max-width: 290px;">Description: <br> ${book.description || "No description available."}</p>
       </div>
     </div>
@@ -53,7 +70,7 @@ var bookCardInfo1 = function() {
 
           <div class="col-md-12 mt-3 pt-1">
             <input type="hidden" name="action-${book.bookID}" value="toBorrowAction">
-            <button class="btn borrow-this-btn px-4" type="submit" id="Borrow-${book.bookID}">Borrow This!</button>
+            <button class="btn borrow-this-btn px-4" type="submit" id="Borrow-${book.bookID}" ${Number(book.availableStock) > 0 ? '' : 'disabled'}>Borrow This!</button>
           </div>
         </div>
         
@@ -78,7 +95,7 @@ var bookCardInfo1 = function() {
 
               if (books && books.length > 0) {
                   books.forEach(function(book) {
-                      container.append(createCard1(book));
+                      container.append(createCard1(escapeBookFields(book)));
                   });
               } else {
                   container.html("<p>No books available.</p>");
@@ -121,6 +138,7 @@ var bookCardInfo2 = function() {
         <h4 class="h-light mb-3">${book.title}</h4>
         <h6>Author: <span class="h-light h6 mb-3">${book.author}</span></h6>
         <h6>Publish Date: <strong>${book.publishedDate || "N/A"}</strong></h6>
+        <h6>Available copies: <strong>${Number(book.availableStock) || 0}</strong></h6>
         <p class="text-multiline-ellipsis" style="max-width: 290px;">Description: <br> ${book.description || "No description available."}</p>
       </div>
     </div>
@@ -154,7 +172,7 @@ var bookCardInfo2 = function() {
 
           <div class="col-md-12 mt-3 pt-1">
             <input type="hidden" name="action-${book.bookID}" value="toBorrowAction">
-            <button class="btn borrow-this-btn px-4" type="submit" id="Borrow-${book.bookID}">Borrow This!</button>
+            <button class="btn borrow-this-btn px-4" type="submit" id="Borrow-${book.bookID}" ${Number(book.availableStock) > 0 ? '' : 'disabled'}>Borrow This!</button>
           </div>
         </div>
         
@@ -178,7 +196,7 @@ var bookCardInfo2 = function() {
 
               if (books && books.length > 0) {
                   books.forEach(function(book) {
-                      container.append(createCard2(book));
+                      container.append(createCard2(escapeBookFields(book)));
                   });
               } else {
                   container.html("<p>No books available.</p>");
@@ -219,6 +237,7 @@ var bookCardInfo3 = function() {
         <h4 class="h-light mb-3">${book.title}</h4>
         <h6>Author: <span class="h-light h6 mb-3">${book.author}</span></h6>
         <h6>Publish Date: <strong>${book.publishedDate || "N/A"}</strong></h6>
+        <h6>Available copies: <strong>${Number(book.availableStock) || 0}</strong></h6>
         <p class="text-multiline-ellipsis" style="max-width: 290px;">Description: <br> ${book.description || "No description available."}</p>
       </div>
     </div>
@@ -252,7 +271,7 @@ var bookCardInfo3 = function() {
 
           <div class="col-md-12 mt-3 pt-1">
             <input type="hidden" name="action-${book.bookID}" value="toBorrowAction">
-            <button class="btn borrow-this-btn px-4" type="submit" id="Borrow-${book.bookID}">Borrow This!</button>
+            <button class="btn borrow-this-btn px-4" type="submit" id="Borrow-${book.bookID}" ${Number(book.availableStock) > 0 ? '' : 'disabled'}>Borrow This!</button>
           </div>
         </div>
         
@@ -277,7 +296,7 @@ var bookCardInfo3 = function() {
 
               if (books && books.length > 0) {
                   books.forEach(function(book) {
-                      container.append(createCard3(book));
+                      container.append(createCard3(escapeBookFields(book)));
                   });
               } else {
                   container.html("<p>No books available.</p>");
@@ -326,6 +345,7 @@ var bookCardInfo4 = function() {
         <h4 class="h-light mb-3">${book.title}</h4>
         <h6>Author: <span class="h-light h6 mb-3">${book.author}</span></h6>
         <h6>Publish Date: <strong>${book.publishedDate || "N/A"}</strong></h6>
+        <h6>Available copies: <strong>${Number(book.availableStock) || 0}</strong></h6>
         <p class="text-multiline-ellipsis" style="max-width: 290px;">Description: <br> ${book.description || "No description available."}</p>
       </div>
     </div>
@@ -359,7 +379,7 @@ var bookCardInfo4 = function() {
 
           <div class="col-md-12 mt-3 pt-1">
             <input type="hidden" name="action-${book.bookID}" value="toBorrowAction">
-            <button class="btn borrow-this-btn px-4" type="submit" id="Borrow-${book.bookID}">Borrow This!</button>
+            <button class="btn borrow-this-btn px-4" type="submit" id="Borrow-${book.bookID}" ${Number(book.availableStock) > 0 ? '' : 'disabled'}>Borrow This!</button>
           </div>
         </div>
         
@@ -384,7 +404,7 @@ var bookCardInfo4 = function() {
 
               if (books && books.length > 0) {
                   books.forEach(function(book) {
-                      container.append(createCard4(book));
+                      container.append(createCard4(escapeBookFields(book)));
                   });
               } else {
                   container.html("<p>No books available.</p>");
@@ -426,6 +446,7 @@ var bookCardInfo5 = function() {
         <h4 class="h-light mb-3">${book.title}</h4>
         <h6>Author: <span class="h-light h6 mb-3">${book.author}</span></h6>
         <h6>Publish Date: <strong>${book.publishedDate || "N/A"}</strong></h6>
+        <h6>Available copies: <strong>${Number(book.availableStock) || 0}</strong></h6>
         <p class="text-multiline-ellipsis" style="max-width: 290px;">Description: <br> ${book.description || "No description available."}</p>
       </div>
     </div>
@@ -459,7 +480,7 @@ var bookCardInfo5 = function() {
 
           <div class="col-md-12 mt-3 pt-1">
             <input type="hidden" name="action-${book.bookID}" value="toBorrowAction">
-            <button class="btn borrow-this-btn px-4" type="submit" id="Borrow-${book.bookID}">Borrow This!</button>
+            <button class="btn borrow-this-btn px-4" type="submit" id="Borrow-${book.bookID}" ${Number(book.availableStock) > 0 ? '' : 'disabled'}>Borrow This!</button>
           </div>
         </div>
         
@@ -484,7 +505,7 @@ var bookCardInfo5 = function() {
 
               if (books && books.length > 0) {
                   books.forEach(function(book) {
-                      container.append(createCard5(book));
+                      container.append(createCard5(escapeBookFields(book)));
                   });
               } else {
                   container.html("<p>No books available.</p>");

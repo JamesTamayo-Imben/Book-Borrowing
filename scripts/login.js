@@ -38,14 +38,7 @@ var checkSession = function() {
       var sessiondata = $.parseJSON(data);
 
       if (sessiondata.isSuccess) {
-          // if (sessiondata.role === "admin") {
-              $(location).attr('href', 'dashboard.html');
-          // } else if (sessiondata.role === "user") {
-          //     $(location).attr('href', 'dashboardUser.html');
-          //     console.log("dito");
-          // } else {
-          //     console.error("Unknown role: " + sessiondata.role);
-          // }
+          $(location).attr('href', sessiondata.role === 'admin' ? 'dashboard.html' : 'dashboardUser.html');
       } else {
           loadFirst(); // Handle inactive session
       }
@@ -104,7 +97,6 @@ var onLogin = function () {
       var loginObj = $("#frmLogin").serializeArray();
   
       $.post('loginStudent.php', loginObj, function (data) {
-        console.log(data); // Debug response structure
         if (!data.isSuccess) {
           var msg = data.msg || "Login failed.";
           var alert =

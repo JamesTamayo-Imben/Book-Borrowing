@@ -7,10 +7,10 @@
     <title>Document</title> -->
 
     <!-- <meta charset="utf-8" /> -->
-    <title>BOOK BORROWING SYSTEM</title>
+    <title>Library Overview | Book Borrowing System</title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-    <meta content="basta" name="description" />
-    <meta content="JIM" name="author" />
+    <meta content="Manage library inventory, circulation, and student accounts." name="description" />
+    <meta content="Book Borrowing System" name="author" />
 
     <!-- ================== BEGIN BASE CSS STYLE ================== -->
     <!-- <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" /> -->
@@ -297,6 +297,8 @@
 
     </style>
 
+<link href="publics/systemCss/dashboard-improvements.css" rel="stylesheet" />
+
     
 </head>
 
@@ -334,10 +336,8 @@
     
                 <!-- user Profile -->
                 <div class="userProfile d-flex justify-content-center align-items-center flex-column">
-                    <div class="userPic">
-                        <img src="AstaChibi.jpg" alt="user">
-                    </div>
-                    <b class="m-2">JimjimGwapo</b>
+                    <div class="userPic" aria-hidden="true"></div>
+                    <b class="m-2 js-profile-name">Loading profile…</b>
                 </div>
                 <!-- options  -->
                 <ul class="sidebar-nav p-0 mt-4 text-dark">
@@ -356,12 +356,12 @@
                 </li> -->
     
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth" aria-expanded="true" aria-controls="auth">
+                        <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#offcanvas-students" aria-expanded="false" aria-controls="offcanvas-students">
                             <i class="bi bi-people"></i>
                             <span>Student</span>
                         </a>
     
-                        <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <ul id="offcanvas-students" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#offcanvasExample">
                             <li class="sidebar-item">
                                 <a href="javascript:;" id="offuserList" class="sidebar-link main-color ps-5">List</a>
                             </li>
@@ -373,14 +373,17 @@
     
     
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth1" aria-expanded="true" aria-controls="auth1">
+                        <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#offcanvas-books" aria-expanded="false" aria-controls="offcanvas-books">
                             <i class="bi bi-book"></i>
                             <span>Books</span>
                         </a>
     
-                        <ul id="auth1" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <ul id="offcanvas-books" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#offcanvasExample">
                             <li class="sidebar-item">
                                 <a href="javascript:;" id="offbookList" class="sidebar-link main-color ps-5">List</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="javascript:;" id="offmanageBooks" class="sidebar-link main-color ps-5">Manage catalog</a>
                             </li>
                             <li class="sidebar-item">
                                 <a href="javascript:;" id="offborrowedBook" class="sidebar-link main-color ps-5">Borrowed</a>
@@ -418,10 +421,8 @@
 
             <!-- user Profile -->
             <div class="userProfile d-flex justify-content-center align-items-center flex-column">
-                <div class="userPic">
-                    <img src="AstaChibi.jpg" alt="user">
-                </div>
-                <b class="m-2">JimjimGwapo</b>
+                <div class="userPic" aria-hidden="true"></div>
+                <b class="m-2 js-profile-name">Loading profile…</b>
             </div>
             <!-- options  -->
             <ul class="sidebar-nav p-0 mt-4 text-dark">
@@ -442,12 +443,12 @@
             </li> -->
 
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth" aria-expanded="true" aria-controls="auth">
+                    <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#sidebar-students" aria-expanded="false" aria-controls="sidebar-students">
                         <i class="bi bi-people"></i>
                         <span>Student</span>
                     </a>
 
-                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <ul id="sidebar-students" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#system-sidebar">
                         <li class="sidebar-item">
                             <a href="javascript:;" id="userList" class="sidebar-link main-color ps-5">List</a>
                         </li>
@@ -459,14 +460,17 @@
 
 
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth1" aria-expanded="true" aria-controls="auth1">
+                    <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#sidebar-books" aria-expanded="false" aria-controls="sidebar-books">
                         <i class="bi bi-book"></i>
                         <span>Books</span>
                     </a>
 
-                    <ul id="auth1" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <ul id="sidebar-books" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#system-sidebar">
                         <li class="sidebar-item">
                             <a href="javascript:;" id="bookList" class="sidebar-link main-color ps-5">List</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="javascript:;" id="manageBooks" class="sidebar-link main-color ps-5">Manage catalog</a>
                         </li>
                         <li class="sidebar-item">
                             <a href="javascript:;" id="borrowedBook" class="sidebar-link main-color ps-5">Borrowed</a>
@@ -500,157 +504,78 @@
 <!-- pag lipat ng email at id galing login papuntang dashboard -->
         <div id="content" class="content">
 
-            <div id="main-content" class="p-2"> 
-                <div class="container pt-5">
-                    <div class="row h-100">
-                        <div class="col-lg-8">
-                            <div class="row">
-                                <div class="col-sm-8 p-2">
-                                    <div class="laman p-4 pb-2">
-
-                                           <div class="row">
-                                            <div class="col-lg-1"></div>
-                                            <div class="col-lg-10 d-flex justify-content-center p-2 pe-5 graph-frame">
-                                      
-                                              <table class="graph">
-                                                  <!-- <caption class="text-center">BOOKS BAR GRAPH</caption> -->
-                                                  <tbody>
-                                                    <tr id="availableRow" style="height:85%">
-                                                      <th scope="row">Available</th>
-                                                      <td><span id="availablePercentage">0%</span></td>
-                                                    </tr>
-                                                    <tr id="borrowedRow" style="height:23%">
-                                                      <th scope="row">Borrowed</th>
-                                                      <td><span id="borrowedPercentage">0%</span></td>
-                                                    </tr>
-                                                  </tbody>
-                                                </table>
-                      
-                                            </div>
-                                            <div class="col-lg-1"></div>
-                                          </div>
-                      
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 p-2 pe-1">
-                                    <div class="laman p-4 d-flex align-items-center">
-                                        <!-- <p>
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit nemo eum pariatur 
-                                        
-                                        </p>
-                                        <div class="row px-2">
-                                            <button class="prime-color btn">Hello</button>
-                                        </div> -->
-                                        <img src="bento-logo.jpg" alt="" style="width: 100%; border-radius: 50%;">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-
-                                <div class="col-md-6 p-2 pe-1">
-                                    <div class="laman-pie p-4">
-                                        <h3 style="text-align: center;" class="mt-2">All Books Borrow</h3>
-                                        <div style="text-align: center;" class="h-light h3" id="AllBorrow">53</div>
-            
-                                        <!-- <canvas id="customColorBarChart"></canvas> -->
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 p-2 ps-3">
-                                    <div class="bento-box-s">
-                                        <div class="lamanPerson p-4 pt-1">
-                                            <div class="d-flex justify-content-center">
-                                                <i class="bi bi-people"></i>
-                                            </div>
-                                            <h5 style="text-align: center;">View Users</h5>
-                                            
-                                        </div>
-                                      <div class="student-list-button1">
-                                        <div class="to-page-holder">
-                                          <div class="to-page1">
-                                            <a href="javascript:;" id="shortcut-user">
-                                              <span>
-                                                  <i class="bi bi-arrow-right-circle-fill"></i>
-                                              </span>
-                                            </a>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                
-                            </div>
+            <main id="main-content" class="p-2">
+                <div id="library-overview" class="library-dashboard">
+                    <header class="library-page-heading">
+                        <div>
+                            <p class="library-eyebrow">Library administration</p>
+                            <h1>Collection overview</h1>
+                            <p>Inventory, circulation, and student accounts in one place</p>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-4 p-2 ps-3">
-                                    <div class="bento-box-s">
-                                        <div class="laman1 p-4 pt-1">
-                                            <div class="d-flex justify-content-center">
-                                                <i class="bi bi-book-half"></i>
-                                            </div>
-                                            <h5 style="text-align: center;">View our Books</h5>
-                                            
-                                        </div>
-                                      <div class="student-list-button">
-                                        <div class="to-page-holder">
-                                          <div class="to-page">
-                                            <a href="javascript:;" id="shortcut-book">
-                                              <span>
-                                                  <i class="bi bi-arrow-right-circle-fill"></i>
-                                              </span>
-                                            </a>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                <div class="col-lg-12 col-md-8 p-2 ps-3">
-                                    <div class="laman2 p-4 pt-1">
-                                        <div class="d-flex justify-content-center">
-                                            <!-- <i class="bi bi-geo-alt-fill"></i> -->
-            
-                                            <canvas id="pieChart"></canvas>
-                                        </div>
-                                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                                         -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                   
+                        <p id="dashboard-error" class="library-error" role="alert" hidden></p>
+                    </header>
 
-                    <div class="row p-2">
-                        <div class="colloage-frame d-flex justify-content-center flex-column px-3 rnd-20px">
-                            <h2 class="text-center">OUR BOOKS</h2>
-                            <div class="w-100 p-3 collage">
-                              <img src="book-image/book1.jpg" alt="books">
-                              <img src="book-image/book2.jpg" alt="books">
-                              <img src="book-image/book3.jpg" alt="books">
-                              <img src="book-image/book4.jpg" alt="books">
-                              <img src="book-image/book5.jpg" alt="books">
-                              <img src="book-image/book6.jpg" alt="books">
-                              <img src="book-image/book7.jpg" alt="books">
-                              <img src="book-image/book8.jpg" alt="books">
-                              <img src="book-image/book9.jpg" alt="books">
-                              <img src="book-image/book10.jpg" alt="books">
-                              <img src="book-image/book11.jpg" alt="books">
-                              <img src="book-image/book12.jpg" alt="books">
-                              <img src="book-image/book13.jpg" alt="books">
-                              <img src="book-image/book14.jpg" alt="books">
-                              <img src="book-image/book15.jpg" alt="books">
-                              <img src="book-image/book16.jpg" alt="books">
-                              <img src="book-image/book17.jpg" alt="books">
-                              <img src="book-image/book18.jpg" alt="books">
-                              <img src="book-image/book19.jpg" alt="books">
-                              <img src="book-image/book20.jpg" alt="books">
+                    <section class="library-stats" aria-label="Library totals">
+                        <article class="library-stat">
+                            <span class="library-stat-label">Book titles</span>
+                            <strong class="library-stat-value" data-stat="titles">—</strong>
+                            <span class="library-stat-note">In the catalog</span>
+                        </article>
+                        <article class="library-stat">
+                            <span class="library-stat-label">Available copies</span>
+                            <strong class="library-stat-value" data-stat="available">—</strong>
+                            <span class="library-stat-note"><span data-stat="availability-percent">—</span> of all copies</span>
+                        </article>
+                        <article class="library-stat">
+                            <span class="library-stat-label">Active loans</span>
+                            <strong class="library-stat-value" data-stat="loans">—</strong>
+                            <span class="library-stat-note"><span data-stat="overdue">—</span> overdue</span>
+                        </article>
+                        <article class="library-stat">
+                            <span class="library-stat-label">Students</span>
+                            <strong class="library-stat-value" data-stat="students">—</strong>
+                            <span class="library-stat-note">Registered accounts</span>
+                        </article>
+                    </section>
+
+                    <section class="library-dashboard-grid" aria-label="Collection and circulation">
+                        <article class="library-panel">
+                            <h2>Availability by collection</h2>
+                            <p class="library-panel-intro">Available copies compared with total stock</p>
+                            <div id="category-breakdown" class="category-list" aria-live="polite">
+                                <p class="library-empty">Loading collection totals</p>
                             </div>
-                          </div>
-                    </div>
+                        </article>
+                        <article class="library-panel">
+                            <h2>Collection availability</h2>
+                            <p class="library-panel-intro">Copies ready to borrow</p>
+                            <p class="availability-count"><span data-stat="available">—</span> copies</p>
+                            <div class="availability-bar" role="progressbar" aria-label="Available copies" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0">
+                                <span data-stat="availability-bar" style="width:0%"></span>
+                            </div>
+                            <div class="availability-caption">
+                                <span>Available</span>
+                                <strong data-stat="availability-percent">—</strong>
+                            </div>
+                            <nav class="library-shortcuts" aria-label="Library shortcuts">
+                                <a class="library-action" href="javascript:;" id="shortcut-book">Browse the catalog <span aria-hidden="true">→</span></a>
+                                <a class="library-action" href="javascript:;" id="shortcutManageBooks">Manage catalog <span aria-hidden="true">→</span></a>
+                                <a class="library-action" href="javascript:;" id="shortcut-user">Manage students <span aria-hidden="true">→</span></a>
+                            </nav>
+                        </article>
+                    </section>
+
+                    <section class="library-shelf-panel">
+                        <div class="library-shelf-heading">
+                            <h2>Catalog highlights</h2>
+                            <a href="javascript:;" id="shortcutBook">View all books</a>
+                        </div>
+                        <div id="dashboard-books" class="library-book-grid" aria-live="polite">
+                            <p class="library-empty">Loading books from the catalog</p>
+                        </div>
+                    </section>
                 </div>
-            </div>
+            </main>
 
 </div>
     </div>
@@ -659,179 +584,17 @@
 
 
             <script src="publics/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-            <script src="publics/plugins/bootstrap/js/bootstrap.min.js"></script>
-
             <script src="publics/plugins/slimscroll/jquery.slimscroll.min.js"></script>
             <!-- ================== END BASE JS ================== -->
 
             <!-- ================== BEGIN PAGE LEVEL JS ================== -->
             <script type="text/javascript" src="publics/plugins/form-validator/jquery.form-validator.min.js"></script>
-            <!-- <script src="publics/plugins/gritter/js/jquery.gritter.js"></script>
-            <script src="publics/plugins/qrcode/jquery.qrcode.js"></script> -->
-    <script src="publics/plugins/qrcode/qrcode.js"></script>
+            <!-- <script src="publics/plugins/gritter/js/jquery.gritter.js"></script> -->
             <script src="publics/plugins/jquery-blockui/js/jquery.blockUI.js"></script>
-            <script src="publics/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-            <script type="text/javascript" language="javascript" src="publics/plugins/datatable/js/jquery.dataTables.js">
-            </script>
-            <script type="text/javascript" language="javascript" src="publics/plugins/datatable/js/dataTables.bootstrap.js">
-            </script>
-
             <script src="publics/js/apps.min.js"></script>
-            <script src="scripts/dashboard.js"></script>
-            <!-- <script src="scripts/offcanvas.js"></script> -->
-
-            <!-- ================== END PAGE LEVEL JS ================== -->
-
-            <script>
-                $(document).ready(function() {
-                    App.init();
-                            Index.init();
-                    
-                });
-            </script>
-
-             <!-- puss&bootstarp js -->
-             <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
-             <script src="bootstrap/bootstrap.min.js"></script>
-
-<script src="scripts/totalStock.js"></script>
-<!-- <script src="scripts/gISStock.js"></script>
-<script src="scripts/gPSYStock.js"></script>
-<script src="scripts/gCEStock.js"></script>
-<script src="scripts/gNSStock.js"></script>
-<script src="scripts/gMWStock.js"></script>
-
-<script src="scripts/isStudent.js"></script>
-<script src="scripts/ilaStudent.js"></script>
-<script src="scripts/ioeStudent.js"></script>
-<script src="scripts/ionStudent.js"></script>
-<script src="scripts/iomStudent.js"></script> -->
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- <script src="scripts/graph.js"> </script> -->
-<script>
-    var initrylng = (function() {
-    // Predefined category-to-color mapping
-    const categoryColors = {
-        "CE Books": "rgb(0, 140, 255)", 
-        "IS Books": "rgb(6, 214, 16)", 
-        "MW Books": "rgb(247, 35, 247)",          
-        "NS Books": "rgb(250, 175, 237)",            
-        "PSYCH Books": "rgb(236, 236, 236)"
-    };
-
-    var trylng = function() {
-        fetch('piegraph.php')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                const labels = data.map(item => item.category); // Extract categories
-                const values = data.map(item => item.borrowed); // Extract borrowed counts
-
-                // Get colors for each category
-                const backgroundColors = labels.map(label => categoryColors[label] || 'rgb(200, 200, 200)');
-
-                // Data for the pie chart
-                const chartData = {
-                    labels: labels,
-                    datasets: [{
-                        data: values,
-                        backgroundColor: backgroundColors,
-                        hoverBackgroundColor: backgroundColors.map(color => color.replace('rgb', 'rgba').replace(')', ', 0.8)')),
-                        borderColor: '#bbb',
-                        borderWidth: 0.9,
-                        hoverOffset: 20
-                    }]
-                };
-
-                // Chart configuration
-                const config = {
-                    type: 'pie',
-                    data: chartData,
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                                labels: {
-                                    color: '#333',
-                                    font: {
-                                        size: 14
-                                    }
-                                }
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(tooltipItem) {
-                                        const value = tooltipItem.raw;
-                                        const total = values.reduce((acc, val) => acc + val, 0);
-                                        const percentage = ((value / total) * 100).toFixed(2);
-                                        return `${tooltipItem.label}: ${value} books (${percentage}%)`;
-                                    }
-                                }
-                            },
-                            title: {
-                                display: true,
-                                text: 'Books Borrowed by Category',
-                                font: {
-                                    size: 18,
-                                    weight: 'bold'
-                                },
-                                color: '#555'
-                            }
-                        },
-                        animation: {
-                            animateScale: true,
-                            animateRotate: true
-                        }
-                    }
-                };
-
-                // Render the chart
-                const ctx = document.getElementById('pieChart').getContext('2d');
-                if (window.chartInstance) {
-                    window.chartInstance.destroy();  // Destroy previous chart instance
-                }
-                window.chartInstance = new Chart(ctx, config); // Create a new chart instance
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    };
-
-    return {
-        init: function() {
-            trylng(); // Load books on initialization
-            // Reload data when navigation items are clicked
-            $(".nav-link").on("click", function() {
-                trylng(); // Reload data
-            });
-        }
-    };
-})();
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        initrylng.init();
-  });
-</script>
-
-
-
-<script>
-    // Check if the page has been loaded from the browser's history
-    window.addEventListener('pageshow', function (event) {
-      if (event.persisted) {
-        
-        window.location.reload();
-      }
-    });
-  </script>
-
-
-<script src="scripts/AllBorrow.js"></script>
+            <script src="bootstrap/bootstrap.min.js"></script>
+            <script src="scripts/navigation.js"></script>
+            <script src="scripts/dashboard-data.js"></script>
 
 </body>
 

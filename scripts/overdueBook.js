@@ -18,6 +18,11 @@ var formatBlock = function() {
       
         "sAjaxSource":  "overdueBook.php",
         "sAjaxDataProp": "value",
+        "language": {
+            "emptyTable": "There are no overdue books.",
+            "zeroRecords": "No overdue books match your search.",
+            "loadingRecords": "Loading overdue books…"
+        },
         
              "aoColumns": [
                 {

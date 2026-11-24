@@ -18,6 +18,11 @@ var userrecords = $('#encounter').DataTable({
       
         "sAjaxSource":  "borrowedBook.php",
         "sAjaxDataProp": "value",
+        "language": {
+            "emptyTable": "No books are currently borrowed.",
+            "zeroRecords": "No borrowed books match your search.",
+            "loadingRecords": "Loading borrowed books…"
+        },
         
              "aoColumns": [
                 {

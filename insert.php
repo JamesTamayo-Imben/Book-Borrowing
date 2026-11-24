@@ -18,14 +18,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bookIDD = $_POST['bookIDD'] ?? '';
     $borrowedDT = $_POST['borrowedDT'] ?? '';
     $adminID = $_POST['adminID'] ?? '';
-    // $sid = $_POST['sid'] ?? '';
     $returnDate = $_POST['returnDate'] ?? '';
 
-    if (!isset($_SESSION['studentID'])) {
-        echo json_encode(['error' => 'Student ID not found in session']);
+    if (!isset($_SESSION['username'])) {
+        http_response_code(401);
+        echo json_encode(['isSuccess' => false, 'msg' => 'Sign in before borrowing a book.']);
         exit;
     }
-    $sid = $_SESSION['studentID'];
+    $sid = ($_SESSION['role'] ?? 'user') === 'admin'
+        ? trim($_POST['sid'] ?? '')
+        : trim($_SESSION['studentID'] ?? '');
 
     if (empty($bookIDD) || empty($borrowedDT) || empty($adminID) || empty($sid) || empty($returnDate)) {
         echo json_encode(["isSuccess" => false, "msg" => "All fields are required!"]);
@@ -148,5 +150,4 @@ if ($cantBorrowWarning == 3) {
 }
 
 $conn->close();
-
 

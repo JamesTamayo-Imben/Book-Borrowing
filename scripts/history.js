@@ -18,6 +18,11 @@ var formatBlock = function() {
       
         "sAjaxSource":  "history.php",
         "sAjaxDataProp": "value",
+        "language": {
+            "emptyTable": "No library transactions have been recorded yet.",
+            "zeroRecords": "No transactions match your search.",
+            "loadingRecords": "Loading transaction history…"
+        },
         
              "aoColumns": [
                 {
