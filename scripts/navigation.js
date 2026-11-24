@@ -210,6 +210,28 @@
             : 'bi bi-arrow-down-square';
     });
 
+    $(document).on('click', '.book-cover-button', function () {
+        var dialog = document.getElementById('book-cover-dialog');
+        var cover = this.querySelector('img');
+        if (!dialog || !cover) {
+            console.error('Book cover preview could not be opened.');
+            return;
+        }
+
+        var preview = dialog.querySelector('img');
+        var title = dialog.querySelector('p');
+        preview.src = cover.currentSrc || cover.src;
+        preview.alt = cover.alt;
+        title.textContent = cover.alt.replace(/^Cover of\s*/i, '');
+        dialog.showModal();
+    });
+
+    $(document).on('click', '.book-cover-dialog', function (event) {
+        if (event.target === this) {
+            this.close();
+        }
+    });
+
     $(function () {
         $.getJSON('checkSession.php')
             .done(function (session) {

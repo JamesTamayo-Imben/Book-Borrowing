@@ -127,7 +127,11 @@ class Encounter {
         error_reporting(E_ERROR);
 
         $config = new Config();
-        $response = array();
+        $response = [
+            'isSuccess' => true,
+            'value' => [],
+            'msg' => 'Data fetched successfully.'
+        ];
         $conn = $config->conn;
 
         if ($conn->connect_error) {

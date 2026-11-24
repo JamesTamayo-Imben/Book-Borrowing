@@ -18,6 +18,7 @@ var formatBlock = function() {
       
         "sAjaxSource":  "history.php",
         "sAjaxDataProp": "value",
+        "dom": 'rt<"record-table-footer"ip>',
         "language": {
             "emptyTable": "No library transactions have been recorded yet.",
             "zeroRecords": "No transactions match your search.",

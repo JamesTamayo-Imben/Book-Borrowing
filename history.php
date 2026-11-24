@@ -8,7 +8,11 @@
 
 			$config = new Config();
 	
-			$response = array();
+			$response = [
+				'isSuccess' => true,
+				'value' => [],
+				'msg' => 'Data fetched successfully.'
+			];
 
 			$conn = $config->conn;
 

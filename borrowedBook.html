@@ -1,188 +1,69 @@
-<style>
-    /* body {
-        color: #70ee9c;
-    } */
-    .panel-body {
-        border-radius: 8px;
-        padding: 50px;
-    }
-    .panel-body1 {
-        /* margin-bottom: 5px; */
-        /* background-color:whitesmoke;
-        background-color: #222; */
-        border-radius: 8px;
-        padding: 3px;
-    }
+<section class="record-page record-page--borrowed" data-record-view="borrowed">
+    <header class="record-page-header">
+        <p class="record-page-eyebrow">Circulation</p>
+        <h1>Borrowed books</h1>
+        <p>Review active loans, find a record, or process a returned book.</p>
+    </header>
 
-    /* Table Styles */
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        color: #ffffff;
-        background-color: #000000;
-    }
-    
-    /* Header Row 70ee9c 5dc88a 4bb77e*/
-    .table thead th {
-        background-color: #70ee9c;
-        color: #ffffff;
-        font-weight: bold;
-        text-align: left;
-        padding: 10px;
-        border: 1px solid #70ee9c;
-    }
-    
-    /* Data Rows */
-    .table tbody td {
-        padding: 8px;
-        border: 1px solid #70ee9c; /* Darker Green Border */
-    }
-    
-    /* Alternating Row Colors */
-    .table tbody tr:nth-child(even) {
-        background-color: #70ee9c; /* Slightly lighter green for contrast */
-    }
-    
-    .table tbody tr:nth-child(odd) {
-        background-color: #000000; /* Black */
-    }
-    
-    /* Hover Effect */
-    .table tbody tr:hover {
-        background-color: #70ee9c; /* Brighter Green on Hover */
-        color: #ffffff;
-    }
-
-    .form-control {
-      height: 40px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      padding: 5px 10px;
-      font-size: 14px;
-      color: #555;
-      margin-bottom: 10px;
-  }
-  
-  .form-control:focus {
-      outline: none;
-      border-color: #5dc88a;
-      box-shadow: 0 0 5px rgba(93, 200, 138, 0.5);
-  }
-
-  p{
-    font-size: 16px;
-      color: #555;
-      /* font-weight: bold; */
-      margin-bottom: 10px;
-  }
-
-  .return-btn {
-      background-color: #5dc88a;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      height: 40px;
-      width: 100%;
-      max-width: 300px;
-      font-size: 14px;
-      text-align: center;
-      margin: 23px auto 0;
-      cursor: pointer;
-      transition: background-color 0.3s;
-  }
-  
-  .return-btn:hover {
-      background-color: #4bb77e;
-  }
-
-  label {
-    color: #fff;
-  }
-  .borrow-laman{
-        min-height: 240px;
-        height: auto;
-        
-  }
-  .r-8{
-    border-radius: 7px;
-  }
-    </style>
-    
-    <body>
-       <!--<div class="box info-box">
-                <p>WHY YOU LATE?</p>
-                <small>CONTACT US: kahitano@gmail.com</small>
-            </div>  -->
-        <div class="return-button panel-body1 pb-2 pt-0">
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="borrow-laman p-4 second-color for-text r-8">
-                        
-                <p style="color: #70ee9c;">Do you want to return the book?</p>
-                <form id="frmLogins">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <label style="color: white;" for="">Enter StudentID</label>
-                            <input type="text" name="sid" id="sid" placeholder="000-0000-0000" required="required" class="form-control"> 
-                        </div>
-        
-                        <div class="col-md-5">
-                            <label style="color: white;" for="">Enter BookID</label>
-                            <input type="text" name="bid" id="bid" placeholder="-KLDBK000-" required="required" class="form-control"> 
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn return-btn" type="submit" id="return">Return</button>
-                        </div>
-                      </div>
-                </form>
-                <div id="admin-msgs"></div>
-                    </div>
-                    
-                </div>
-
-                <div class="col-md-3 ps-0">
-                    <div class="borrow-laman p-md-4 second-color for-text r-8">
-                        <div class="box info-box">
-                            <p>WHY YOU LATE?</p>
-                            <small>CONTACT US: kahitano@gmail.com</small>
-                            
-                        </div>
-                    </div>
-                </div>
+    <section class="record-panel" aria-labelledby="borrowed-return-heading">
+        <div class="record-panel-heading">
+            <h2 id="borrowed-return-heading">Record a return</h2>
+            <p>Enter the student and book IDs to close an active loan.</p>
+        </div>
+        <form id="frmLogins" class="record-return-form">
+            <div class="record-field">
+                <label for="sid">Student ID</label>
+                <input type="text" name="sid" id="sid" placeholder="000-0000-0000" required class="form-control">
             </div>
-        </div>    
-     
-           
-           
-                <div class="panel-body second-color for-text">
-                    <div class="row">
-                        <p style="color: #70ee9c;">BORROWED BOOKS LIST</p>
-                        <div class="col-md-12" style="overflow-x:auto">
-                            <table id="encounter" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>BookID</th>
-                                        <th>Borrowed Date</th>
-                                        <th>Return Date</th>
-                                        <th>Student ID</th>
-                                        
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Table rows will be dynamically added here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-        <script src="scripts/return.js"></script>
-    <script src="scripts/borrowedBook.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function() {
-        Encounter.init();
-      });
-    </script>
-    </body>
-    
+            <div class="record-field">
+                <label for="bid">Book ID</label>
+                <input type="text" name="bid" id="bid" placeholder="KLDBK000" required class="form-control">
+            </div>
+            <button class="btn record-submit" type="submit" id="return">Record return</button>
+        </form>
+        <div id="admin-msgs" class="record-message" aria-live="polite"></div>
+    </section>
+
+    <section class="record-panel" aria-labelledby="borrowed-list-heading">
+        <div class="record-panel-heading">
+            <h2 id="borrowed-list-heading">Current loans</h2>
+            <p>Filter by book, student, or either loan date.</p>
+        </div>
+        <div class="record-filter-bar" aria-label="Filter borrowed books">
+            <div class="record-filter">
+                <label for="borrowed-filter-book">Book ID</label>
+                <input class="form-control" id="borrowed-filter-book" type="search" data-record-filter="0" placeholder="Find a book">
+            </div>
+            <div class="record-filter">
+                <label for="borrowed-filter-student">Student ID</label>
+                <input class="form-control" id="borrowed-filter-student" type="search" data-record-filter="3" placeholder="Find a student">
+            </div>
+            <div class="record-filter">
+                <label for="borrowed-filter-date">Borrowed date</label>
+                <input class="form-control" id="borrowed-filter-date" type="date" data-record-filter="1">
+            </div>
+            <div class="record-filter">
+                <label for="borrowed-filter-return">Return date</label>
+                <input class="form-control" id="borrowed-filter-return" type="date" data-record-filter="2">
+            </div>
+            <button class="record-filter-clear" type="button" data-clear-record-filters>Clear filters</button>
+        </div>
+        <div class="record-table-wrap">
+            <table id="encounter" class="table">
+                <thead>
+                    <tr>
+                        <th>Book ID</th>
+                        <th>Borrowed date</th>
+                        <th>Return date</th>
+                        <th>Student ID</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+</section>
+
+<script src="scripts/return.js"></script>
+<script src="scripts/borrowedBook.js"></script>
+<script src="scripts/record-filters.js"></script>

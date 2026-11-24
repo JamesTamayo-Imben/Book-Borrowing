@@ -30,7 +30,7 @@ var bookCardInfo1 = function() {
   <div class="basta-card col-8 p-3 ps-4 d-flex justify-content-center align-items-center" id="borrow-this-${book.bookID}">
     <div class="row">
       <div class="col-4 p-4 d-flex align-items-center">
-        <img src="${book.image}" alt="Cover of ${book.title}">
+        <button class="book-cover-button" type="button"><img src="${book.image}" alt="Cover of ${book.title}"></button>
       </div>
       <div class="col-8 p-2 ps-3 pt-4 borrow-card">
         <h4 class="h-light mb-3">${book.title}</h4>
@@ -131,7 +131,7 @@ var bookCardInfo2 = function() {
       <div class="basta-card col-8 p-3 ps-4 d-flex justify-content-center align-items-center" id="borrow-this-${book.bookID}">
         <div class="row">
           <div class="col-4 p-4 d-flex align-items-center">
-            <img src="${book.image}" alt="Cover of ${book.title}">
+            <button class="book-cover-button" type="button"><img src="${book.image}" alt="Cover of ${book.title}"></button>
           </div>
           <div class="col-8 p-2 ps-3 pt-4 borrow-card">
             <h4 class="h-light mb-3">${book.title}</h4>
@@ -228,7 +228,7 @@ var bookCardInfo3 = function() {
       <div class="basta-card col-8 p-3 ps-4 d-flex justify-content-center align-items-center" id="borrow-this-${book.bookID}">
         <div class="row">
           <div class="col-4 p-4 d-flex align-items-center">
-            <img src="${book.image}" alt="Cover of ${book.title}">
+            <button class="book-cover-button" type="button"><img src="${book.image}" alt="Cover of ${book.title}"></button>
           </div>
           <div class="col-8 p-2 ps-3 pt-4 borrow-card">
             <h4 class="h-light mb-3">${book.title}</h4>
@@ -334,7 +334,7 @@ var bookCardInfo4 = function() {
       <div class="basta-card col-8 p-3 ps-4 d-flex justify-content-center align-items-center" id="borrow-this-${book.bookID}">
         <div class="row">
           <div class="col-4 p-4 d-flex align-items-center">
-            <img src="${book.image}" alt="Cover of ${book.title}">
+            <button class="book-cover-button" type="button"><img src="${book.image}" alt="Cover of ${book.title}"></button>
           </div>
           <div class="col-8 p-2 ps-3 pt-4 borrow-card">
             <h4 class="h-light mb-3">${book.title}</h4>
@@ -433,7 +433,7 @@ var bookCardInfo5 = function() {
       <div class="basta-card col-8 p-3 ps-4 d-flex justify-content-center align-items-center" id="borrow-this-${book.bookID}">
         <div class="row">
           <div class="col-4 p-4 d-flex align-items-center">
-            <img src="${book.image}" alt="Cover of ${book.title}">
+            <button class="book-cover-button" type="button"><img src="${book.image}" alt="Cover of ${book.title}"></button>
           </div>
           <div class="col-8 p-2 ps-3 pt-4 borrow-card">
             <h4 class="h-light mb-3">${book.title}</h4>
