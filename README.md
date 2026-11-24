@@ -79,6 +79,7 @@ The sample book covers refer to the images already in `book-image/`. Student nam
 | --- | --- |
 | `logIn.html`, `dashboard*.html` | Sign-in and dashboard pages |
 | `*.php` | Authentication, registration, book, borrowing, return, and data endpoints |
+| `includes/api.php` | Shared handlers used by the category-specific book, stock, student, and borrowing endpoints |
 | `dbconn.php` | MySQL connection settings |
 | `schema.sql` | Database and table definitions |
 | `sample-data.sql` | Repeat-safe demo records |
