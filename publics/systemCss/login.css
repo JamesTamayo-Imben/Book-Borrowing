@@ -1,0 +1,152 @@
+body {
+    background: url('l2.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #e4e4e4;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.backgroundImage {
+    position: absolute;
+    background: linear-gradient(to top, rgb(5, 5, 5), transparent);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    filter: blur(10px);
+    z-index: -1;
+}
+
+.logInPanel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.leftSide, .rightSide {
+    padding: 20px;
+    color: wheat;
+}
+
+#loginavatar1 {
+    width: 30%;
+    margin: 0 auto;
+}
+
+.description h2 {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.reader {
+    color: #3b7a24;
+    font-weight: bold;
+}
+
+.description p {
+    font-size: 15px;
+    text-align: center;
+}
+
+.contactIcons a i {
+    color: wheat;
+    font-size: 2rem;
+    margin-right: 10px;
+    transition: 0.2s;
+}
+
+.contactIcons a i:hover {
+    color: brown;
+}
+
+#login {
+    background-color: #3c2d2ddf;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 10px black;
+}
+
+.panel-heading {
+    color: #3b7a24;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+}
+
+#loginavatar {
+    width: 300px;
+    height: 150px;
+    margin: 0 auto;
+    object-fit: cover;
+}
+
+.btn {
+    background-color: #3b7a24;
+    color: #e4e4e4;
+    border: none;
+    border-radius: 4px;
+    height: 40px;
+    transition: background-color 0.3s ease;
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    margin: 15px auto;
+}
+
+.btn:hover {
+    background-color: #5dc88a;
+}
+
+.panel-body p {
+    font-size: 14px;
+    text-align: center;
+}
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.input-group {
+    margin-top: 15px;
+}
+
+.input-group-addon {
+    background-color: rgba(36, 12, 12, 0.726);
+    color: rgba(98, 87, 87, 0.906);
+    border: 1px solid #3b7a24;
+    border-radius: 4px 0 0 4px;
+}
+
+.input-group input,
+.input-group select {
+    border: 1px solid #3b7a24;
+    border-radius: 0 4px 4px 0;
+    height: 40px;
+    color: #ffffff;
+    background-color: rgba(36, 12, 12, 0.726);
+    outline: none;
+    padding: 0 10px;
+}
+
+.input-group input::placeholder {
+    color: #aaa;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    border-color: #455044;
+    background-color: rgba(60, 45, 45, 0.9);
+    color: #e4e4e4;
+}

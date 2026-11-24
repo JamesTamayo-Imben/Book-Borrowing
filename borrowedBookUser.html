@@ -1,0 +1,296 @@
+
+<style>
+    :root {
+        --primary-color: #02BD52;
+        --forhighlight: #1BF640;
+        --fortext: #FCFCFC;
+        --second-color: #161618;
+    }
+    /* .h-light {
+     color: var(--forhighlight); 
+     }
+    .prime-color {
+     background-color: var(--primary-color); 
+     }
+    .second-color {
+     background-color: var(--second-color); 
+     }
+    .for-text {
+     color: var(--fortext); 
+     } */
+    .borrow{
+        height: auto;
+    }
+    .borrow-content{
+        border-radius: 20px;
+    } 
+    #borrow-box-all{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
+    .borrow-box-holder{
+        max-width: 850px;
+        width: 85%;
+    }
+    .borrow-box{
+        background-color: #303035;
+        border-radius: 20px;
+        width: 100%;
+        
+    }
+    .nav-tabs{
+        border-color: var(--primary-color) !important;
+    }
+    /* .nav-tabs .nav-link:hover {
+        background-color: var(--primary-color) !important;
+        color: var(--fortext) !important;
+        border-color: var(--primary-color) !important;
+    } */
+    .nav-link.active, .nav-tabs .nav-link:hover{
+        background-color: var(--primary-color) !important;
+        color: var(--fortext) !important;
+        border-color: var(--primary-color) !important;
+    }
+    .nav-tabs .nav-link:focus{
+        background-color: #06a54b !important;
+    }
+
+    
+    .pad-ko {
+    padding: 1.7rem 1.6rem 1.7rem 1.6rem !important;
+    }
+    .h5{
+        margin-bottom: 0px;
+    }
+    .borrow-remove{
+        padding-left: 1rem;
+    }
+    .borrow-remove i{
+        color: #fc0b0b;
+        font-size: 1.55rem;
+    }
+    hr{
+        margin: .8rem 0;
+    }
+    .book-img img{
+        max-width: 200px;
+        width: 90%;
+        min-width: 70px;
+        border-radius: 7px;
+    }
+    @media (max-width: 1024px) {
+        .borrow-box-holder{
+        max-width: none;
+        width: 100%;
+    }
+        .book-img img{
+            margin-top: 35px;
+            margin-bottom: 40px;
+            max-width: none;
+        width: 100%;
+        }
+    }
+    @media (max-width: 768px) {
+        .borrow-box-holder{
+        max-width: none;
+        width: 100%;
+    }
+        .book-img{
+            display: flex;
+            justify-content: center;
+        }
+        .book-img img{
+            margin-top: 30px;
+            margin-bottom: 40px;
+            max-width: none;
+        width: 100%;
+        }
+    }
+
+    .text-multiline-ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;  /* Change to the number of lines you want to display */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.book-info .btn{
+    background-color: var(--primary-color) !important;
+    border: 1px solid var(--primary-color) !important;
+    font-weight: 500;
+}
+.book-info .btn:hover{
+    background-color: transparent !important;
+    color: var(--primary-color) !important;
+}
+
+.book-info-due .btn{
+    background-color: #d0342c !important;
+    border: 1px solid #d0342c !important;
+    font-weight: 500;
+}
+.book-info-due .btn:hover{
+    background-color: transparent !important;
+    color: #d0342c !important;
+}
+
+.modal-footer .confirm-update{
+    background-color: transparent !important;
+    color: var(--primary-color) !important;
+    border: 1px solid var(--primary-color) !important;
+    font-weight: 500;
+}
+.modal-footer .confirm-update:hover{
+    background-color: var(--primary-color) !important;
+    color: var(--fortext) !important;
+}
+
+.due-footer .confirm-update{
+    background-color: transparent !important;
+    color: #d0342c !important;
+    border: 1px solid #d0342c !important;
+    font-weight: 500;
+}
+.due-footer .confirm-update:hover{
+    background-color: #d0342c !important;
+    color: var(--fortext) !important;
+}
+
+
+
+</style>
+ <body class="d-flex justify-content-center align-items-center">
+ 
+<div class="p-3">
+    <div class="borrow second-color p-5 rounded">
+        <div class="borrow-upper d-flex justify-content-between align-items-end">
+            <h3 class="mb-0">Borrowed Book/s</h3>
+            <span class="ml-auto" style="color: #e7dfe7; cursor: pointer;"></span>
+        </div>
+        <ul class="nav nav-tabs mt-3 nav-tabs-due">
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="javascript:;" id="borrow-all">All</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="javascript:;" id="borrow-is">I.S.</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="javascript:;" id="borrow-psy">PSYCH</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="javascript:;" id="borrow-ce">C.E.</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="javascript:;" id="borrow-ns">N.S.</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="javascript:;" id="borrow-mw">M.W.</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link nav-link-due" href="javascript:;" id="borrow-over">Overdue</a>
+            </li>
+        </ul>
+    
+<!-- dito lalabbas ung user borrows -->
+    <div class="borrow-types" id="borrow-types">
+        <div id="borrow-box-all" class="pt-2 row">
+            
+          
+        </div>
+
+        <div id="borrow-box-all-over" class="row">
+            
+          
+        </div>
+
+        
+    </div>
+   
+    
+    
+      
+      
+
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="scripts/borrowAll.js"></script>
+<script src="scripts/borrowUserNavs.js"></script>
+<script>
+    $(document).ready(function() {
+        App.init();
+                Index.init();
+        
+    });
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        returnUpdate1.init();
+        returnUpdate1B.init();
+  });
+</script>
+<!-- <script type="text/javascript">
+    $(document).ready(function() {
+        returnUpdate2.init();
+  });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        returnUpdate3.init();
+  });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        returnUpdate4.init();
+  });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        returnUpdate5.init();
+  });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        returnUpdate6.init();
+  });
+</script> -->
+
+
+<script>
+    const tabs = document.querySelectorAll('.nav-link');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function () {
+        
+        tabs.forEach(t => t.classList.remove('active'));
+        
+        this.classList.add('active');
+      });
+    });
+  </script>
+
+
+<script>
+    function getCurrentDate() {
+      const now = new Date();
+      const philippineOffset = 8 * 60; 
+      const philippineTime = new Date(now.getTime() + (now.getTimezoneOffset() + philippineOffset) * 60 * 1000);
+      return philippineTime.toISOString().split("T")[0];
+    }
+    function getAdd30daysDate() {
+      const now = new Date();
+      const philippineOffset = 8 * 60;
+      const philippineTime = new Date(now.getTime() + (now.getTimezoneOffset() + philippineOffset) * 60 * 1000);
+      philippineTime.setDate(philippineTime.getDate() + 30);
+      return philippineTime.toISOString().split("T")[0];
+    }
+  </script>
+
+</body>

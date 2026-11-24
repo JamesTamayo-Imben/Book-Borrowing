@@ -1,0 +1,23 @@
+#main {
+    transition: all 0.4s ease-in-out;
+    background-color: #cecece;
+    display: inline-flex;
+    flex-direction: column;
+    padding-left: 241px;
+    height: auto;
+  }
+.main-body{
+    width: 100%;
+    min-height: 91svh;
+    height: auto;
+    padding: 10px;
+    padding-left: 0px;
+    background-color: #cecece;
+    border-radius: 7px;
+}
+@media (max-width:768px) {
+    #main {
+      padding-left: 10px;
+    }
+
+}

@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title> -->
+
+    <!-- <meta charset="utf-8" /> -->
+    <title>BOOK BORROWING SYSTEM</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="basta" name="description" />
+    <meta content="JIM" name="author" />
+
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    <!-- <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" /> -->
+    <link href="publics/css/jquery-ui.css" rel="stylesheet" />
+    <!-- <link href="public/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="public/plugins/datatable/css/dataTables.bootstrap.min.css" rel="stylesheet" /> -->
+    <link href="publics/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="publics/css/animate.min.css" rel="stylesheet" />
+    <link href="publics/css/style.min.css" rel="stylesheet" />
+    <link href="publics/css/style-responsive.min.css" rel="stylesheet" />
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!---<link rel="icon" href="favicon.png" sizes="16x16 32x32" type="image/png"> (2 sizes)-->
+
+    <!-- ================== END BASE CSS STYLE ================== -->
+
+    <!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+    <link href="publics/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
+    <!-- ================== END PAGE LEVEL STYLE ================== -->
+
+    <!-- puss&boostrap 5 -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+    <!-- systim css -->
+    <link href="publics/systemCss/dashboard.css" rel="stylesheet" />
+    <link href="publics/systemCss/sidebar.css" rel="stylesheet" />
+    <link href="publics/systemCss/main.css" rel="stylesheet" />
+    <link href="publics/systemCss/statistics.css" rel="stylesheet" />
+
+    <style>
+        :root{
+        --primary-color: #02BD52;
+        --forhighlight: #1BF640;
+        --fortext: #FCFCFC;
+        --second-color: #161618;
+    }
+    /* 
+    #DDDEE3 
+    #0D0D0D
+    #3D3D3F
+    */
+    body {
+  background-color: #000;
+  font-family: 'Arial', sans-serif;
+  height: 100svh;
+  color: var(--fortext) !important;
+  
+}
+ 
+    .h-light{
+        color: var(--forhighlight);
+    }
+    .prime-color{
+        background-color: var(--primary-color);
+    }
+    .second-color{
+        background-color: var(--second-color) !important;
+    }
+    .for-text{
+        color: var(--fortext) !important;
+    }
+    .nav-color{
+        background-color: #3c3d3d;
+    }
+        nav{
+            display: none !important;
+            color: var(--fortext);
+        }
+        @media (max-width: 768px) {
+            nav{
+                /* position: sticky !important;
+                top: 0;
+                z-index: 1020;
+                margin-top: 0px; */
+                display: block !important;
+            }
+        }
+        .system-sidebar{
+            padding-top: 10px;
+        }
+
+        .sidebar-link {
+            color: var(--fortext) !important;
+        }
+
+
+    
+
+
+        .laman{
+        background-color: var(--second-color);
+        min-height: 320px;
+        height: auto;
+        border-radius: 20px;
+        color: var(--fortext);
+     }
+     .laman1{
+        background-color: var(--primary-color);
+        min-height: 200px;
+        height: auto;
+        border-radius: 20px;
+     }
+     .lamanPerson{
+        background-color: var(--second-color);
+        min-height: 200px;
+        height: auto;
+        border-radius: 20px;
+     }
+     .laman1 i{
+        
+        font-size: 4rem;
+     }
+     .lamanPerson i{
+        
+        font-size: 4rem;
+     }
+     .laman2{
+        background-color: var(--second-color);
+        min-height: 300px;
+        height: auto;
+        border-radius: 20px;
+     }
+     .laman2 i{
+        color: var(--primary-color);
+        font-size: 7rem;
+     }
+     .laman-pie{
+        background-color: var(--second-color);
+        min-height: 50px;
+        height: 190px;
+        border-radius: 20px;
+        color: var(--fortext);
+     }
+
+
+
+     .bento-box {
+        background-color: var(--second-color);
+        height: 300px;
+        border-radius: 20px;
+      }
+      .bento-box1 {
+        background-color: var(--second-color);
+        height: 400px;
+        border-radius: 20px;
+      }
+      .bento-box2 {
+        background-color: var(--second-color);
+        height: 300px;
+        border-radius: 20px;
+      }
+      .bento-box-s {
+        background-color: var(--second-color);
+        height: 200px;
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+      }
+      .student-list-button {
+        background-color: var(--second-color);
+        height: 45px;
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+      }
+      .student-list-button1 {
+        background-color: var(--primary-color);
+        height: 45px;
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+      }
+      .to-page a{
+        color: var(--fortext);
+      }
+      .to-page1 a{
+        color: var(--fortext);
+      }
+      .student-reg-button {
+        background-color: var(--primary-color);
+        height: 45px;
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+      }
+      .to-page-holder {
+        position: relative;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        overflow: hidden;
+        padding-top: 3px;
+        padding-right: 3px;
+      }
+      .to-page {
+        height: 37px;
+        width: 37px;
+        border-radius: 50%;
+        /* color: #fff; */
+        font-size: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 4px;
+        /* padding-left: 6px; */
+        border-radius: 50%;
+      }
+      .to-page1 {
+        height: 37px;
+        width: 37px;
+        border-radius: 50%;
+        /* color: #fff; */
+        font-size: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 4px;
+        /* padding-left: 6px; */
+        border-radius: 50%;
+      }
+      /* .to-page:hover .to-page span{
+        box-shadow: 0px 0px 5px 30px rgb(206, 30, 153),
+        0px 0px 5px 40px blue,
+        0px 0px 5px 50px rgb(240, 51, 183);
+      } */
+      .to-page span i{
+        font-size: 1.7rem;
+      }
+      .to-page1 span i{
+        font-size: 1.7rem;
+      }
+      .laman {
+        color: #fff;
+      }
+      .title-content {
+        color: #1af51a;
+      }
+
+      .carousel-img img {
+        height: 250px;
+      }
+      .carousel-content {
+        color: #fff;
+      }
+
+     .colloage-frame{
+    margin-top: 60px;
+    background-color: var(--second-color);
+    padding-top: 30px;
+}
+.collage{
+    columns: 190px;
+}
+
+.collage img{
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    box-shadow: 8px 12px 16px -7px rgba(46,46,46,0.68);
+}
+.rnd-20px{
+    border-radius: 20px;
+}
+.navbar-toggler{
+    padding: 5px 7px 3px 7px;
+    border: 1px solid var(--second-color);
+}
+.navbar-toggler:hover{
+    border: 1px solid var(--fortext);
+    
+}
+.navbar-toggler i{
+    color: var(--fortext);
+    font-size: 1.8rem;
+}
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+    </style>
+
+    
+</head>
+
+<body>
+    <!-- dashingboard -->
+    <div class="dashboard">
+        <!-- navbora -->
+        <nav class="navbar navbar-expand-md second-color sticky-top navbar-dark">
+            <div class="container-fluid d-flex justify-content-end">
+                <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+                <!-- <form class="d-flex" role="search" style="min-width: 50px; max-width: 340px; width: 80%;margin-right: 8px;">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form> -->
+                <button class="btn navbar-toggler d-flex align-items-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                    <!-- <span class="navbar-toggler-icon"></span> -->
+                    <i class="bi bi-text-right"></i>
+                </button>
+
+            </div>
+        </nav>
+
+        <!-- end navbora -->
+
+        <!-- offcanvashuh -->
+        <div class="offcanvas offcanvas-start second-color" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+
+                <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="sidebar-logo for-text">
+                    bookBorrowers
+                </div>
+    
+                <!-- user Profile -->
+                <div class="userProfile d-flex justify-content-center align-items-center flex-column">
+                    <div class="userPic">
+                        <img src="AstaChibi.jpg" alt="user">
+                    </div>
+                    <b class="m-2">JimjimGwapo</b>
+                </div>
+                <!-- options  -->
+                <ul class="sidebar-nav p-0 mt-4 text-dark">
+                    <li class="sidebar-item">
+                        <a href="javascript:;" id="offdashboard" class="sidebar-link">
+                            <i class="bi bi-speedometer2"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+    
+                    <!-- <li class="sidebar-item">
+                    <a href="javascript:;" id="userList" class="sidebar-link">
+                      <i class="bi bi-people"></i>
+                      <span>Users</span>
+                    </a>
+                </li> -->
+    
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth" aria-expanded="true" aria-controls="auth">
+                            <i class="bi bi-people"></i>
+                            <span>Student</span>
+                        </a>
+    
+                        <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="javascript:;" id="offuserList" class="sidebar-link main-color ps-5">List</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="javascript:;" id="offuserRegistration" class="sidebar-link main-color ps-5">Registration</a>
+                            </li>
+                        </ul>
+                    </li>
+    
+    
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth1" aria-expanded="true" aria-controls="auth1">
+                            <i class="bi bi-book"></i>
+                            <span>Books</span>
+                        </a>
+    
+                        <ul id="auth1" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="javascript:;" id="offbookList" class="sidebar-link main-color ps-5">List</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="javascript:;" id="offborrowedBook" class="sidebar-link main-color ps-5">Borrowed</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="javascript:;" id="offoverdueBook" class="sidebar-link main-color ps-5">Overdue</a>
+                            </li>
+                        </ul>
+                    </li>
+    
+                    <li class="sidebar-item">
+                        <a href="javascript:;" id="offlogs" class="sidebar-link">
+                            <i class="bi bi-clock-history"></i>
+                            <span>Logs</span>
+                        </a>
+                    </li>
+    
+                </ul>
+                <!-- Sidebar Navigation Ends  -->
+                <div class="sidebar-footer">
+                    <a href="javascript:;" id="offlogout" class="sidebar-link">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- offcanvashuh end -->
+
+        <!-- medjsidebar -->
+        <div class="system-sidebar second-color for-text" id="system-sidebar">
+            <div class="sidebar-logo for-text">
+                bookBorrowers
+            </div>
+
+            <!-- user Profile -->
+            <div class="userProfile d-flex justify-content-center align-items-center flex-column">
+                <div class="userPic">
+                    <img src="AstaChibi.jpg" alt="user">
+                </div>
+                <b class="m-2">JimjimGwapo</b>
+            </div>
+            <!-- options  -->
+            <ul class="sidebar-nav p-0 mt-4 text-dark">
+                <li class="sidebar-item">
+                    <a href="javascript:;" id="dashboard" class="sidebar-link nav-link">
+                        <div class="hover-link">
+                            <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- <li class="sidebar-item">
+                <a href="javascript:;" id="userList" class="sidebar-link">
+                  <i class="bi bi-people"></i>
+                  <span>Users</span>
+                </a>
+            </li> -->
+
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth" aria-expanded="true" aria-controls="auth">
+                        <i class="bi bi-people"></i>
+                        <span>Student</span>
+                    </a>
+
+                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="javascript:;" id="userList" class="sidebar-link main-color ps-5">List</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="javascript:;" id="userRegistration" class="sidebar-link main-color ps-5">Registration</a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth1" aria-expanded="true" aria-controls="auth1">
+                        <i class="bi bi-book"></i>
+                        <span>Books</span>
+                    </a>
+
+                    <ul id="auth1" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="javascript:;" id="bookList" class="sidebar-link main-color ps-5">List</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="javascript:;" id="borrowedBook" class="sidebar-link main-color ps-5">Borrowed</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="javascript:;" id="overdueBook" class="sidebar-link main-color ps-5">Overdue</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item">
+                    <a href="javascript:;" id="logs" class="sidebar-link">
+                        <i class="bi bi-clock-history"></i>
+                        <span>Logs</span>
+                    </a>
+                </li>
+
+            </ul>
+            <!-- Sidebar Navigation Ends  -->
+            <div class="sidebar-footer">
+                <a href="javascript:;" id="logout" class="sidebar-link">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+        <!-- end medjsidebar -->
+
+        <!-- laman -->
+
+<!-- pag lipat ng email at id galing login papuntang dashboard -->
+        <div id="content" class="content">
+
+            <div id="main-content" class="p-2"> 
+                <div class="container pt-5">
+                    <div class="row h-100">
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-sm-8 p-2">
+                                    <div class="laman p-4 pb-2">
+
+                                           <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-10 d-flex justify-content-center p-2 pe-5 graph-frame">
+                                      
+                                              <table class="graph">
+                                                  <!-- <caption class="text-center">BOOKS BAR GRAPH</caption> -->
+                                                  <tbody>
+                                                    <tr id="availableRow" style="height:85%">
+                                                      <th scope="row">Available</th>
+                                                      <td><span id="availablePercentage">0%</span></td>
+                                                    </tr>
+                                                    <tr id="borrowedRow" style="height:23%">
+                                                      <th scope="row">Borrowed</th>
+                                                      <td><span id="borrowedPercentage">0%</span></td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+                      
+                                            </div>
+                                            <div class="col-lg-1"></div>
+                                          </div>
+                      
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 p-2 pe-1">
+                                    <div class="laman p-4 d-flex align-items-center">
+                                        <!-- <p>
+                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit nemo eum pariatur 
+                                        
+                                        </p>
+                                        <div class="row px-2">
+                                            <button class="prime-color btn">Hello</button>
+                                        </div> -->
+                                        <img src="bento-logo.jpg" alt="" style="width: 100%; border-radius: 50%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6 p-2 pe-1">
+                                    <div class="laman-pie p-4">
+                                        <h3 style="text-align: center;" class="mt-2">All Books Borrow</h3>
+                                        <div style="text-align: center;" class="h-light h3" id="AllBorrow">53</div>
+            
+                                        <!-- <canvas id="customColorBarChart"></canvas> -->
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 p-2 ps-3">
+                                    <div class="bento-box-s">
+                                        <div class="lamanPerson p-4 pt-1">
+                                            <div class="d-flex justify-content-center">
+                                                <i class="bi bi-people"></i>
+                                            </div>
+                                            <h5 style="text-align: center;">View Users</h5>
+                                            
+                                        </div>
+                                      <div class="student-list-button1">
+                                        <div class="to-page-holder">
+                                          <div class="to-page1">
+                                            <a href="javascript:;" id="shortcut-user">
+                                              <span>
+                                                  <i class="bi bi-arrow-right-circle-fill"></i>
+                                              </span>
+                                            </a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-4 p-2 ps-3">
+                                    <div class="bento-box-s">
+                                        <div class="laman1 p-4 pt-1">
+                                            <div class="d-flex justify-content-center">
+                                                <i class="bi bi-book-half"></i>
+                                            </div>
+                                            <h5 style="text-align: center;">View our Books</h5>
+                                            
+                                        </div>
+                                      <div class="student-list-button">
+                                        <div class="to-page-holder">
+                                          <div class="to-page">
+                                            <a href="javascript:;" id="shortcut-book">
+                                              <span>
+                                                  <i class="bi bi-arrow-right-circle-fill"></i>
+                                              </span>
+                                            </a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                <div class="col-lg-12 col-md-8 p-2 ps-3">
+                                    <div class="laman2 p-4 pt-1">
+                                        <div class="d-flex justify-content-center">
+                                            <!-- <i class="bi bi-geo-alt-fill"></i> -->
+            
+                                            <canvas id="pieChart"></canvas>
+                                        </div>
+                                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                         -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                   
+
+                    <div class="row p-2">
+                        <div class="colloage-frame d-flex justify-content-center flex-column px-3 rnd-20px">
+                            <h2 class="text-center">OUR BOOKS</h2>
+                            <div class="w-100 p-3 collage">
+                              <img src="book-image/book1.jpg" alt="books">
+                              <img src="book-image/book2.jpg" alt="books">
+                              <img src="book-image/book3.jpg" alt="books">
+                              <img src="book-image/book4.jpg" alt="books">
+                              <img src="book-image/book5.jpg" alt="books">
+                              <img src="book-image/book6.jpg" alt="books">
+                              <img src="book-image/book7.jpg" alt="books">
+                              <img src="book-image/book8.jpg" alt="books">
+                              <img src="book-image/book9.jpg" alt="books">
+                              <img src="book-image/book10.jpg" alt="books">
+                              <img src="book-image/book11.jpg" alt="books">
+                              <img src="book-image/book12.jpg" alt="books">
+                              <img src="book-image/book13.jpg" alt="books">
+                              <img src="book-image/book14.jpg" alt="books">
+                              <img src="book-image/book15.jpg" alt="books">
+                              <img src="book-image/book16.jpg" alt="books">
+                              <img src="book-image/book17.jpg" alt="books">
+                              <img src="book-image/book18.jpg" alt="books">
+                              <img src="book-image/book19.jpg" alt="books">
+                              <img src="book-image/book20.jpg" alt="books">
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </div>
+
+</div>
+    </div>
+            <!-- end dashingboard-->
+            <script src="publics/plugins/jquery/jquery-1.9.1.min.js"></script>
+
+
+            <script src="publics/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+            <script src="publics/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+            <script src="publics/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+            <!-- ================== END BASE JS ================== -->
+
+            <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+            <script type="text/javascript" src="publics/plugins/form-validator/jquery.form-validator.min.js"></script>
+            <!-- <script src="publics/plugins/gritter/js/jquery.gritter.js"></script>
+            <script src="publics/plugins/qrcode/jquery.qrcode.js"></script> -->
+    <script src="publics/plugins/qrcode/qrcode.js"></script>
+            <script src="publics/plugins/jquery-blockui/js/jquery.blockUI.js"></script>
+            <script src="publics/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+            <script type="text/javascript" language="javascript" src="publics/plugins/datatable/js/jquery.dataTables.js">
+            </script>
+            <script type="text/javascript" language="javascript" src="publics/plugins/datatable/js/dataTables.bootstrap.js">
+            </script>
+
+            <script src="publics/js/apps.min.js"></script>
+            <script src="scripts/dashboard.js"></script>
+            <!-- <script src="scripts/offcanvas.js"></script> -->
+
+            <!-- ================== END PAGE LEVEL JS ================== -->
+
+            <script>
+                $(document).ready(function() {
+                    App.init();
+                            Index.init();
+                    
+                });
+            </script>
+
+             <!-- puss&bootstarp js -->
+             <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+             <script src="bootstrap/bootstrap.min.js"></script>
+
+<script src="scripts/totalStock.js"></script>
+<!-- <script src="scripts/gISStock.js"></script>
+<script src="scripts/gPSYStock.js"></script>
+<script src="scripts/gCEStock.js"></script>
+<script src="scripts/gNSStock.js"></script>
+<script src="scripts/gMWStock.js"></script>
+
+<script src="scripts/isStudent.js"></script>
+<script src="scripts/ilaStudent.js"></script>
+<script src="scripts/ioeStudent.js"></script>
+<script src="scripts/ionStudent.js"></script>
+<script src="scripts/iomStudent.js"></script> -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- <script src="scripts/graph.js"> </script> -->
+<script>
+    var initrylng = (function() {
+    // Predefined category-to-color mapping
+    const categoryColors = {
+        "CE Books": "rgb(0, 140, 255)", 
+        "IS Books": "rgb(6, 214, 16)", 
+        "MW Books": "rgb(247, 35, 247)",          
+        "NS Books": "rgb(250, 175, 237)",            
+        "PSYCH Books": "rgb(236, 236, 236)"
+    };
+
+    var trylng = function() {
+        fetch('piegraph.php')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const labels = data.map(item => item.category); // Extract categories
+                const values = data.map(item => item.borrowed); // Extract borrowed counts
+
+                // Get colors for each category
+                const backgroundColors = labels.map(label => categoryColors[label] || 'rgb(200, 200, 200)');
+
+                // Data for the pie chart
+                const chartData = {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: backgroundColors,
+                        hoverBackgroundColor: backgroundColors.map(color => color.replace('rgb', 'rgba').replace(')', ', 0.8)')),
+                        borderColor: '#bbb',
+                        borderWidth: 0.9,
+                        hoverOffset: 20
+                    }]
+                };
+
+                // Chart configuration
+                const config = {
+                    type: 'pie',
+                    data: chartData,
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    color: '#333',
+                                    font: {
+                                        size: 14
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(tooltipItem) {
+                                        const value = tooltipItem.raw;
+                                        const total = values.reduce((acc, val) => acc + val, 0);
+                                        const percentage = ((value / total) * 100).toFixed(2);
+                                        return `${tooltipItem.label}: ${value} books (${percentage}%)`;
+                                    }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Books Borrowed by Category',
+                                font: {
+                                    size: 18,
+                                    weight: 'bold'
+                                },
+                                color: '#555'
+                            }
+                        },
+                        animation: {
+                            animateScale: true,
+                            animateRotate: true
+                        }
+                    }
+                };
+
+                // Render the chart
+                const ctx = document.getElementById('pieChart').getContext('2d');
+                if (window.chartInstance) {
+                    window.chartInstance.destroy();  // Destroy previous chart instance
+                }
+                window.chartInstance = new Chart(ctx, config); // Create a new chart instance
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    };
+
+    return {
+        init: function() {
+            trylng(); // Load books on initialization
+            // Reload data when navigation items are clicked
+            $(".nav-link").on("click", function() {
+                trylng(); // Reload data
+            });
+        }
+    };
+})();
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        initrylng.init();
+  });
+</script>
+
+
+
+<script>
+    // Check if the page has been loaded from the browser's history
+    window.addEventListener('pageshow', function (event) {
+      if (event.persisted) {
+        
+        window.location.reload();
+      }
+    });
+  </script>
+
+
+<script src="scripts/AllBorrow.js"></script>
+
+</body>
+
+</html>

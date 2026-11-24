@@ -1,0 +1,230 @@
+<style>
+    :root{
+        --main-color: #70ee9c;
+    }
+    .panel-body {
+        border-radius: 8px;
+        padding: 50px;
+    }
+    .panel-body1 {
+        /* margin-bottom: 5px; */
+        /* background-color:whitesmoke;
+        background-color: #222; */
+        border-radius: 8px;
+        padding: 3px;
+    }
+    .borrow-laman{
+        min-height: 240px;
+        height: auto;
+        
+  }
+  .r-8{
+    border-radius: 7px;
+  }
+
+    .col-left {
+        margin-bottom: 5px;
+        background-color: #222;
+        border-radius: 8px;
+        padding: 50px;
+        width: 28%;  
+        margin-left: 10px; 
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        color: #ffffff;
+        background-color: #000000;
+    }
+/* Header Row 70ee9c 5dc88a 4bb77e*/
+    .table thead th {
+        background-color: var(--main-color);
+        color: #ffffff;
+        font-weight: bold;
+        text-align: left;
+        padding: 10px;
+        border: 1px solid var(--main-color);
+    }
+
+    .table tbody td {
+        padding: 8px;
+        border: 1px solid var(--main-color);
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: var(--main-color);
+    }
+
+    .table tbody tr:nth-child(odd) {
+        background-color: #000000;
+    }
+
+    .table tbody tr:hover {
+        background-color: var(--main-color);
+        color: #ffffff;
+    }
+
+    .form-control {
+        height: 40px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 5px 10px;
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #5dc88a;
+        box-shadow: 0 0 5px rgba(93, 200, 138, 0.5);
+    }
+
+    .form-box p {
+        color: var(--main-color);
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .form-box .form-control {
+        margin-bottom: 15px;
+    }
+
+    .form-box {
+        flex-grow: 1;
+        max-width: 600px;
+        padding: 30px;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        /* justify-content: center; */
+    }
+
+    p {
+        font-size: 16px;
+        color: #555;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .btn-btn {
+        background-color: var(--main-color);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        height: 40px;
+        width: 100%;
+        max-width: 300px;
+        font-size: 14px;
+        text-align: center;
+        margin: 23px auto 0;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-btn:hover {
+        background-color: var(--main-color);
+    }
+
+    label {
+        color: #fff;
+    }
+
+    /* .info-box {
+        display: flex;
+        width: 40%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    } */
+
+    .info-box h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: var(--main-color);
+    }
+    
+  .table-color{
+    color: var(--main-color);
+  }
+</style>
+
+<body>
+    <div class="return-button panel-body1 pb-2 pt-0">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="borrow-laman p-md-4 second-color for-text r-8">
+                    <div class="box info-box">
+                        <p class="table-color">WHY YOU LATE?</p>
+                        <small>CONTACT US: kahitano@gmail.com</small>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9 ps-0">
+                <div class="borrow-laman p-4 second-color for-text r-8">
+                    
+            <p>Do you want to return the book?</p>
+            <form id="RfrmLogins">
+                <div class="row">
+                    <div class="col-md-5">
+                        <label style="color: white;" for="">Enter StudentID</label>
+                        <input type="text" name="Rsid" id="Rsid" placeholder="000-0000-0000" required="required" class="form-control"> 
+                    </div>
+    
+                    <div class="col-md-5">
+                        <label style="color: white;" for="">Enter BookID</label>
+                        <input type="text" name="Rbid" id="Rbid" placeholder="-KLDBK000-" required="required" class="form-control"> 
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-btn" type="submit" id="return">Return</button>
+                    </div>
+                  </div>
+            </form>
+            <div id="Radmin-msgs"></div>
+                </div>
+                
+            </div>
+
+            
+        </div>
+    </div>   
+
+        <div class="panel-body second-color for-text">
+            <div class="row">
+                <p class="table-color">OVERDUE BOOKS LIST</p>
+                <div class="col-md-12" style="overflow-x:auto">
+                    <table id="encounter" class="table">
+                        <thead>
+                            <tr>
+                                <th>BookID</th>
+                                <th>Borrowed Date</th>
+                                <th>Date/Time Overdue</th>
+                                <th>Student ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+    <script src="scripts/returnoverdue.js"></script>
+    <script src="scripts/overdueBook.js"></script>
+    
+   
+   <script type="text/javascript">
+    $(document).ready(function() {
+      Encounter.init();
+    });
+  </script>
+    
+</body>

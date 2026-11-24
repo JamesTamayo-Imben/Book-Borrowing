@@ -1,0 +1,113 @@
+<style>
+
+</style>
+
+<body>
+  <div class="statistics bg-light pt-5">
+    <div class="row mb-5">
+      <div class="col-lg-2 col-1"></div>
+      <div class="col-lg-8 col-10 d-flex justify-content-center p-3 graph-frame" id="totalStock">
+
+        <!-- <table class="graph">
+          <caption class="text-center">BOOKS BAR GRAPH</caption>
+          
+          <tbody>
+            <tr style="height:85%">
+              <th scope="row">Available</th>
+              <td><span>85%</span></td>
+            </tr>
+            <tr style="height:23%">
+              <th scope="row">Borrowed</th>
+              <td><span>23%</span></td>
+            </tr>
+            
+          </tbody>
+        </table> -->
+
+
+        <table class="graph">
+          <caption class="text-center">BOOKS BAR GRAPH</caption>
+          <tbody>
+            <tr id="availableRow" style="height:85%">
+              <th scope="row">Available</th>
+              <td><span id="availablePercentage">0%</span></td>
+            </tr>
+            <tr id="borrowedRow" style="height:23%">
+              <th scope="row">Borrowed</th>
+              <td><span id="borrowedPercentage">0%</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        
+      </div>
+      <div class="col-lg-2 col-1"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-2 col-1"></div>
+      <div class="col-lg-8 col-10 d-flex justify-content-center p-3 graph-frame">
+
+        <table class="graph">
+            <caption class="text-center">CATEGORY BAR GRAPH</caption>
+            <tbody>
+              <tr id="ISRow" style="height:85%;">
+                <th scope="row" style="color: #0ff007;">No. IMACS Books</th>
+                <td style="background-color: #0ff007;"><span id="ISPercentage">0%</span></td>
+              </tr>
+              <tr id="PSYRow" style="height:23%;">
+                <th scope="row" style="color: #ff1e1e;">No. ILA Books</th>
+                <td style="background-color: #ff1e1e;"><span id="PSYPercentage">0%</span></td>
+              </tr>
+              <tr id="CERow" style="height:85%">
+                  <th scope="row" style="color: #008cff;">No. IOE Books</th>
+                  <td style="background-color: #008cff;"><span id="CEPercentage">0%</span></td>
+                </tr>
+                <tr id="NSRow" style="height:23%">
+                  <th scope="row" style="color: #ffabf1;">No. ION Books</th>
+                  <td style="background-color: #ffabf1;"><span id="NSPercentage">0%</span></td>
+                </tr><tr id="MWRow" style="height:85%">
+                  <th scope="row" style="color: #fd1cfd;">No. IOM Books</th>
+                  <td style="background-color: #fd1cfd;"><span id="MWPercentage">0%</span></td>
+                </tr>
+            </tbody>
+          </table>
+
+      </div>
+      <div class="col-lg-2 col-1"></div>
+    </div>
+
+    <div class="colloage-frame d-flex justify-content-center flex-column px-3">
+      <h2 class="text-center">OUR BOOKS</h2>
+      <div class="w-100 p-3 collage">
+        <img src="book-image/book1.jpg" alt="books">
+        <img src="book-image/book2.jpg" alt="books">
+        <img src="book-image/book3.jpg" alt="books">
+        <img src="book-image/book4.jpg" alt="books">
+        <img src="book-image/book5.jpg" alt="books">
+        <img src="book-image/book6.jpg" alt="books">
+        <img src="book-image/book7.jpg" alt="books">
+        <img src="book-image/book8.jpg" alt="books">
+        <img src="book-image/book9.jpg" alt="books">
+        <img src="book-image/book10.jpg" alt="books">
+        <img src="book-image/book11.jpg" alt="books">
+        <img src="book-image/book12.jpg" alt="books">
+        <img src="book-image/book13.jpg" alt="books">
+        <img src="book-image/book14.jpg" alt="books">
+        <img src="book-image/book15.jpg" alt="books">
+        <img src="book-image/book16.jpg" alt="books">
+        <img src="book-image/book17.jpg" alt="books">
+        <img src="book-image/book18.jpg" alt="books">
+        <img src="book-image/book19.jpg" alt="books">
+        <img src="book-image/book20.jpg" alt="books">
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/totalStock.js"></script>
+<script src="scripts/gISStock.js"></script>
+<script src="scripts/gPSYStock.js"></script>
+<script src="scripts/gCEStock.js"></script>
+<script src="scripts/gNSStock.js"></script>
+<script src="scripts/gMWStock.js"></script>
+</body>

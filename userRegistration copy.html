@@ -1,0 +1,316 @@
+<style>
+  body {
+      /* color: #232323; */
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+  }
+  
+  .card {
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      background-color: #232323;
+  }
+  
+  .card-body {
+      padding: 15px;
+  }
+  
+  .panel-primarys .panel-heading {
+      /* background-color: #5dc88a; */
+      color: #70ee9c;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      /* padding: 10px; */
+      border-radius: 4px;
+  }
+  
+  .info {
+      font-size: 16px;
+      color: #555;
+      font-weight: bold;
+      margin-bottom: 10px;
+  }
+  
+  hr {
+      border: 1px solid #ddd;
+      margin: 15px 0;
+  }
+  
+  .form-control {
+      height: 40px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 5px 10px;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+  }
+  
+  .form-control:focus {
+      outline: none;
+      border-color: #5dc88a;
+      box-shadow: 0 0 5px rgba(93, 200, 138, 0.5);
+  }
+  
+  label {
+      font-size: 14px;
+      font-weight: bold;
+      color: #fff;
+      display: block;
+      margin-bottom: 5px;
+  }
+  
+  select {
+      appearance: none;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 5px 10px;
+      font-size: 14px;
+      width: 100%;
+      height: 40px;
+  }
+
+  .text-center {
+    text-align: center;
+}
+  
+  .btns {
+      background-color: #5dc88a;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      height: 40px;
+      width: 100%;
+      max-width: 300px;
+      font-size: 14px;
+      text-align: center;
+      margin: 20px auto 0;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  }
+  
+  .btns:hover {
+      background-color: #4bb77e;
+  }
+  
+  @media (max-width: 768px) {
+      .form-control {
+          font-size: 12px;
+      }
+  
+      .btns {
+          font-size: 12px;
+      }
+  }
+  </style>
+  
+
+<body>
+
+  <div class="card r-5">
+    <div class="card-body">
+        <!-- dto  -->
+            <div class="col-md-12">
+              <div class="panel-primarys" id="logins">
+                <div class="panel-heading mb-4" style="text-align:center">REGISTER</div>
+                <form id="frmLogins" method="POST">
+                  <div class="p-4">
+                    <div id="admin-msgs"></div>
+                    <p class="info" style="color: gray;">PERSONAL INFORMATION</p>
+                    <hr>
+      
+                    <div class="row">
+                      <div class="col-md-4">
+                        <!-- <div class="input-group"> <span class="input-group-addon"><i class="fa fa-user"></i></span> -->
+                          <label for="">Enter Lastname</label>
+                          <input type="text" name="lname" id="lname" placeholder="-@sample Dela Cruz-" required="required" class="form-control" data-validation-error-msg="Lastname is required" data-validation-error-msg-container="#usernamerror"> 
+                        <!-- </div> -->
+                        <div id="usernamerror"> </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <!-- <div class="input-group"> <span class="input-group-addon"><i class="fa fa-user"></i></span> -->
+                          <label for="">Enter Middlename</label>
+                          <input type="text" name="mname" id="mname" placeholder="-@sample Calibuso-" required="required" class="form-control" data-validation-error-msg="Middlename is required" data-validation-error-msg-container="#usernamerror"> 
+                        <!-- </div> -->
+                        <div id="usernamerror"> </div>
+                      </div>
+                    
+      
+                      <div class="col-md-4">
+                        <!-- <div class="input-group"> <span class="input-group-addon"><i class="fa fa-user"></i></span> -->
+                          <label for="">Enter Firstname</label>
+                          <input type="text" name="fname" id="fname" class="form-control" placeholder="-@sample John-" required="required" data-validation-error-msg="Firstname is required" data-validation-error-msg-container="#usernamerror"> 
+                        <!-- </div> -->
+                        <div id="usernamerror"> </div>
+                      </div>
+                    </div>
+      
+      
+                    <div class="row">
+                      <div class="col-md-4">
+                        <!-- <div class="input-group"> <span class="input-group-addon"><i class="fa fa-user"></i></span> -->
+                          <label for="">Birthdate</label>
+                          <input type="date" name="bday" id="bday" placeholder="-Enter Birthdate-" required="required" class="form-control" data-validation-error-msg="Birthdate is required" data-validation-error-msg-container="#usernamerror"> 
+                        <!-- </div> -->
+                        <div id="usernamerror"> </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <!-- <div class="input-group"> <span class="input-group-addon"><i class="fa fa-user"></i></span> -->
+                          <label for="">Age</label>
+                          <input type="text" name="age" id="age" class="form-control" placeholder="-@sample 18-" required="required" data-validation-error-msg="Age is required" data-validation-error-msg-container="#usernamerror"> 
+                        <!-- </div> -->
+                        <div id="usernamerror"> </div>
+                      </div>
+      
+                      <div class="col-md-4">
+                        <!-- <div class="input-group"> <span class="input-group-addon"><i class="fa fa-user"></i></span> -->
+                          <label for="">Gender</label> 
+                          <select name="gender" id="gender"  required="required" class="form-control" data-validation-error-msg="Middlename is required" data-validation-error-msg-container="#usernamerror">
+                            <option value="" disabled selected>-Select Gender-</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                          </select>                
+                          <!-- </div> -->
+                          <div id="usernamerror"> </div>
+                      </div>
+                    </div>
+      
+                
+      
+                    <div class="row">
+                      <div class="col-md-4">
+                        <!-- <div class="input-group"> <span class="input-group-addon"><i class="fa fa-phone"></i></span> -->
+                         <label for="">ContactNumber</label>
+                          <input type="text" name="connum" id="connum" placeholder="+63" required="required" class="form-control" data-validation-error-msg="Contact is required" data-validation-error-msg-container="#usernamerror"> 
+                        <!-- </div> -->
+                        <div id="usernamerror"> </div>
+                      </div>
+      
+                      <div class="col-md-4">
+                        <!-- <div class="input-group"> <span class="input-group-addon"><i class="fa fa-envelope"></i></span> -->
+                          <label for="">Email</label>
+                          <input type="email" name="email" id="email" class="form-control" placeholder="-sample@gmail.com-" required="required" data-validation-error-msg="Email is required" data-validation-error-msg-container="#usernamerror"> 
+                        <!-- </div> -->
+                        <div id="usernamerror"> </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <!-- <div class="input-group"> <span class="input-group-addon"><i class="fa fa-university"></i></span> -->
+                          <label for="">Institution</label>
+                          <select name="insti" id="insti"  required="required" class="form-control" data-validation-error-msg="Choose your Institution" data-validation-error-msg-container="#usernamerror">
+                            <option value="" disabled selected>-Select Institute-</option>
+                            <option value="IMACS">IMACS</option>
+                            <option value="ILA">ILA</option>
+                            <option value="IOE">IOE</option>
+                            <option value="ION">ION</option>
+                            <option value="IOM">IOM</option>
+                          </select>                
+                          <!-- </div> -->
+                          <div id="usernamerror"> </div>
+                      </div>
+                    </div>
+      
+                    <div class="row">
+                      <div class="col-md-6">
+                        <!-- <div class="input-group"> <span class="input-group-addon"><i class="fa fa-id-card"></i></span> -->
+                          <label for="">Student ID</label>
+                          <input type="text" name="student" id="student" class="form-control" placeholder="0000-000-000" required="required" data-validation-error-msg="Student Number is required" data-validation-error-msg-container="#usernamerror"> 
+                        <!-- </div> -->
+                        <div id="usernamerror"> </div>
+                      </div>
+                    </div>
+    
+                    <br>
+                    
+                    <p class="info" style="color: gray;">ADDRESS</p>
+                      <hr>
+      
+                    
+                      <div class="row">
+                          <div class="col-md-6">
+                            <label for="">Province</label>
+                            <!-- <div class="input-group"> <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span> -->
+                              <input type="text" name="province" id="province" placeholder="-Enter Province-" required="required" class="form-control" data-validation-error-msg="Province is required" data-validation-error-msg-container="#usernamerror">
+                             <!-- </div> -->
+                            <div id="usernamerror"> </div>
+                          </div>
+        
+                       
+                          <div class="col-md-6">
+                            <label for="">City</label>
+                            <!-- <div class="input-group"> <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span> -->
+                              <input type="text" name="city" id="city" placeholder="-Enter City-" required="required" class="form-control" data-validation-error-msg="City is required" data-validation-error-msg-container="#usernamerror">
+                             <!-- </div> -->
+                            <div id="usernamerror"> </div>
+                          </div>
+                          </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label for="">Barangay/Street</label>
+                          <!-- <div class="input-group"> <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span> -->
+                            <input type="text" name="brgy" id="brgy" placeholder="-Enter Barangay-" required="required" class="form-control" data-validation-error-msg="Barangay is required" data-validation-error-msg-container="#usernamerror">
+                           <!-- </div> -->
+                          <div id="usernamerror"> </div>
+                        </div>
+        
+                        <div class="col-md-6">
+                          <label for="">Block & Lot</label>
+                          <!-- <div class="input-group"> <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span> -->
+                              <input type="text" name="blk" id="blk" class="form-control" placeholder="-Enter Blk/Lot-" required="required" data-validation-error-msg="Block and Lot is required" data-validation-error-msg-container="#usernamerror"> 
+                            <!-- </div> -->
+                            <div id="usernamerror"> </div>
+                        </div>
+                      </div>
+
+                  
+      
+                 
+      
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                          <input type="hidden" name="action" value="isLogins">
+                          <button type="submit" class="btns" id="btnLogin">Register</button>
+                          <br>
+                           <small class="text-center" style="color: #70ee9c;">All the information given will be protected under RA No. 10173</small>
+                      </div>
+                  </div>
+
+                 
+
+                  
+                  <!-- <div class="register-link">
+                    <p class="account">Already have an account? <a href="login.html">LogIn</a></p>
+                </div> -->
+      
+                  </div>
+                </form>
+            </div>
+      
+            <!-- <div class="row">
+              <div class="col-md-12"> <img src="images/x.png" id="loginavatar1" class="img-responsive"> </div>
+            <p style="text-align: center; font-size: 15px;">Book Borrowing System, Final project @2024</p>
+            </div> -->
+      
+          </div>
+        
+
+    </div>
+</div>
+
+<!-- <script src="./Country+State+District-City-Data.js"></script> -->
+    <script src= "scripts/register.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+          register.init();
+        });
+    </script>
+
+</body>

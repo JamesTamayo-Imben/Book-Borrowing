@@ -1,0 +1,158 @@
+<style>
+    /* General Body Styling */
+*{
+    font-size: 1rem;
+}
+
+/* Card Styling */
+.box {
+    color: rgb(6, 5, 5);
+    border-radius: 8px;
+}
+
+ 
+.img-fluid {
+    max-height: 100%;  
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+
+.icon{
+    font-size: 1.35rem;
+    margin: 5px;
+    margin-left: 0px;
+}
+
+.infoField strong{
+    color: #222222e5;
+}
+
+/* Badge Styling */
+.badge-custom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#d8dad8e8;
+    color: rgb(10, 7, 7);
+    border-radius: 5px;
+    margin: 5px;
+    min-width: 110px;
+    width: auto;
+    height: 35px;
+    text-align: center;
+    padding: auto;
+}
+
+/* Button Styling */
+.bookmark-btn {
+    background-color: #41fc76e8 ;
+    color: rgb(6, 5, 5);
+    border: none;
+    border-radius: 5px;
+    margin: 5px;
+    width: 110px;
+    height: 40px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.bookmark-btn:hover {
+    background-color:#888b8ad8 ;
+}
+
+a {
+    text-decoration: none;
+}
+
+.fav-btn{
+    background-color: rgb(252, 215, 53);
+    width: 180px;
+}
+
+.bg-box{
+    background-color: #f0eeeee7;
+    border-radius: 4px;
+}
+</style>
+<body>
+    <div class="p-2">
+        <div class="bg-box w-100 p-4">
+    <div class="box container bg-light">
+        <!-- <?php foreach($borrowId as $trans) : ?> -->
+        <div class="w-100 p-4">
+            <div class="row">
+                <!-- Image Section -->
+                <div class="col-lg-4 col-md-6">
+                    <img src="" class="img-fluid rounded-start" alt="The Greatest Estate Developer">
+                </div>
+
+                
+                <!-- Text Section -->
+                <div class="col-lg-8 col-md-6 d-flex align-items-center row">
+                    <div class="col-lg-1"></div>
+                    <div class="infoField col-lg-11">
+                        <h2 class="my-4">
+                            <!-- <?php echo $trans["title"]; ?> -->
+                        </h2>
+
+                        <p><i class="icon bi bi-person"></i>Author: <strong>
+                            <!-- <?php echo $trans["author"]; ?> -->
+                        </strong></p>
+                        <p><i class="icon bi bi-calendar2-event"></i>Date Published: <strong>
+                            <!-- <?php echo $trans["publishedDate"]; ?> -->
+                        </strong></p>
+                        <p><i class="icon bi bi-book"></i>
+                        Book Status: 
+                        <strong>
+                        
+                        <!-- <?php $bookStatusID = $trans["bookStatusID"];?>
+                        <?php $getbookStatus = mysqli_query($conn, "SELECT * FROM `bookstatus` WHERE bookStatusID = '$bookStatusID'"); ?>
+                            <?php foreach($getbookStatus as $getStatus) {?>
+                                <?php echo $getStatus["bookStatusName"]; ?>
+                        <?php } ?> -->
+
+                        </strong></p>
+                        <p><i class="icon bi bi-layers"></i>Stocks: <strong>
+                            <!-- <?php echo $trans["totalStock"]; ?> -->
+                        </strong></p>
+
+                        <h5 class="mt-4">Category</h5>
+                        <div class="d-flex flex-row row ms-1">
+                            <div class="badge-custom col-3">
+                            
+                            <!-- Get category name from category table -->
+                            <!-- <?php $catID = $trans["categoryID"]?>
+                            <?php
+                            $getCategory = mysqli_query($conn, "SELECT * FROM `category` WHERE categoryID = '$catID'");
+                            ?>
+                            <?php foreach($getCategory as $get) {?>
+                                <?php echo $get["categoryName"]; ?>
+                            <?php }?> -->
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="col-md-12 my-4">
+                    
+                    <h5>Summary</h5>
+                    <p></p>
+
+                    <!-- Buttons Section -->
+                    <div class="mt-4 w-100 d-flex justify-content-center end-btn row">
+                        <button class="bookmark-btn btn  me-2 col-6">
+                            Borrow</button>
+                        <button class="bookmark-btn btn fav-btn col-6">
+                            Add to Favorites</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+        </div>
+</body>

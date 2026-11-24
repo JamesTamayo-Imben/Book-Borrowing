@@ -1,0 +1,136 @@
+
+<style>
+    :root {
+        --primary-color: #02BD52;
+        --forhighlight: #1BF640;
+        --fortext: #FCFCFC;
+        --second-color: #161618;
+    }
+    .notif{
+        height: auto;
+    }
+    .notif-content{
+        border-radius: 20px;
+    } 
+    .notif-box{
+        background-color: #303035;
+        border-radius: 20px;
+    }
+    .nav-tabs{
+        border-color: var(--primary-color) !important;
+    }
+    /* .nav-tabs .nav-link:hover {
+        background-color: var(--primary-color) !important;
+        color: var(--fortext) !important;
+        border-color: var(--primary-color) !important;
+    } */
+    .nav-link.active, .nav-tabs .nav-link:hover{
+        background-color: var(--primary-color) !important;
+        color: var(--fortext) !important;
+        border-color: var(--primary-color) !important;
+    }
+    .nav-tabs .nav-link:focus{
+        background-color: #06a54b !important;
+    }
+    .pad-ko {
+    padding: 1.4rem 1.6rem 1.4rem 1.6rem !important;
+    }
+    .h5{
+        margin-bottom: 0px;
+    }
+    .notif-remove{
+        padding-left: 1rem;
+    }
+    .notif-remove i{
+        color: #fc0b0b;
+        font-size: 1.55rem;
+    }
+    hr{
+        margin: .8rem 0;
+    }
+</style>
+ <body class="d-flex justify-content-center align-items-center">
+ 
+<div class="p-3">
+    <div class="notif second-color p-5 rounded">
+        <div class="notif-upper d-flex justify-content-between align-items-end">
+            <h3 class="mb-0">Notifications</h3>
+            <span class="ml-auto" style="color: #e7dfe7; cursor: pointer;">Mark all as read</span>
+        </div>
+        <ul class="nav nav-tabs mt-3 ">
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="javascript:;" id="notif-all">All</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="javascript:;" id="notif-warning">Warnings</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="javascript:;" id="notif-return">Returns</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="javascript:;" id="notif-borrow">Borrows</a>
+            </li>
+        </ul>
+    
+<!-- dito lalabbas ung notif -->
+    <div class="notif-types" id="notif-types">
+        <div id="notif-box-all" class="pt-2">
+        
+        </div>
+    </div>
+   
+    
+    
+      
+      
+
+
+</div>
+</div>
+
+<script>
+    const tabs = document.querySelectorAll('.nav-link');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function () {
+        
+        tabs.forEach(t => t.classList.remove('active'));
+        
+        this.classList.add('active');
+      });
+    });
+  </script>
+
+<script src="scripts/notifBoxAll.js"></script>
+<script src="scripts/notifNavs.js"></script>
+<script>
+    $(document).ready(function() {
+        App.init();
+                Index.init();
+        
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        notifBoxJs1.init();
+  });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        notifBoxJs2.init();
+  });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        notifBoxJs3.init();
+  });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        notifBoxJs4.init();
+  });
+</script>
+
+</body>

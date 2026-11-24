@@ -1,0 +1,95 @@
+<style>
+    /* body {
+        color: #70ee9c;
+    } */
+    .panel-body {
+        background-color:#222;
+        border-radius: 8px;
+        padding: 50px;
+    }
+
+    label {
+        color: #fff;
+    }
+
+    #counter_info.dataTables_in {
+        color: red;
+    }
+    li {
+        color: red;
+    }
+    /* Table Styles */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        color: #ffffff;
+        background-color: #000000;
+    }
+    
+    /* Header Row */
+    .table thead th {
+        background-color: #70ee9c; /* Dark Green */
+        color: #ffffff;
+        font-weight: bold;
+        text-align: left;
+        padding: 10px;
+        border: 1px solid #70ee9c; /* Darker Green Border */
+    }
+    
+    /* Data Rows */
+    .table tbody td {
+        padding: 8px;
+        border: 1px solid #70ee9c; /* Darker Green Border */
+    }
+    
+    /* Alternating Row Colors */
+    .table tbody tr:nth-child(even) {
+        background-color: #70ee9c; /* Slightly lighter green for contrast */
+    }
+    
+    .table tbody tr:nth-child(odd) {
+        background-color: #000000; /* Black */
+    }
+    
+    /* Hover Effect */
+    .table tbody tr:hover {
+        background-color: #70ee9c; /* Brighter Green on Hover */
+        color: #ffffff;
+    }
+    </style>
+    
+    <body>
+        <div class="col-md-12">
+          
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12" style="overflow-x:auto">
+                            <table id="encounter" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Student ID</th>
+                                        <th>Gender</th>
+                                        <th>Contact Number</th>
+                                        <th>Email</th>
+                                        <th>Institution</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Table rows will be dynamically added here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+          
+        </div>
+    <script src="scripts/studentList.js"></script>
+    <script>
+      $(document).ready(function() {
+        Encounter.init();
+      });
+    </script>
+    </body>
+    

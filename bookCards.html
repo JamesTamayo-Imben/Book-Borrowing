@@ -1,0 +1,591 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Borrow Book</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  -->
+  <style>
+    :root {
+        --primary-color: #02BD52;
+        --forhighlight: #1BF640;
+        --fortext: #FCFCFC;
+        --second-color: #161618;
+    }
+    body {
+        background-color: #000;
+        font-family: 'Arial', sans-serif;
+        height: 100svh;
+        color: var(--fortext);
+    }
+    .h-light {
+     color: var(--forhighlight); 
+     }
+    .prime-color {
+     background-color: var(--primary-color); 
+     }
+    .second-color {
+     background-color: var(--second-color); 
+     }
+    .for-text {
+     color: var(--fortext); 
+     }
+    .basta-card {
+
+        background-color: var(--second-color);
+        border-radius: 20px;
+        height: 250px;
+        width: 100%;
+        max-width: 610px;
+        min-width: 200px;
+        position: relative;
+        overflow: hidden;
+    }
+    img {
+     width: 100%; 
+     }
+    .labas-hover {
+        opacity: 0;
+        position: absolute;
+        right: -100px;
+        height: 100%;
+        width: 64%;
+        transition: .5s ease-in-out;
+        background-color: #fff;
+        padding: .7rem;
+    }
+    .basta-card:hover .labas-hover {
+     opacity: 1; right: 0px; 
+     }
+    .borrow-this-btn {
+        color: #02BD52;
+        border: 1px solid #02BD52;
+        background-color: transparent;
+        font-weight: 500;
+    }
+    .borrow-this-btn:hover {
+     background-color: #02BD52; color: #FCFCFC; 
+     }
+    .borrow-this-btn:focus {
+     background-color: #04b14f; color: #FCFCFC; 
+     }
+     .text-multiline-ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;  /* Change to the number of lines you want to display */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+hr{
+  border: 2px solid #8a8a8a;
+}
+.alert {
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .alert.hidden {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+
+    form{
+      transition: all 0.5 ease;
+    }
+
+    /* .hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+} */
+
+  </style>
+<!-- </head> -->
+<body class="d-flex justify-content-center align-items-center">
+    <!-- <div id="book-card-container1" class="book-cards row d-flex justify-content-center align-items-center">
+    </div> -->
+  <!-- <div class="row p-4">
+    <div class="col-2"></div>
+    <div class="basta-card col-8 p-3 ps-4 d-flex justify-content-center align-items-center" id="borrow-this">
+      <div class="row">
+        <div class="col-4 p-4 d-flex align-items-center">
+          <img src="AstaChibi.jpg" alt="">
+        </div>
+        <div class="col-8 p-2 ps-3 pt-4 borrow-card">
+          <h4>Title: sdlsdlnn</h4>
+          <h6>Author: </h6>
+          <h6>Publish Date: </h6>
+          <p>Description: <br> Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, iure dolorum. Quas velit soluta iure doloremque, eligendium architect alias?</p>
+        </div>
+      </div>
+
+      <div class="labas-hover text-dark">
+        <div id="borrow-msg" class="ms-2"></div>
+        <form class="col-8 p-3" id="form-borrow" method="POST">
+          
+          <div class="row">
+            <div class="col-md-12">
+              <input type="hidden" name="bookIDD" id="bookIDD" value="KLDBK001">
+              <input type="hidden" name="borrowedDT" id="borrowedDT" value="">
+              <input type="hidden" name="adminID" id="adminID" value="adminID">
+              <label for="sid">Enter Student ID</label>
+              <input type="text" name="sid" id="sid" placeholder="000-0000-0000" required="required" class="form-control"> 
+              <div id="IDerror"></div>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-12">
+              <label for="returnDate">Return Date</label>
+              <input type="date" name="returnDate" id="returnDate" required="required" class="form-control" min="2024-12-01"> 
+              <div id="returnDaterror"></div>
+            </div>
+
+            <div class="col-md-12 mt-3">
+              <input type="hidden" name="action" value="toBorrowAction">
+              <button class="btn borrow-this-btn px-4" type="submit" id="Borrow">Borrow This!</button>
+              
+            </div>
+          </div>
+          
+        </form> 
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row p-4">
+    <div class="col-2"></div>
+    <div class="basta-card col-8 p-3 ps-4 d-flex justify-content-center align-items-center" id="borrow-this">
+      <div class="row">
+        <div class="col-4 p-4 d-flex align-items-center">
+          <img src="AstaChibi.jpg" alt="">
+        </div>
+        <div class="col-8 p-2 ps-3 pt-4 borrow-card">
+          <h4>Title: ghvhvhn</h4>
+          <h6>Author: esrdtfyg</h6>
+          <h6>Publish Date: </h6>
+          <p>Description: <br> Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, iure dolorum. Quas velit soluta iure doloremque, eligendium architect alias?</p>
+        </div>
+      </div>
+
+      <div class="labas-hover text-dark">
+        <div id="borrow-msg1" class="ms-2"></div>
+        <form class="col-8 p-3" id="form-borrow1" method="POST">
+          
+          <div class="row">
+            <div class="col-md-12">
+              <input type="hidden" name="bookIDD1" id="bookIDD1" value="KLDBK004">
+              <input type="hidden" name="borrowedDT1" id="borrowedDT-1" value="">
+              <input type="hidden" name="adminID1" id="adminID1" value="ako">
+              <label for="sid1">Enter Student ID</label>
+              <input type="text" name="sid1" id="sid1" placeholder="000-0000-0000" required="required" class="form-control"> 
+              <div id="IDerror1"></div>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-12">
+              <label for="returnDate1">Return Date</label>
+              <input type="date" name="returnDate1" id="returnDate1" required="required" class="form-control" min="2024-12-01"> 
+              <div id="returnDaterror1"></div>
+            </div>
+
+            <div class="col-md-12 mt-3">
+              <input type="hidden" name="action" value="toBorrowAction1">
+              <button class="btn borrow-this-btn px-4" type="submit" id="Borrow1">Borrow This!</button>
+              
+            </div>
+          </div>
+          
+        </form> 
+      </div>
+    </div>
+  </div> -->
+
+
+  
+   <!-- IS BOOKS category -->
+   <div class="rounded p-3 mb-2 mt-2">
+    <div class="category-title d-flex justify-content-between h2 mt-3 ps-3">
+        Information System Books
+        <span class="ml-auto"><i class="bi bi-arrow-right-square"></i></span>
+    </div>
+    <div class="category-box row py-4 px-1 d-flex justify-content-center align-items-center rounded ">
+      <div id="book-card-container1" class="book-cards row d-flex justify-content-center align-items-center">
+      </div>
+    </div>  
+  </div>   
+<hr>
+  <!-- PSYCH BOOKS category -->
+  <div class="rounded p-3 mb-2">
+    <div class="category-title d-flex justify-content-between h2 mt-3 ps-3">
+        Psychology Books
+        <span class="ml-auto"><i class="bi bi-arrow-right-square"></i></span>
+    </div>
+    <div class="category-box row py-4 px-1 d-flex justify-content-center align-items-center rounded ">
+      <div id="book-card-container2" class="book-cards row d-flex justify-content-center align-items-center">
+      </div>
+    </div>  
+  </div> 
+  <hr>
+  <!-- CE BOOKS category -->
+  <div class="rounded p-3 mb-2">
+    <div class="category-title d-flex justify-content-between h2 mt-3 ps-3">
+        Engineering Books
+        <span class="ml-auto"><i class="bi bi-arrow-right-square"></i></span>
+    </div>
+    <div class="category-box row py-4 px-1 d-flex justify-content-center align-items-center rounded ">
+      <div id="book-card-container3" class="book-cards row d-flex justify-content-center align-items-center">
+      </div>
+    </div>  
+  </div> 
+  <hr>
+  <!-- NS BOOKS category -->
+  <div class="rounded p-3 mb-2">
+    <div class="category-title d-flex justify-content-between h2 mt-3 ps-3">
+        Nursing Books
+        <span class="ml-auto"><i class="bi bi-arrow-right-square"></i></span>
+    </div>
+    <div class="category-box row py-4 px-1 d-flex justify-content-center align-items-center rounded ">
+      <div id="book-card-container4" class="book-cards row d-flex justify-content-center align-items-center">
+      </div>
+    </div>  
+  </div> 
+  <hr>
+  <!-- MW BOOKS category -->
+  <div class="rounded p-3">
+    <div class="category-title d-flex justify-content-between h2 mt-3 ps-3">
+        Midwifery Books
+        <span class="ml-auto"><i class="bi bi-arrow-right-square"></i></span>
+    </div>
+    <div class="category-box row py-4 px-1 d-flex justify-content-center align-items-center rounded ">
+      <div id="book-card-container5" class="book-cards row d-flex justify-content-center align-items-center">
+      </div>
+    </div>  
+  </div> 
+
+
+
+
+  <script src="scripts/bookCard1.js"></script>
+  <!-- <script src="scripts/bookCard2.js"></script>
+  <script src="scripts/bookCard3.js"></script>
+  <script src="scripts/bookCard4.js"></script>
+  <script src="scripts/bookCard5.js"></script> -->
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script> -->
+
+
+
+  <!-- <script>
+   $(document).ready(function() {
+  $("#form-borrow").submit(function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Gather form data
+    var formData = {
+      bookIDD: $("#bookIDD").val(),
+      borrowedDT: $("#borrowedDT").val(),
+      returnDate: $("#returnDate").val(),
+      
+      sid: $("#sid").val(),
+      adminID: $("#adminID").val(),
+      action: "toBorrowAction"
+    };
+
+    // Log data to console for debugging
+    console.log("Sending data:", formData);
+
+    // Send data to the server using AJAX
+    $.ajax({
+      url: "insert.php", // PHP script that handles data insertion
+      type: "POST",
+      data: formData,
+      success: function(response) {
+        const res = JSON.parse(response); // Parse the JSON response
+        console.log("Server response:", res); // Log server response
+
+        if (res.isSuccess) {
+          $("#borrow-msg").html(`<div class="alert alert-success">${res.msg}</div>`);
+          $("#form-borrow")[0].reset(); // Reset the form after successful submission
+        } else {
+          $("#borrow-msg").html(`<div class="alert alert-danger">${res.msg}</div>`);
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error("AJAX Error:", status, error);
+        $("#borrow-msg").html(`<div class="alert alert-danger">An error occurred: ${error}</div>`);
+      }
+    });
+  });
+});
+
+
+$(document).ready(function() {
+  $("#form-borrow1").submit(function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Gather form data
+    var formData = {
+      bookIDD: $("#bookIDD1").val(),
+      borrowedDT: $("#borrowedDT1").val(),
+      returnDate: $("#returnDate1").val(),
+      
+      sid: $("#sid1").val(),
+      adminID: $("#adminID1").val(),
+      action: "toBorrowAction1"
+    };
+
+    // Log data to console for debugging
+    console.log("Sending data:", formData);
+
+    // Send data to the server using AJAX
+    $.ajax({
+      url: "insert.php", // PHP script that handles data insertion
+      type: "POST",
+      data: formData,
+      success: function(response) {
+        const res = JSON.parse(response); // Parse the JSON response
+        console.log("Server response:", res); // Log server response
+
+        if (res.isSuccess) {
+          $("#borrow-msg1").html(`<div class="alert alert-success">${res.msg}</div>`);
+          $("#form-borrow1")[0].reset(); // Reset the form after successful submission
+        } else {
+          $("#borrow-msg1").html(`<div class="alert alert-danger">${res.msg}</div>`);
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error("AJAX Error:", status, error);
+        $("#borrow-msg1").html(`<div class="alert alert-danger">An error occurred: ${error}</div>`);
+      }
+    });
+  });
+});
+
+  </script> -->
+
+  <!-- <script>
+    $(document).ready(function() {
+  // Delegate the submit event to the dynamic form element
+  $(document).on("submit", "form[id^='form-borrow-']", function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Dynamically get the form ID using the form's unique ID (generated by counter)
+    var formId = $(this).attr('id');
+    var counter = formId.split('-')[2]; // Extract counter from the form ID
+
+    // Gather form data using the dynamic IDs
+    var bookIDD = $("#bookIDD-" + counter);
+    var borrowedDT = $("#borrowedDT-" + counter);
+    var returnDate = $("#returnDate-" + counter);
+    var sid = $("#sid-" + counter);
+    var adminID = $("#adminID-" + counter);
+
+    // Validate the fields
+    if (!bookIDD || !borrowedDT || !returnDate || !sid || !adminID) {
+      $("#borrow-msg-" + counter).html('<div class="alert alert-danger">All fields ahghgghdghdre required!</div>');
+      return; // Stop further execution if any field is empty
+    }
+
+    // Prepare form data
+    var formData = {
+      bookIDD: bookIDD .val(),
+      borrowedDT: borrowedDT .val(),
+      returnDate: returnDate .val(),
+      sid: sid .val(),
+      adminID: adminID .val(),
+      action: "toBorrowAction"
+    };
+
+    // Log data to console for debugging
+    console.log("Sending data:", formData);
+
+    // Send data to the server using AJAX
+    $.ajax({
+      url: "insert.php", // PHP script that handles data insertion
+      type: "POST",
+      data: formData,
+      success: function(response) {
+        const res = JSON.parse(response); // Parse the JSON response
+        console.log("Server response:", res); // Log server response
+
+        if (res.isSuccess) {
+          $("#borrow-msg-" + counter).html(`<div class="alert alert-success">${res.msg}</div>`);
+          $("#form-borrow-" + counter)[0].reset(); // Reset the form after successful submission
+        } else {
+          $("#borrow-msg-" + counter).html(`<div class="alert alert-danger">${res.msg}</div>`);
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error("AJAX Error:", status, error);
+        $("#borrow-msg-" + counter).html(`<div class="alert alert-danger">An error occurred: ${error}</div>`);
+      }
+    });
+  });
+});
+
+  </script> -->
+
+
+<script>
+  $(document).ready(function() {
+  // Get today's date and format it as YYYY-MM-DD
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${day}`;
+
+  // Delegate the submit event to the dynamic form element
+  $(document).on("submit", "form[id^='form-borrow-']", function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+
+    var formId = $(this).attr('id');
+    // var counter = formId.split('-')[3]; // ID bookID
+    var bookID = formId.split('-')[2];
+
+    document.getElementById('borrowedDT-' + bookID).value = formattedDate;
+
+    document.getElementById('returnDate-' + bookID).min = formattedDate;
+    // Log to console for verification
+    console.log(`Hidden input (borrowedDT-${bookID}) value set to: ${formattedDate}`);
+
+    var bookIDD = $("#bookIDD-" + bookID);
+    var borrowedDT = $("#borrowedDT-" + bookID);
+    var returnDate = $("#returnDate-" + bookID);
+    var sid = $("#sid-" +  bookID);
+    var adminID = $("#adminID-" +  bookID);
+
+    // Validate the fields
+    if (!bookIDD.val() || !borrowedDT.val() || !returnDate.val() || !sid.val() || !adminID.val()) {
+      $("#borrow-msg-" + bookID).html(`
+      <div class="alert alert-danger alert-dismissible show" role="alert" id="alert">
+        <strong>All fields are required!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      `);
+      return; //  <div class="alert alert-danger">All fields are required!</div>
+    }
+
+    var formData = {
+      bookIDD: bookIDD.val(),
+      borrowedDT: borrowedDT.val(),
+      returnDate: returnDate.val(),
+      sid: sid.val(),
+      adminID: adminID.val(),
+      action: "toBorrowAction"
+    };
+
+
+    // console.log("Sending data:", formData);
+
+    $.ajax({
+      url: "insert.php", 
+      type: "POST",
+      data: formData,
+      success: function(response) {
+        const res = JSON.parse(response); 
+        console.log("Server response:", res); 
+
+        if (res.isSuccess) {
+          $("#borrow-msg-" + bookID).html(`
+          <div class="alert alert-success alert-dismissible show" role="alert" id="alert">
+              <strong>${res.msg}</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          `);
+          $("#form-borrow-" + bookID)[0].reset(); //<div class="alert alert-success">${res.msg}</div>
+        } else {
+          $("#borrow-msg-" + bookID).html(`
+          <div class="alert alert-danger alert-dismissible show" role="alert"  id="alert">
+              <div>${res.msg}</div>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          `);
+          $("#form-borrow-" + bookID)[0].reset();
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error("AJAX Error:", status, error);
+        $("#borrow-msg-" + bookID).html(`
+        <div class="alert alert-danger alert-dismissible show" role="alert" id="alert">
+              <strong>An error occurred:</strong> ${error}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        `);
+      }
+    });
+
+    //mawawala sya after mo sya makita huhuhu ;(
+    setTimeout(() => {
+  const alert = document.getElementById(`alert`);
+  if (alert) {
+    alert.classList.add('hidden'); 
+    alert.addEventListener('transitionend', () => {
+      alert.remove();
+    });
+  }
+}, 3000); 
+
+  });
+});
+</script>
+ 
+<script>
+  function getCurrentDate() {
+    const now = new Date();
+    const philippineOffset = 8 * 60; 
+    const philippineTime = new Date(now.getTime() + (now.getTimezoneOffset() + philippineOffset) * 60 * 1000);
+    return philippineTime.toISOString().split("T")[0];
+    // const today = new Date();
+    // const year = today.getFullYear();
+    // const month = String(today.getMonth() + 1).padStart(2, '0'); 
+    // const day = String(today.getDate()).padStart(2, '0'); 
+    // return `${year}-${month}-${day}`;
+    // return new Date().toISOString().split('T')[0];
+  }
+  function getAdd30daysDate() {
+    const now = new Date();
+    const philippineOffset = 8 * 60;
+    const philippineTime = new Date(now.getTime() + (now.getTimezoneOffset() + philippineOffset) * 60 * 1000);
+    philippineTime.setDate(philippineTime.getDate() + 30);
+    return philippineTime.toISOString().split("T")[0];
+    // const today = new Date();
+    // today.setDate(today.getDate() + 30); 
+    // return today.toISOString().split("T")[0];
+    // const today = new Date();
+    // const year = today.getFullYear();
+    // const month = String(today.getMonth() + 1).padStart(2, '0'); 
+    // return `${year}-${month}-${day}`;
+  }
+</script>
+
+<!-- <script type="text/javascript">
+  $(document).ready(function() {
+  bookCardInfo1.init();
+});
+</script> -->
+<script type="text/javascript">
+  $(document).ready(function() {
+  bookCardInfo2.init();
+});
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+  bookCardInfo3.init();
+});
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+  bookCardInfo4.init();
+});
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+  bookCardInfo5.init();
+});
+</script>
+</body>
+
