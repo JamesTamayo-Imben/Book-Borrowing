@@ -40,6 +40,7 @@
     var sessionRole = null;
     var dataTablesLoad = null;
     var manageBooksLoad = null;
+    var catalogObservers = [];
 
     var loadScript = function (source) {
         return new Promise(function (resolve, reject) {
@@ -87,7 +88,111 @@
             });
     };
 
+    var initializeCatalogFilters = function (content) {
+        disconnectCatalogObservers();
+
+        var catalog = content.querySelector('.library-catalog');
+        if (!catalog) {
+            return;
+        }
+
+        var search = catalog.querySelector('#catalog-search');
+        var categoryFilter = catalog.querySelector('#catalog-category');
+        var availabilityFilter = catalog.querySelector('#catalog-availability');
+        var result = catalog.querySelector('#catalog-result');
+        var emptyState = catalog.querySelector('#catalog-no-results');
+        var sections = Array.from(catalog.querySelectorAll('.library-catalog-section'));
+
+        var applyFilters = function () {
+            var query = search.value.trim().toLocaleLowerCase();
+            var category = categoryFilter.value;
+            var availability = availabilityFilter.value;
+            var filtering = Boolean(query || category || availability);
+            var matchedBooks = 0;
+
+            sections.forEach(function (section) {
+                var sectionMatches = 0;
+                var sectionCategory = section.dataset.categoryId;
+                var cards = section.querySelectorAll('.book-cards > .col-lg-6');
+
+                cards.forEach(function (card) {
+                    var title = card.querySelector('h4')?.textContent || '';
+                    var details = card.querySelector('.borrow-card');
+                    var author = details?.querySelector('h6')?.textContent || '';
+                    var description = card.querySelector('.text-multiline-ellipsis')?.textContent || '';
+                    var availableLabel = Array.from(details?.querySelectorAll('h6') || [])
+                        .find(function (heading) {
+                            return /available copies/i.test(heading.textContent);
+                        });
+                    var copies = Number(availableLabel?.querySelector('strong')?.textContent || 0);
+                    var searchable = [title, author, description].join(' ').toLocaleLowerCase();
+                    var matches = (!query || searchable.includes(query)) &&
+                        (!category || category === sectionCategory) &&
+                        (!availability || (availability === 'available' ? copies > 0 : copies === 0));
+
+                    card.hidden = !matches;
+                    if (matches) {
+                        sectionMatches += 1;
+                        matchedBooks += 1;
+                    }
+                });
+
+                if (filtering) {
+                    section.hidden = sectionMatches === 0;
+                    if (sectionMatches > 0) {
+                        var box = section.querySelector('.category-box');
+                        var toggle = section.querySelector('.category-toggle');
+                        box.hidden = false;
+                        toggle.setAttribute('aria-expanded', 'true');
+                        toggle.setAttribute(
+                            'aria-label',
+                            'Hide ' + section.querySelector('.library-category-heading h2').textContent.trim()
+                        );
+                        toggle.querySelector('i').className = 'bi bi-arrow-down-square';
+                    }
+                } else {
+                    section.hidden = false;
+                    cards.forEach(function (card) {
+                        card.hidden = false;
+                    });
+                }
+            });
+
+            result.textContent = filtering
+                ? matchedBooks + (matchedBooks === 1 ? ' book matches' : ' books match') + ' your filters'
+                : matchedBooks + (matchedBooks === 1 ? ' book in the catalog' : ' books in the catalog');
+            emptyState.hidden = !filtering || matchedBooks > 0;
+        };
+
+        search.addEventListener('input', applyFilters);
+        categoryFilter.addEventListener('change', applyFilters);
+        availabilityFilter.addEventListener('change', applyFilters);
+        catalog.querySelector('#clear-catalog-filters').addEventListener('click', function () {
+            search.value = '';
+            categoryFilter.value = '';
+            availabilityFilter.value = '';
+            applyFilters();
+            search.focus();
+        });
+
+        sections.forEach(function (section) {
+            var container = section.querySelector('.book-cards');
+            var observer = new MutationObserver(applyFilters);
+            observer.observe(container, { childList: true, subtree: true });
+            catalogObservers.push(observer);
+        });
+        applyFilters();
+    };
+
+    var disconnectCatalogObservers = function () {
+        catalogObservers.forEach(function (observer) {
+            observer.disconnect();
+        });
+        catalogObservers = [];
+    };
+
     var loadPage = function (page) {
+        disconnectCatalogObservers();
         var content = $('#main-content');
         if (!content.length) {
             window.location.href = page;
@@ -110,6 +215,7 @@
                 if (page === 'bookCards.html' || page === 'bookCardsUser.html') {
                     try {
                         initializeBookCards();
+                        initializeCatalogFilters(content[0]);
                     } catch (error) {
                         console.error('Book list initialization failed:', error);
                         content.html(

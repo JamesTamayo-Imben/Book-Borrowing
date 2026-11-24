@@ -4,7 +4,35 @@
     <h1>Browse books</h1>
     <p>Choose a collection to view its books and current availability.</p>
   </header>
-  <section class="library-catalog-section" aria-labelledby="category-title-1">
+  <div class="library-catalog-filters" role="search" aria-label="Search and filter books">
+    <div class="library-catalog-search">
+      <label for="catalog-search">Search books</label>
+      <input class="form-control" id="catalog-search" type="search" placeholder="Title, author, or description">
+    </div>
+    <div class="library-catalog-filter">
+      <label for="catalog-category">Collection</label>
+      <select class="form-select" id="catalog-category">
+        <option value="">All collections</option>
+        <option value="KLDIS001">Information System</option>
+        <option value="KLDPS002">Psychology</option>
+        <option value="KLDCE003">Engineering</option>
+        <option value="KLDNS004">Nursing</option>
+        <option value="KLDMW005">Midwifery</option>
+      </select>
+    </div>
+    <div class="library-catalog-filter">
+      <label for="catalog-availability">Availability</label>
+      <select class="form-select" id="catalog-availability">
+        <option value="">Any availability</option>
+        <option value="available">Available</option>
+        <option value="unavailable">Unavailable</option>
+      </select>
+    </div>
+    <button class="library-filter-clear" id="clear-catalog-filters" type="button">Clear filters</button>
+  </div>
+  <p class="library-catalog-result" id="catalog-result" role="status" aria-live="polite"></p>
+  <p class="library-empty library-catalog-no-results" id="catalog-no-results" hidden>No books match these filters. Try another title or collection.</p>
+  <section class="library-catalog-section" data-category-id="KLDIS001" aria-labelledby="category-title-1">
     <div class="library-category-heading">
       <h2 id="category-title-1">Information System Books</h2>
       <button class="category-toggle" type="button" aria-expanded="false" aria-controls="category-box-1" aria-label="Show Information System books">
@@ -17,7 +45,7 @@
       </div>
     </div>
   </section>
-  <section class="library-catalog-section" aria-labelledby="category-title-2">
+  <section class="library-catalog-section" data-category-id="KLDPS002" aria-labelledby="category-title-2">
     <div class="library-category-heading">
       <h2 id="category-title-2">Psychology Books</h2>
       <button class="category-toggle" type="button" aria-expanded="false" aria-controls="category-box-2" aria-label="Show Psychology books">
@@ -30,7 +58,7 @@
       </div>
     </div>
   </section>
-  <section class="library-catalog-section" aria-labelledby="category-title-3">
+  <section class="library-catalog-section" data-category-id="KLDCE003" aria-labelledby="category-title-3">
     <div class="library-category-heading">
       <h2 id="category-title-3">Engineering Books</h2>
       <button class="category-toggle" type="button" aria-expanded="false" aria-controls="category-box-3" aria-label="Show Engineering books">
@@ -43,7 +71,7 @@
       </div>
     </div>
   </section>
-  <section class="library-catalog-section" aria-labelledby="category-title-4">
+  <section class="library-catalog-section" data-category-id="KLDNS004" aria-labelledby="category-title-4">
     <div class="library-category-heading">
       <h2 id="category-title-4">Nursing Books</h2>
       <button class="category-toggle" type="button" aria-expanded="false" aria-controls="category-box-4" aria-label="Show Nursing books">
@@ -56,7 +84,7 @@
       </div>
     </div>
   </section>
-  <section class="library-catalog-section" aria-labelledby="category-title-5">
+  <section class="library-catalog-section" data-category-id="KLDMW005" aria-labelledby="category-title-5">
     <div class="library-category-heading">
       <h2 id="category-title-5">Midwifery Books</h2>
       <button class="category-toggle" type="button" aria-expanded="false" aria-controls="category-box-5" aria-label="Show Midwifery books">
