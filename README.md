@@ -8,6 +8,7 @@ A PHP and MySQL application for managing a library's book inventory, student acc
 
 - Student registration and sign-in, with separate student and administrator dashboards
 - Book browsing by collection, live stock display, and keyboard-accessible collection toggles
+- Clickable student catalog cards with stock, collection, and bibliographic details
 - Administrator-only book create, update, and delete tools
 - Responsive spacing and a consistent neutral/forest/green 60/30/10 color system
 - Database-backed administrator inventory and circulation summaries, plus a live student catalog
@@ -81,7 +82,7 @@ For a MySQL command-line setup with XAMPP's default empty root password:
 
 In phpMyAdmin, import `schema.sql` first and `sample-data.sql` second. Both files can be imported again without duplicating their sample records. `INSERT IGNORE` preserves rows that already use the sample IDs; it does not overwrite your edits.
 
-The sample book covers refer to the images already in `book-image/`. Bibliographic details were checked against book records in [Open Library](https://openlibrary.org/), including [The Pragmatic Programmer](https://openlibrary.org/works/OL5748544W), [Clean Code](https://openlibrary.org/works/OL17618370W), [Introduction to Algorithms](https://openlibrary.org/works/OL4781294W), [Why Buildings Fall Down](https://openlibrary.org/works/OL3350803W), [Beyond Failure](https://openlibrary.org/works/OL12220231W), and the [2011 Skill Checklists edition](https://openlibrary.org/books/OL27087807M). The Introduction to Psychology cover does not name an author, so its author is left blank rather than inferred from the publisher. Student names, accounts, and records are fictional demo data.
+The sample book covers refer to the images already in `book-image/`. Student catalog details include concise, work-level context and first-publication years where a matching [Open Library](https://openlibrary.org/) record is available, including [The Pragmatic Programmer](https://openlibrary.org/works/OL5748544W), [C# Game Programming Cookbook for Unity 3D](https://openlibrary.org/works/OL19547573W), [Clean Code](https://openlibrary.org/works/OL17618370W), [Introduction to Algorithms](https://openlibrary.org/works/OL4781294W), [Forty Studies That Changed Psychology](https://openlibrary.org/works/OL1845342W), [Exploring Psychology](https://openlibrary.org/works/OL14859349W), [Abnormal Psychology](https://openlibrary.org/works/OL2035675W), [Civil Engineering Formulas](https://openlibrary.org/works/OL280480W), [The Tower and the Bridge](https://openlibrary.org/works/OL15840572W), and [Why Buildings Fall Down](https://openlibrary.org/works/OL3350803W). The Introduction to Psychology cover does not name an author, so its author is left blank rather than inferred from the publisher. Student names, accounts, and records are fictional demo data.
 
 ## Project layout
 
@@ -90,6 +91,7 @@ The sample book covers refer to the images already in `book-image/`. Bibliograph
 | `logIn.html`, `dashboard*.html` | Sign-in and dashboard pages |
 | `*.php` | Authentication, registration, book, borrowing, return, and data endpoints |
 | `dashboardOverview.php`, `catalog.php` | Authenticated dashboard summaries and live catalog data |
+| `notificationCount.php` | Session-scoped student notification total |
 | `manageBooks.html`, `manageBooks.php`, `scripts/manageBooks.js` | Administrator-only catalog CRUD and validation |
 | `scripts/dashboard-data.js`, `scripts/navigation.js` | Dashboard rendering and role-aware navigation |
 | `includes/api.php` | Shared handlers used by the category-specific book, stock, student, and borrowing endpoints |

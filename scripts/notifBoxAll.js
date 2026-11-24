@@ -1,33 +1,42 @@
+var failNotificationList = function(containerSelector, error) {
+    console.error('Notification request failed:', error);
+    $(containerSelector)
+        .attr('aria-busy', 'false')
+        .html(
+            '<p class="notification-results-state notification-results-state--error" role="alert">' +
+            'Notifications could not be loaded. Refresh and try again.' +
+            '</p>'
+        );
+};
 
+var showNotificationLoading = function(containerSelector) {
+    $(containerSelector)
+        .attr('aria-busy', 'true')
+        .html('<p class="notification-results-state">Loading notifications...</p>');
+};
 
 var notifBoxJs1 = function() {
     "use strict";
   
     var createNotifBox = function(notif) {
         return `
-        <div class="notif-box pad-ko mt-3 row" style="border: 1px solid ${notif.notificationColor}">
-            <div class="col-11">
-                <div class="notif-title h5 d-flex justify-content-between">
-                    ${notif.notificationType}!
-                    <span class="notif-date ml-auto" style="color: #6b6b6b;">
-                    ${notif.notificationDate}
-                    </span>
+        <article class="notification-card">
+            <div class="notification-card-content">
+                <div class="notification-card-heading">
+                    <h2 class="notification-title">${notif.notificationType}</h2>
+                    <time class="notification-date">${notif.notificationDate}</time>
                 </div>
-                <hr>
-                <div class="notif-message p">
-                ${notif.notificationMessage}
-                </div>
+                <p class="notification-message">${notif.notificationMessage}</p>
             </div>
-            <div class="col-1 d-flex justify-content-center align-items-center">
-                <div class="notif-remove" style="cursor: pointer" data-id="${notif.notificationID}">
-                    <i class="bi bi-trash3"></i>
-                </div>
-            </div>
-        </div>
+            <button class="notif-remove notification-delete" type="button" data-id="${notif.notificationID}" aria-label="Delete notification">
+                <i class="bi bi-trash3" aria-hidden="true"></i>
+            </button>
+        </article>
         `;
     };
 
     var loadNotifAll = function() {
+        showNotificationLoading('#notif-box-all');
         $.ajax({
             url: "notifBoxAll.php",
             method: "GET",
@@ -35,14 +44,14 @@ var notifBoxJs1 = function() {
             success: function(response) {
                 var notifs = response.value; 
                 var container = $('#notif-box-all');
-                container.empty(); 
+                container.attr('aria-busy', 'false').empty();
   
                 if (notifs && notifs.length > 0) {
                     notifs.forEach(function(notif) {
                         container.append(createNotifBox(notif));
                     });
                 } else {
-                    container.html(`<p class="mt-4 text-center">No Notification available.</p>`);
+                    container.html('<p class="notification-results-state">No notifications in this filter.</p>');
                 }
 
                 // Add delete button event listener
@@ -51,8 +60,8 @@ var notifBoxJs1 = function() {
                     deleteNotification(notificationID);
                 });
             },
-            error: function() {
-                alert("Failed to load notif.");
+            error: function(xhr, status, error) {
+                failNotificationList('#notif-box-all', error);
             }
         });
     };
@@ -64,6 +73,7 @@ var notifBoxJs1 = function() {
             data: { id: notificationID },
             success: function(response) {
                 if (response.success) {
+                    window.dispatchEvent(new CustomEvent('notifications:changed'));
                    // alert("Notification deleted successfully.");
                     loadNotifAll(); // Reload notifications
                 } else {
@@ -93,30 +103,24 @@ var notifBoxJs1 = function() {
 
         return `
   <!-- Notification-->
-        <div class="notif-box pad-ko mt-3 row" style="border: 1px solid ${notif.notificationColor}">
-            <div class="col-11">
-                <div class="notif-title h5 d-flex justify-content-between">
-                    ${notif.notificationType}!
-                    <span class="notif-date ml-auto" style="color: #6b6b6b;">
-                    ${notif.notificationDate}
-                    </span>
+        <article class="notification-card">
+            <div class="notification-card-content">
+                <div class="notification-card-heading">
+                    <h2 class="notification-title">${notif.notificationType}</h2>
+                    <time class="notification-date">${notif.notificationDate}</time>
                 </div>
-                <hr>
-                <div class="notif-message p">
-                ${notif.notificationMessage}
-               </div>
+                <p class="notification-message">${notif.notificationMessage}</p>
             </div>
-            <div class="col-1 d-flex justify-content-center align-items-center">
-                <div class="notif-remove" style="cursor: pointer" data-id="${notif.notificationID}">
-                    <i class="bi bi-trash3"></i>
-                </div>
-            </div>
-         </div>
+            <button class="notif-remove notification-delete" type="button" data-id="${notif.notificationID}" aria-label="Delete notification">
+                <i class="bi bi-trash3" aria-hidden="true"></i>
+            </button>
+        </article>
         `;
     };
 // notificationType, notificationMessage, notificationDate
 
     var loadNotifWarning = function() {
+        showNotificationLoading('#notif-box-warning');
         $.ajax({
             url: "notifBoxWarning.php",
             method: "GET",
@@ -124,14 +128,14 @@ var notifBoxJs1 = function() {
             success: function(response) {
                 var notifs = response.value; 
                 var container = $('#notif-box-warning');
-                container.empty(); 
+                container.attr('aria-busy', 'false').empty();
   
                 if (notifs && notifs.length > 0) {
                     notifs.forEach(function(notif) {
                         container.append(createNotifBox(notif));
                     });
                 } else {
-                    container.html(`<p class="mt-4 text-center">No Notification available.</p>`);
+                    container.html('<p class="notification-results-state">No notifications in this filter.</p>');
                 }
 
                 // Add delete button event listener
@@ -141,8 +145,8 @@ var notifBoxJs1 = function() {
                 });
   
             },
-            error: function() {
-                alert("Failed to load notif.");
+            error: function(xhr, status, error) {
+                failNotificationList('#notif-box-warning', error);
             }
         });
     };
@@ -155,6 +159,7 @@ var notifBoxJs1 = function() {
             data: { id: notificationID },
             success: function(response) {
                 if (response.success) {
+                   window.dispatchEvent(new CustomEvent('notifications:changed'));
                    // alert("Notification deleted successfully.");
                    loadNotifWarning(); // Reload notifications
                 } else {
@@ -184,30 +189,24 @@ var notifBoxJs1 = function() {
 
         return `
   <!-- Notification-->
-        <div class="notif-box pad-ko mt-3 row" style="border: 1px solid ${notif.notificationColor}">
-            <div class="col-11">
-                <div class="notif-title h5 d-flex justify-content-between">
-                    ${notif.notificationType}!
-                    <span class="notif-date ml-auto" style="color: #6b6b6b;">
-                    ${notif.notificationDate}
-                    </span>
+        <article class="notification-card">
+            <div class="notification-card-content">
+                <div class="notification-card-heading">
+                    <h2 class="notification-title">${notif.notificationType}</h2>
+                    <time class="notification-date">${notif.notificationDate}</time>
                 </div>
-                <hr>
-                <div class="notif-message p">
-                ${notif.notificationMessage}
-               </div>
+                <p class="notification-message">${notif.notificationMessage}</p>
             </div>
-            <div class="col-1 d-flex justify-content-center align-items-center">
-                <div class="notif-remove" style="cursor: pointer" data-id="${notif.notificationID}">
-                    <i class="bi bi-trash3"></i>
-                </div>
-            </div>
-         </div>
+            <button class="notif-remove notification-delete" type="button" data-id="${notif.notificationID}" aria-label="Delete notification">
+                <i class="bi bi-trash3" aria-hidden="true"></i>
+            </button>
+        </article>
         `;
     };
 // notificationType, notificationMessage, notificationDate
 
     var loadNotifReturn = function() {
+        showNotificationLoading('#notif-box-return');
         $.ajax({
             url: "notifBoxReturn.php",
             method: "GET",
@@ -215,14 +214,14 @@ var notifBoxJs1 = function() {
             success: function(response) {
                 var notifs = response.value; 
                 var container = $('#notif-box-return');
-                container.empty(); 
+                container.attr('aria-busy', 'false').empty();
   
                 if (notifs && notifs.length > 0) {
                     notifs.forEach(function(notif) {
                         container.append(createNotifBox(notif));
                     });
                 } else {
-                    container.html(`<p class="mt-4 text-center">No Notification available.</p>`);
+                    container.html('<p class="notification-results-state">No notifications in this filter.</p>');
                 }
     // Add delete button event listener
     $('.notif-remove').on('click', function() {
@@ -231,8 +230,8 @@ var notifBoxJs1 = function() {
     });
 
     },
-    error: function() {
-    alert("Failed to load notif.");
+    error: function(xhr, status, error) {
+    failNotificationList('#notif-box-return', error);
     }
     });
     };
@@ -245,6 +244,7 @@ var notifBoxJs1 = function() {
     data: { id: notificationID },
     success: function(response) {
     if (response.success) {
+    window.dispatchEvent(new CustomEvent('notifications:changed'));
     // alert("Notification deleted successfully.");
     loadNotifReturn(); // Reload notifications
     } else {
@@ -274,30 +274,24 @@ var notifBoxJs1 = function() {
 
         return `
   <!-- Notification-->
-        <div class="notif-box pad-ko mt-3 row" style="border: 1px solid ${notif.notificationColor}">
-            <div class="col-11">
-                <div class="notif-title h5 d-flex justify-content-between">
-                    ${notif.notificationType}!
-                    <span class="notif-date ml-auto" style="color: #6b6b6b;">
-                    ${notif.notificationDate}
-                    </span>
+        <article class="notification-card">
+            <div class="notification-card-content">
+                <div class="notification-card-heading">
+                    <h2 class="notification-title">${notif.notificationType}</h2>
+                    <time class="notification-date">${notif.notificationDate}</time>
                 </div>
-                <hr>
-                <div class="notif-message p">
-                ${notif.notificationMessage}
-               </div>
+                <p class="notification-message">${notif.notificationMessage}</p>
             </div>
-            <div class="col-1 d-flex justify-content-center align-items-center">
-                <div class="notif-remove" style="cursor: pointer" data-id="${notif.notificationID}">
-                    <i class="bi bi-trash3"></i>
-                </div>
-            </div>
-         </div>
+            <button class="notif-remove notification-delete" type="button" data-id="${notif.notificationID}" aria-label="Delete notification">
+                <i class="bi bi-trash3" aria-hidden="true"></i>
+            </button>
+        </article>
         `;
     };
 // notificationType, notificationMessage, notificationDate
 
     var loadNotifBorrow = function() {
+        showNotificationLoading('#notif-box-borrow');
         $.ajax({
             url: "notifBoxBorrow.php",
             method: "GET",
@@ -305,7 +299,7 @@ var notifBoxJs1 = function() {
             success: function(response) {
                 var notifs = response.value; 
                 var container = $('#notif-box-borrow');
-                container.empty(); 
+                container.attr('aria-busy', 'false').empty();
   
                 if (notifs && notifs.length > 0) {
                     notifs.forEach(function(notif) {
@@ -314,7 +308,7 @@ var notifBoxJs1 = function() {
                     });
                     
                 } else {
-                    container.html(`<p class="mt-4 text-center">No Notification available.</p>`);
+                    container.html('<p class="notification-results-state">No notifications in this filter.</p>');
                 }
   
          // Add delete button event listener
@@ -324,8 +318,8 @@ var notifBoxJs1 = function() {
     });
 
     },
-    error: function() {
-    alert("Failed to load notif.");
+    error: function(xhr, status, error) {
+    failNotificationList('#notif-box-borrow', error);
     }
     });
     };
@@ -338,6 +332,7 @@ var notifBoxJs1 = function() {
     data: { id: notificationID },
     success: function(response) {
     if (response.success) {
+    window.dispatchEvent(new CustomEvent('notifications:changed'));
     // alert("Notification deleted successfully.");
     loadNotifBorrow(); // Reload notifications
     } else {

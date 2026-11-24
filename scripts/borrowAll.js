@@ -1,21 +1,68 @@
+var showBorrowLoading = function(containerSelector, message) {
+    $(containerSelector)
+        .attr('aria-busy', 'true')
+        .attr('aria-live', 'polite')
+        .html('<p class="borrow-results-state">' + message + '</p>');
+};
+
+var renderBorrowResults = function(containerSelector, updates, createCard, emptyMessage) {
+    var container = $(containerSelector);
+    container.attr('aria-busy', 'false').attr('aria-live', 'polite').empty();
+
+    if (!Array.isArray(updates)) {
+        container.html(
+            '<p class="borrow-results-state borrow-results-state--error" role="alert">' +
+            'Borrowing records could not be loaded. Refresh and try again.' +
+            '</p>'
+        );
+        console.error('Borrowed books response did not contain a result list.');
+        return;
+    }
+
+    if (updates.length === 0) {
+        container.html('<p class="borrow-results-state">' + emptyMessage + '</p>');
+        return;
+    }
+
+    container.append(
+        '<p class="borrow-results-summary">' + updates.length +
+        (updates.length === 1 ? ' book in this list' : ' books in this list') + '</p>'
+    );
+    updates.forEach(function(update) {
+        container.append(createCard(update));
+    });
+};
+
+var failBorrowResults = function(containerSelector, error) {
+    console.error('Error loading borrowed books:', error);
+    $(containerSelector)
+        .attr('aria-busy', 'false')
+        .attr('aria-live', 'polite')
+        .html(
+            '<p class="borrow-results-state borrow-results-state--error" role="alert">' +
+            'Borrowing records could not be loaded. Refresh and try again.' +
+            '</p>'
+        );
+};
+
 var returnUpdate1 = function () {
     "use strict";
 
     // Create the HTML structure for a borrowed book
     var createUpdateBox = function (update) {
         return `
-        <div class="pt-2 col-12 d-flex justify-content-center align-items-center">
+        <div class="borrow-record-item">
             <div class="borrow-box-holder">
                 <div class="borrow-box pad-ko mt-3 row">
                     <div class="book-img col-lg-4">
-                        <img src="${update.image}" alt="Book Cover">
+                        <button class="book-cover-button borrowed-book-cover" type="button" aria-label="View book cover"><img src="${update.image}" alt=""></button>
                     </div>
                     <div class="book-info col-lg-8 pb-3">
                         <h3 class="mb-3 h-light">${update.title}</h3>
                         <p class="mb-1 for-text">Author: <strong>${update.author}</strong></p>
                         <p class="mb-1 for-text">ID: <span style="color: #8b8c8f;font-weight: 600">${update.bookID}</span></p>
                         <p class="mb-1 for-text">Borrowed: <i style="color: #8b8c8f;font-weight: 500">${update.borrowedDate}</i></p>
-                        <p class="mb-3 for-text">Overdue: <i class="h-light">${update.returnDate}</i></p>
+                        <p class="mb-3 for-text">Due date: <i class="h-light">${update.returnDate}</i></p>
                         <button type="button" class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#exampleModal-${update.bookID}">Extend</button>
 
                         <!-- Modal -->
@@ -51,26 +98,21 @@ var returnUpdate1 = function () {
 
     // Load all borrowed books
     var loadreturnUpdate1 = function () {
+        showBorrowLoading('#borrow-box-all', 'Loading your borrowed books...');
         $.ajax({
             url: "borrowAll.php",
             method: "GET",
             dataType: "json",
             success: function (response) {
-                var updates = response.value;
-                var container = $('#borrow-box-all');
-                container.empty();
-
-                if (updates && updates.length > 0) {
-                    updates.forEach(function (update) {
-                        container.append(createUpdateBox(update));
-                    });
-                } else {
-                    container.html(`<p class="mt-4 text-center">No books were borrowed.</p>`);
-                }
+                renderBorrowResults(
+                    '#borrow-box-all',
+                    response.value,
+                    createUpdateBox,
+                    'You have no borrowed books right now.'
+                );
             },
             error: function (xhr, status, error) {
-                console.error("Error loading data:", error);
-                alert("Failed to load borrowed books.");
+                failBorrowResults('#borrow-box-all', error);
             }
         });
     };
@@ -127,18 +169,18 @@ var returnUpdate1B = function() {
     // Create the HTML structure for a borrowed book
     var createUpdateBox = function(update) {
         return `
-         <div class="pt-2 col-12 d-flex justify-content-center align-items-center">
+         <div class="borrow-record-item">
             <div class="borrow-box-holder">
                 <div class="borrow-box pad-ko mt-3 row">
                     <div class="book-img col-lg-4">
-                        <img src="${update.image}" alt="Book Cover">
+                        <button class="book-cover-button borrowed-book-cover" type="button" aria-label="View book cover"><img src="${update.image}" alt=""></button>
                     </div>
                     <div class="book-info-due  col-lg-8 pb-3">
                         <h3 class="mb-3" style="color: #ee2f25">${update.title}</h3>
                         <p class="mb-1 for-text">Author: <strong>${update.author}</strong></p>
                         <p class="mb-1 for-text">ID: <span style="color: #8b8c8f;font-weight: 600">${update.bookID}</span></p>
                         <p class="mb-1 for-text">Borrowed: <i style="color: #8b8c8f;font-weight: 500">${update.borrowedDate}</i></p> <!-- Display borrowed date -->
-                        <p class="mb-3 for-text">Overdue: <i style="color: #ee2f25">${update.returnDate}</i></p>
+                        <p class="mb-3 for-text">Due date: <i style="color: #ee2f25">${update.returnDate}</i></p>
                         <button type="button" class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#exampleModal-${update.bookID}">Extend</button>
 
                         <!-- Modal -->
@@ -174,27 +216,21 @@ var returnUpdate1B = function() {
 
     // Load all borrowed books
     var loadreturnUpdate1B = function() {
+        showBorrowLoading('#borrow-box-all-over', 'Checking for overdue books...');
         $.ajax({
             url: "borrowOver.php",
             method: "GET",
             dataType: "json",
             success: function(response) {
-                var updates = response.value;
-                var container = $('#borrow-box-all-over');
-                container.empty();
-
-                if (updates && updates.length > 0) {
-                    updates.forEach(function(update) {
-                        container.append(createUpdateBox(update));
-                    });
-                } 
-                // else {
-                //     container.html(`<p class="mt-4 text-center">No books were borrowed.</p>`);
-                // }
+                renderBorrowResults(
+                    '#borrow-box-all-over',
+                    response.value,
+                    createUpdateBox,
+                    'No overdue books. You are up to date.'
+                );
             },
             error: function(xhr, status, error) {
-                console.error("Error loading data:", error);
-                alert("Failed to load borrowed books.");
+                failBorrowResults('#borrow-box-all-over', error);
             }
         });
     };
@@ -255,18 +291,18 @@ var returnUpdate2 = function() {
     // Create the HTML structure for a borrowed book
     var createUpdateBox = function(update) {
         return `
-         <div class="pt-2 col-12 d-flex justify-content-center align-items-center">
+         <div class="borrow-record-item">
             <div class="borrow-box-holder">
                 <div class="borrow-box pad-ko mt-3 row">
                     <div class="book-img col-lg-4">
-                        <img src="${update.image}" alt="Book Cover">
+                        <button class="book-cover-button borrowed-book-cover" type="button" aria-label="View book cover"><img src="${update.image}" alt=""></button>
                     </div>
                     <div class="book-info col-lg-8 pb-3">
                         <h3 class="mb-3 h-light">${update.title}</h3>
                         <p class="mb-1 for-text">Author: <strong>${update.author}</strong></p>
                         <p class="mb-1 for-text">ID: <span style="color: #8b8c8f;font-weight: 600">${update.bookID}</span></p>
                         <p class="mb-1 for-text">Borrowed: <i style="color: #8b8c8f;font-weight: 500">${update.borrowedDate}</i></p> <!-- Display borrowed date -->
-                        <p class="mb-3 for-text">Overdue: <i class="h-light">${update.returnDate}</i></p>
+                        <p class="mb-3 for-text">Due date: <i class="h-light">${update.returnDate}</i></p>
                         <button type="button" class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#exampleModal-${update.bookID}">Extend</button>
 
                         <!-- Modal -->
@@ -302,26 +338,21 @@ var returnUpdate2 = function() {
 
     // Load all borrowed books
     var loadreturnUpdate2 = function() {
+        showBorrowLoading('#borrow-box-is', 'Loading borrowed books...');
         $.ajax({
             url: "borrowIS.php",
             method: "GET",
             dataType: "json",
             success: function(response) {
-                var updates = response.value;
-                var container = $('#borrow-box-is');
-                container.empty();
-
-                if (updates && updates.length > 0) {
-                    updates.forEach(function(update) {
-                        container.append(createUpdateBox(update));
-                    });
-                } else {
-                    container.html(`<p class="mt-4 text-center">No books were borrowed.</p>`);
-                }
+                renderBorrowResults(
+                    '#borrow-box-is',
+                    response.value,
+                    createUpdateBox,
+                    'No borrowed books in Information Systems.'
+                );
             },
             error: function(xhr, status, error) {
-                console.error("Error loading data:", error);
-                alert("Failed to load borrowed books.");
+                failBorrowResults('#borrow-box-is', error);
             }
         });
     };
@@ -381,18 +412,18 @@ var returnUpdate3 = function() {
     // Create the HTML structure for a borrowed book
     var createUpdateBox = function(update) {
         return `
-         <div class="pt-2 col-12 d-flex justify-content-center align-items-center">
+         <div class="borrow-record-item">
             <div class="borrow-box-holder">
                 <div class="borrow-box pad-ko mt-3 row">
                     <div class="book-img col-lg-4">
-                        <img src="${update.image}" alt="Book Cover">
+                        <button class="book-cover-button borrowed-book-cover" type="button" aria-label="View book cover"><img src="${update.image}" alt=""></button>
                     </div>
                     <div class="book-info col-lg-8 pb-3">
                         <h3 class="mb-3 h-light">${update.title}</h3>
                         <p class="mb-1 for-text">Author: <strong>${update.author}</strong></p>
                         <p class="mb-1 for-text">ID: <span style="color: #8b8c8f;font-weight: 600">${update.bookID}</span></p>
                         <p class="mb-1 for-text">Borrowed: <i style="color: #8b8c8f;font-weight: 500">${update.borrowedDate}</i></p> <!-- Display borrowed date -->
-                        <p class="mb-3 for-text">Overdue: <i class="h-light">${update.returnDate}</i></p>
+                        <p class="mb-3 for-text">Due date: <i class="h-light">${update.returnDate}</i></p>
                         <button type="button" class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#exampleModal-${update.bookID}">Extend</button>
 
                         <!-- Modal -->
@@ -428,26 +459,21 @@ var returnUpdate3 = function() {
 
     // Load all borrowed books
     var loadreturnUpdate3 = function() {
+        showBorrowLoading('#borrow-box-psy', 'Loading borrowed books...');
         $.ajax({
             url: "borrowPsy.php",
             method: "GET",
             dataType: "json",
             success: function(response) {
-                var updates = response.value;
-                var container = $('#borrow-box-psy');
-                container.empty();
-
-                if (updates && updates.length > 0) {
-                    updates.forEach(function(update) {
-                        container.append(createUpdateBox(update));
-                    });
-                } else {
-                    container.html(`<p class="mt-4 text-center">No books were borrowed.</p>`);
-                }
+                renderBorrowResults(
+                    '#borrow-box-psy',
+                    response.value,
+                    createUpdateBox,
+                    'No borrowed books in Psychology.'
+                );
             },
             error: function(xhr, status, error) {
-                console.error("Error loading data:", error);
-                alert("Failed to load borrowed books.");
+                failBorrowResults('#borrow-box-psy', error);
             }
         });
     };
@@ -507,18 +533,18 @@ var returnUpdate4 = function() {
     // Create the HTML structure for a borrowed book
     var createUpdateBox = function(update) {
         return `
-         <div class="pt-2 col-12 d-flex justify-content-center align-items-center">
+         <div class="borrow-record-item">
             <div class="borrow-box-holder">
                 <div class="borrow-box pad-ko mt-3 row">
                     <div class="book-img col-lg-4">
-                        <img src="${update.image}" alt="Book Cover">
+                        <button class="book-cover-button borrowed-book-cover" type="button" aria-label="View book cover"><img src="${update.image}" alt=""></button>
                     </div>
                     <div class="book-info col-lg-8 pb-3">
                         <h3 class="mb-3 h-light">${update.title}</h3>
                         <p class="mb-1 for-text">Author: <strong>${update.author}</strong></p>
                         <p class="mb-1 for-text">ID: <span style="color: #8b8c8f;font-weight: 600">${update.bookID}</span></p>
                         <p class="mb-1 for-text">Borrowed: <i style="color: #8b8c8f;font-weight: 500">${update.borrowedDate}</i></p> <!-- Display borrowed date -->
-                        <p class="mb-3 for-text">Overdue: <i class="h-light">${update.returnDate}</i></p>
+                        <p class="mb-3 for-text">Due date: <i class="h-light">${update.returnDate}</i></p>
                         <button type="button" class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#exampleModal-${update.bookID}">Extend</button>
 
                         <!-- Modal -->
@@ -554,26 +580,21 @@ var returnUpdate4 = function() {
 
     // Load all borrowed books
     var loadreturnUpdate4 = function() {
+        showBorrowLoading('#borrow-box-ce', 'Loading borrowed books...');
         $.ajax({
             url: "borrowCE.php",
             method: "GET",
             dataType: "json",
             success: function(response) {
-                var updates = response.value;
-                var container = $('#borrow-box-ce');
-                container.empty();
-
-                if (updates && updates.length > 0) {
-                    updates.forEach(function(update) {
-                        container.append(createUpdateBox(update));
-                    });
-                } else {
-                    container.html(`<p class="mt-4 text-center">No books were borrowed.</p>`);
-                }
+                renderBorrowResults(
+                    '#borrow-box-ce',
+                    response.value,
+                    createUpdateBox,
+                    'No borrowed books in Engineering.'
+                );
             },
             error: function(xhr, status, error) {
-                console.error("Error loading data:", error);
-                alert("Failed to load borrowed books.");
+                failBorrowResults('#borrow-box-ce', error);
             }
         });
     };
@@ -633,18 +654,18 @@ var returnUpdate5 = function() {
     // Create the HTML structure for a borrowed book
     var createUpdateBox = function(update) {
         return `
-         <div class="pt-2 col-12 d-flex justify-content-center align-items-center">
+         <div class="borrow-record-item">
             <div class="borrow-box-holder">
                 <div class="borrow-box pad-ko mt-3 row">
                     <div class="book-img col-lg-4">
-                        <img src="${update.image}" alt="Book Cover">
+                        <button class="book-cover-button borrowed-book-cover" type="button" aria-label="View book cover"><img src="${update.image}" alt=""></button>
                     </div>
                     <div class="book-info col-lg-8 pb-3">
                         <h3 class="mb-3 h-light">${update.title}</h3>
                         <p class="mb-1 for-text">Author: <strong>${update.author}</strong></p>
                         <p class="mb-1 for-text">ID: <span style="color: #8b8c8f;font-weight: 600">${update.bookID}</span></p>
                         <p class="mb-1 for-text">Borrowed: <i style="color: #8b8c8f;font-weight: 500">${update.borrowedDate}</i></p> <!-- Display borrowed date -->
-                        <p class="mb-3 for-text">Overdue: <i class="h-light">${update.returnDate}</i></p>
+                        <p class="mb-3 for-text">Due date: <i class="h-light">${update.returnDate}</i></p>
                         <button type="button" class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#exampleModal-${update.bookID}">Extend</button>
 
                         <!-- Modal -->
@@ -680,26 +701,21 @@ var returnUpdate5 = function() {
 
     // Load all borrowed books
     var loadreturnUpdate5 = function() {
+        showBorrowLoading('#borrow-box-ns', 'Loading borrowed books...');
         $.ajax({
             url: "borrowNS.php",
             method: "GET",
             dataType: "json",
             success: function(response) {
-                var updates = response.value;
-                var container = $('#borrow-box-ns');
-                container.empty();
-
-                if (updates && updates.length > 0) {
-                    updates.forEach(function(update) {
-                        container.append(createUpdateBox(update));
-                    });
-                } else {
-                    container.html(`<p class="mt-4 text-center">No books were borrowed.</p>`);
-                }
+                renderBorrowResults(
+                    '#borrow-box-ns',
+                    response.value,
+                    createUpdateBox,
+                    'No borrowed books in Nursing.'
+                );
             },
             error: function(xhr, status, error) {
-                console.error("Error loading data:", error);
-                alert("Failed to load borrowed books.");
+                failBorrowResults('#borrow-box-ns', error);
             }
         });
     };
@@ -759,18 +775,18 @@ var returnUpdate6 = function() {
     // Create the HTML structure for a borrowed book
     var createUpdateBox = function(update) {
         return `
-         <div class="pt-2 col-12 d-flex justify-content-center align-items-center">
+         <div class="borrow-record-item">
             <div class="borrow-box-holder">
                 <div class="borrow-box pad-ko mt-3 row">
                     <div class="book-img col-lg-4">
-                        <img src="${update.image}" alt="Book Cover">
+                        <button class="book-cover-button borrowed-book-cover" type="button" aria-label="View book cover"><img src="${update.image}" alt=""></button>
                     </div>
                     <div class="book-info col-lg-8 pb-3">
                         <h3 class="mb-3 h-light">${update.title}</h3>
                         <p class="mb-1 for-text">Author: <strong>${update.author}</strong></p>
                         <p class="mb-1 for-text">ID: <span style="color: #8b8c8f;font-weight: 600">${update.bookID}</span></p>
                         <p class="mb-1 for-text">Borrowed: <i style="color: #8b8c8f;font-weight: 500">${update.borrowedDate}</i></p> <!-- Display borrowed date -->
-                        <p class="mb-3 for-text">Overdue: <i class="h-light">${update.returnDate}</i></p>
+                        <p class="mb-3 for-text">Due date: <i class="h-light">${update.returnDate}</i></p>
                         <button type="button" class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#exampleModal-${update.bookID}">Extend</button>
 
                         <!-- Modal -->
@@ -806,26 +822,21 @@ var returnUpdate6 = function() {
 
     // Load all borrowed books
     var loadreturnUpdate6 = function() {
+        showBorrowLoading('#borrow-box-mw', 'Loading borrowed books...');
         $.ajax({
             url: "borrowMW.php",
             method: "GET",
             dataType: "json",
             success: function(response) {
-                var updates = response.value;
-                var container = $('#borrow-box-mw');
-                container.empty();
-
-                if (updates && updates.length > 0) {
-                    updates.forEach(function(update) {
-                        container.append(createUpdateBox(update));
-                    });
-                } else {
-                    container.html(`<p class="mt-4 text-center">No books were borrowed.</p>`);
-                }
+                renderBorrowResults(
+                    '#borrow-box-mw',
+                    response.value,
+                    createUpdateBox,
+                    'No borrowed books in Midwifery.'
+                );
             },
             error: function(xhr, status, error) {
-                console.error("Error loading data:", error);
-                alert("Failed to load borrowed books.");
+                failBorrowResults('#borrow-box-mw', error);
             }
         });
     };
@@ -885,18 +896,18 @@ var returnUpdate7 = function() {
     // Create the HTML structure for a borrowed book
     var createUpdateBox = function(update) {
         return `
-         <div class="pt-2 col-12 d-flex justify-content-center align-items-center">
+         <div class="borrow-record-item">
             <div class="borrow-box-holder">
                 <div class="borrow-box pad-ko mt-3 row">
                     <div class="book-img col-lg-4">
-                        <img src="${update.image}" alt="Book Cover">
+                        <button class="book-cover-button borrowed-book-cover" type="button" aria-label="View book cover"><img src="${update.image}" alt=""></button>
                     </div>
                     <div class="book-info-due  col-lg-8 pb-3">
                         <h3 class="mb-3" style="color: #ee2f25">${update.title}</h3>
                         <p class="mb-1 for-text">Author: <strong>${update.author}</strong></p>
                         <p class="mb-1 for-text">ID: <span style="color: #8b8c8f;font-weight: 600">${update.bookID}</span></p>
                         <p class="mb-1 for-text">Borrowed: <i style="color: #8b8c8f;font-weight: 500">${update.borrowedDate}</i></p> <!-- Display borrowed date -->
-                        <p class="mb-3 for-text">Overdue: <i style="color: #ee2f25">${update.returnDate}</i></p>
+                        <p class="mb-3 for-text">Due date: <i style="color: #ee2f25">${update.returnDate}</i></p>
                         <button type="button" class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#exampleModal-${update.bookID}">Extend</button>
     
                         <!-- Modal -->
@@ -932,26 +943,21 @@ var returnUpdate7 = function() {
 
     // Load all borrowed books
     var loadreturnUpdate7 = function() {
+        showBorrowLoading('#borrow-box-over', 'Checking for overdue books...');
         $.ajax({
             url: "borrowOver.php",
             method: "GET",
             dataType: "json",
             success: function(response) {
-                var updates = response.value;
-                var container = $('#borrow-box-over');
-                container.empty();
-
-                if (updates && updates.length > 0) {
-                    updates.forEach(function(update) {
-                        container.append(createUpdateBox(update));
-                    });
-                } else {
-                    container.html(`<p class="mt-4 text-center">No books were borrowed.</p>`);
-                }
+                renderBorrowResults(
+                    '#borrow-box-over',
+                    response.value,
+                    createUpdateBox,
+                    'No overdue books. You are up to date.'
+                );
             },
             error: function(xhr, status, error) {
-                console.error("Error loading data:", error);
-                alert("Failed to load borrowed books.");
+                failBorrowResults('#borrow-box-over', error);
             }
         });
     };
@@ -1002,5 +1008,3 @@ var returnUpdate7 = function() {
         }
     };
 }();
-
-

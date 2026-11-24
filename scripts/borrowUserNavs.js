@@ -1,210 +1,97 @@
+'use strict';
 
-var formatBlock = function(blockmsg) {
-    return {
-        message: blockmsg,
-        css: {
-            border: 'none',
-            padding: '15px',
-            backgroundColor: '#000',
-            '-webkit-border-radius': '10px',
-            '-moz-border-radius': '10px',
-            opacity: .5,
-            color: '#fff',
-            width: '200px'
-        }
-    };
-}
+var loadBorrowTab = function(page, initialize) {
+    var container = $('#borrow-types');
+    container
+        .attr('aria-busy', 'true')
+        .html('<p class="borrow-results-state">Loading the selected books...</p>');
 
+    $.get(page)
+        .done(function(data) {
+            container.html(data).attr('aria-busy', 'false');
+            $('#viewstitle').empty();
 
-var loadFirst = function() {
-    setTimeout(function() {
-        $('#core').removeClass('hidden');
-        // $('#loader').addClass('hidden');
-    }, 1000);
+            if (typeof initialize !== 'function') {
+                console.error('Borrowed-book filter has no initializer:', page);
+                container.html(
+                    '<p class="borrow-results-state borrow-results-state--error" role="alert">' +
+                    'This borrowed-book filter could not be initialized. Refresh and try again.' +
+                    '</p>'
+                );
+                return;
+            }
+
+            if (initialize() === false) {
+                container.html(
+                    '<p class="borrow-results-state borrow-results-state--error" role="alert">' +
+                    'This borrowed-book filter could not be initialized. Refresh and try again.' +
+                    '</p>'
+                );
+            }
+        })
+        .fail(function(xhr, status, error) {
+            console.error('Borrowed-book filter request failed:', page, error);
+            container
+                .attr('aria-busy', 'false')
+                .html(
+                    '<p class="borrow-results-state borrow-results-state--error" role="alert">' +
+                    'This borrowed-book filter could not be loaded. Refresh and try again.' +
+                    '</p>'
+                );
+        });
 };
 
-
-
-
-$("#borrow-all").click(function(){
-    var blockmsg = 'Please wait <img style="display:inline;width:20px;height:20px;" src="public/img/loader.gif"/>';
-
-    $('#borrow-types').block(formatBlock(blockmsg));
-    $('#borrow-types').fadeOut('500', function() {
-        
-        $.get('borrowAll.html', function(data) {
-            $('#borrow-types').html(data);
-            $('#viewstitle').html('');
-
-            //  $('#borrow-types').fadeIn(300, function () {
-            //     $('#borrow-types').unblock();
-            
-            //     returnUpdate1.init();
-            //     returnUpdate1B.init();
-            // });
-           
-            $('#borrow-types').fadeIn(400, function () {
-                $('#borrow-types').unblock();
-            var returnUpdates = {
-                returnUpdate1: returnUpdate1,
-                returnUpdate1B: returnUpdate1B,
-            };
-            Object.keys(returnUpdates).forEach(function (key) {
-                var returnUpdate = returnUpdates[key];
-                if (typeof returnUpdate !== "undefined" && typeof returnUpdate.init === "function") {
-                    console.log(`Reinitializing ${key}`);
-                    returnUpdate.init();
-                } else {
-                    console.error(`${key} is not defined or does not have an init method.`);
-                }
-            });
-            });
-
-
-        });   
-    });
-});
-
-
-
-$("#borrow-is").click(function(){
-    var blockmsg = 'Please wait <img style="display:inline;width:20px;height:20px;" src="public/img/loader.gif"/>';
-
-    $('#borrow-types').block(formatBlock(blockmsg));
-    $('#borrow-types').fadeOut('500', function() {
-        
-        $.get('borrowIS.html', function(data) {
-            $('#borrow-types').html(data);
-            $('#viewstitle').html('');
-
-             $('#borrow-types').fadeIn(300, function () {
-                $('#borrow-types').unblock();
-            
-                returnUpdate2.init();
-            });
-           
-        });   
-    });
-});
-
-
-
-$("#borrow-psy").click(function(){
-    var blockmsg = 'Please wait <img style="display:inline;width:20px;height:20px;" src="public/img/loader.gif"/>';
-
-    $('#borrow-types').block(formatBlock(blockmsg));
-    $('#borrow-types').fadeOut('500', function() {
-        
-        $.get('borrowPsy.html', function(data) {
-            $('#borrow-types').html(data);
-            $('#viewstitle').html('');
-
-             $('#borrow-types').fadeIn(300, function () {
-                $('#borrow-types').unblock();
-            
-                returnUpdate3.init();
-            });
-           
-        });   
-    });
-});
-
-
-
-$("#borrow-ce").click(function(){
-    var blockmsg = 'Please wait <img style="display:inline;width:20px;height:20px;" src="public/img/loader.gif"/>';
-
-    $('#borrow-types').block(formatBlock(blockmsg));
-    $('#borrow-types').fadeOut('500', function() {
-        
-        $.get('borrowCE.html', function(data) {
-            $('#borrow-types').html(data);
-            $('#viewstitle').html('');
-
-             $('#borrow-types').fadeIn(300, function () {
-                $('#borrow-types').unblock();
-            
-                returnUpdate4.init();
-            });
-           
-        });   
-    });
-});
-
-
-
-$("#borrow-ns").click(function(){
-    var blockmsg = 'Please wait <img style="display:inline;width:20px;height:20px;" src="public/img/loader.gif"/>';
-
-    $('#borrow-types').block(formatBlock(blockmsg));
-    $('#borrow-types').fadeOut('500', function() {
-        
-        $.get('borrowNS.html', function(data) {
-            $('#borrow-types').html(data);
-            $('#viewstitle').html('');
-
-             $('#borrow-types').fadeIn(300, function () {
-                $('#borrow-types').unblock();
-            
-                returnUpdate5.init();
-            });
-           
-        });   
-    });
-});
-
-
-$("#borrow-mw").click(function(){
-    var blockmsg = 'Please wait <img style="display:inline;width:20px;height:20px;" src="public/img/loader.gif"/>';
-
-    $('#borrow-types').block(formatBlock(blockmsg));
-    $('#borrow-types').fadeOut('500', function() {
-        
-        $.get('borrowMW.html', function(data) {
-            $('#borrow-types').html(data);
-            $('#viewstitle').html('');
-
-             $('#borrow-types').fadeIn(300, function () {
-                $('#borrow-types').unblock();
-            
-                returnUpdate6.init();
-            });
-           
-        });   
-    });
-});
-
-
-$("#borrow-over").click(function(){
-    var blockmsg = 'Please wait <img style="display:inline;width:20px;height:20px;" src="public/img/loader.gif"/>';
-
-    $('#borrow-types').block(formatBlock(blockmsg));
-    $('#borrow-types').fadeOut('500', function() {
-        
-        $.get('borrowOver.html', function(data) {
-            $('#borrow-types').html(data);
-            $('#viewstitle').html('');
-
-             $('#borrow-types').fadeIn(300, function () {
-                $('#borrow-types').unblock();
-            
-                returnUpdate7.init();
-            });
-           
-        });   
-    });
-});
-
-
-
-var Index = function() {
-    "use strict";
-    
-    return {
-        init: function() {
-            checkSession()
-             
-
+var initializeBorrowLists = function(names) {
+    for (var index = 0; index < names.length; index += 1) {
+        var name = names[index];
+        var list = window[name];
+        if (!list || typeof list.init !== 'function') {
+            console.error('Borrowed-book list component could not be initialized:', name);
+            return false;
         }
+        list.init();
     }
-}();
+    return true;
+};
+
+$('#borrow-all').on('click', function() {
+    loadBorrowTab('borrowAll.html', function() {
+        return initializeBorrowLists(['returnUpdate1', 'returnUpdate1B']);
+    });
+});
+
+$('#borrow-is').on('click', function() {
+    loadBorrowTab('borrowIS.html', function() {
+        return initializeBorrowLists(['returnUpdate2']);
+    });
+});
+
+$('#borrow-psy').on('click', function() {
+    loadBorrowTab('borrowPsy.html', function() {
+        return initializeBorrowLists(['returnUpdate3']);
+    });
+});
+
+$('#borrow-ce').on('click', function() {
+    loadBorrowTab('borrowCE.html', function() {
+        return initializeBorrowLists(['returnUpdate4']);
+    });
+});
+
+$('#borrow-ns').on('click', function() {
+    loadBorrowTab('borrowNS.html', function() {
+        return initializeBorrowLists(['returnUpdate5']);
+    });
+});
+
+$('#borrow-mw').on('click', function() {
+    loadBorrowTab('borrowMW.html', function() {
+        return initializeBorrowLists(['returnUpdate6']);
+    });
+});
+
+$('#borrow-over').on('click', function() {
+    loadBorrowTab('borrowOver.html', function() {
+        return initializeBorrowLists(['returnUpdate7']);
+    });
+});

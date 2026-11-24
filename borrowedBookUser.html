@@ -1,241 +1,57 @@
 
-<style>
-    :root {
-        --primary-color: #02BD52;
-        --forhighlight: #1BF640;
-        --fortext: #FCFCFC;
-        --second-color: #161618;
-    }
-    /* .h-light {
-     color: var(--forhighlight); 
-     }
-    .prime-color {
-     background-color: var(--primary-color); 
-     }
-    .second-color {
-     background-color: var(--second-color); 
-     }
-    .for-text {
-     color: var(--fortext); 
-     } */
-    .borrow{
-        height: auto;
-    }
-    .borrow-content{
-        border-radius: 20px;
-    } 
-    #borrow-box-all{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
-    }
-    .borrow-box-holder{
-        max-width: 850px;
-        width: 85%;
-    }
-    .borrow-box{
-        background-color: #303035;
-        border-radius: 20px;
-        width: 100%;
-        
-    }
-    .nav-tabs{
-        border-color: var(--primary-color) !important;
-    }
-    /* .nav-tabs .nav-link:hover {
-        background-color: var(--primary-color) !important;
-        color: var(--fortext) !important;
-        border-color: var(--primary-color) !important;
-    } */
-    .nav-link.active, .nav-tabs .nav-link:hover{
-        background-color: var(--primary-color) !important;
-        color: var(--fortext) !important;
-        border-color: var(--primary-color) !important;
-    }
-    .nav-tabs .nav-link:focus{
-        background-color: #06a54b !important;
-    }
-
-    
-    .pad-ko {
-    padding: 1.7rem 1.6rem 1.7rem 1.6rem !important;
-    }
-    .h5{
-        margin-bottom: 0px;
-    }
-    .borrow-remove{
-        padding-left: 1rem;
-    }
-    .borrow-remove i{
-        color: #fc0b0b;
-        font-size: 1.55rem;
-    }
-    hr{
-        margin: .8rem 0;
-    }
-    .book-img img{
-        max-width: 200px;
-        width: 90%;
-        min-width: 70px;
-        border-radius: 7px;
-    }
-    @media (max-width: 1024px) {
-        .borrow-box-holder{
-        max-width: none;
-        width: 100%;
-    }
-        .book-img img{
-            margin-top: 35px;
-            margin-bottom: 40px;
-            max-width: none;
-        width: 100%;
-        }
-    }
-    @media (max-width: 768px) {
-        .borrow-box-holder{
-        max-width: none;
-        width: 100%;
-    }
-        .book-img{
-            display: flex;
-            justify-content: center;
-        }
-        .book-img img{
-            margin-top: 30px;
-            margin-bottom: 40px;
-            max-width: none;
-        width: 100%;
-        }
-    }
-
-    .text-multiline-ellipsis {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;  /* Change to the number of lines you want to display */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.book-info .btn{
-    background-color: var(--primary-color) !important;
-    border: 1px solid var(--primary-color) !important;
-    font-weight: 500;
-}
-.book-info .btn:hover{
-    background-color: transparent !important;
-    color: var(--primary-color) !important;
-}
-
-.book-info-due .btn{
-    background-color: #d0342c !important;
-    border: 1px solid #d0342c !important;
-    font-weight: 500;
-}
-.book-info-due .btn:hover{
-    background-color: transparent !important;
-    color: #d0342c !important;
-}
-
-.modal-footer .confirm-update{
-    background-color: transparent !important;
-    color: var(--primary-color) !important;
-    border: 1px solid var(--primary-color) !important;
-    font-weight: 500;
-}
-.modal-footer .confirm-update:hover{
-    background-color: var(--primary-color) !important;
-    color: var(--fortext) !important;
-}
-
-.due-footer .confirm-update{
-    background-color: transparent !important;
-    color: #d0342c !important;
-    border: 1px solid #d0342c !important;
-    font-weight: 500;
-}
-.due-footer .confirm-update:hover{
-    background-color: #d0342c !important;
-    color: var(--fortext) !important;
-}
-
-
-
-</style>
- <body class="d-flex justify-content-center align-items-center">
- 
-<div class="p-3">
-    <div class="borrow second-color p-5 rounded">
-        <div class="borrow-upper d-flex justify-content-between align-items-end">
-            <h3 class="mb-0">Borrowed Book/s</h3>
-            <span class="ml-auto" style="color: #e7dfe7; cursor: pointer;"></span>
+<section class="borrowed-books-page" aria-labelledby="borrowed-books-title">
+    <header class="library-page-heading">
+        <div>
+            <p class="library-eyebrow">Your library</p>
+            <h1 id="borrowed-books-title">Borrowed books</h1>
+            <p>Review your current loans, due dates, and past-due books.</p>
         </div>
-        <ul class="nav nav-tabs mt-3 nav-tabs-due">
+    </header>
+    <section class="borrowed-books-panel library-panel" aria-label="Your borrowed books">
+        <ul class="nav nav-tabs borrowed-book-tabs" role="group" aria-label="Filter borrowed books">
             <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="javascript:;" id="borrow-all">All</a>
+                <button class="nav-link active" type="button" aria-pressed="true" id="borrow-all">All</button>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="javascript:;" id="borrow-is">I.S.</a>
+                <button class="nav-link" type="button" aria-pressed="false" id="borrow-is">I.S.</button>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="javascript:;" id="borrow-psy">PSYCH</a>
+                <button class="nav-link" type="button" aria-pressed="false" id="borrow-psy">Psychology</button>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="javascript:;" id="borrow-ce">C.E.</a>
+                <button class="nav-link" type="button" aria-pressed="false" id="borrow-ce">C.E.</button>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="javascript:;" id="borrow-ns">N.S.</a>
+                <button class="nav-link" type="button" aria-pressed="false" id="borrow-ns">N.S.</button>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="javascript:;" id="borrow-mw">M.W.</a>
+                <button class="nav-link" type="button" aria-pressed="false" id="borrow-mw">M.W.</button>
             </li>
             <li class="nav-item">
-            <a class="nav-link nav-link-due" href="javascript:;" id="borrow-over">Overdue</a>
+                <button class="nav-link nav-link-due" type="button" aria-pressed="false" id="borrow-over">Overdue</button>
             </li>
         </ul>
-    
-<!-- dito lalabbas ung user borrows -->
-    <div class="borrow-types" id="borrow-types">
-        <div id="borrow-box-all" class="pt-2 row">
-            
-          
+        <div class="borrow-types" id="borrow-types" role="region" aria-label="Borrowed book records" tabindex="0">
+            <div id="borrow-box-all" class="borrow-record-list" aria-live="polite" aria-busy="true">
+                <p class="borrow-results-state">Loading your borrowed books...</p>
+            </div>
+            <div id="borrow-box-all-over" class="borrow-record-list" aria-live="polite" aria-busy="true">
+                <p class="borrow-results-state">Checking for overdue books...</p>
+            </div>
         </div>
+    </section>
+</section>
 
-        <div id="borrow-box-all-over" class="row">
-            
-          
-        </div>
-
-        
-    </div>
-   
-    
-    
-      
-      
-
-
-</div>
-</div>
-
+<dialog class="book-cover-dialog" id="book-cover-dialog" aria-label="Book cover preview">
+    <form method="dialog">
+        <button class="book-cover-close" type="submit">Close</button>
+    </form>
+    <img src="" alt="">
+    <p></p>
+</dialog>
 
 <script src="scripts/borrowAll.js"></script>
 <script src="scripts/borrowUserNavs.js"></script>
-<script>
-    $(document).ready(function() {
-        App.init();
-                Index.init();
-        
-    });
-</script>
-
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        returnUpdate1.init();
-        returnUpdate1B.init();
-  });
-</script>
 <!-- <script type="text/javascript">
     $(document).ready(function() {
         returnUpdate2.init();
@@ -264,16 +80,17 @@
 
 
 <script>
-    const tabs = document.querySelectorAll('.nav-link');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', function () {
-        
-        tabs.forEach(t => t.classList.remove('active'));
-        
-        this.classList.add('active');
-      });
+    document.querySelectorAll('.borrowed-books-page .nav-link').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+            document.querySelectorAll('.borrowed-books-page .nav-link').forEach(function (item) {
+                item.classList.remove('active');
+                item.setAttribute('aria-pressed', 'false');
+            });
+            this.classList.add('active');
+            this.setAttribute('aria-pressed', 'true');
+        });
     });
-  </script>
+</script>
 
 
 <script>
@@ -291,5 +108,3 @@
       return philippineTime.toISOString().split("T")[0];
     }
   </script>
-
-</body>

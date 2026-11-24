@@ -232,6 +232,36 @@
                     window.ManageBooks.init();
                 }
 
+                if (page === 'borrowedBookUser.html') {
+                    if (!window.returnUpdate1 || typeof window.returnUpdate1.init !== 'function' ||
+                        !window.returnUpdate1B || typeof window.returnUpdate1B.init !== 'function') {
+                        console.error('Borrowed-book lists could not be initialized.');
+                        content.html(
+                            '<section class="library-error" role="alert">' +
+                            '<h1>Borrowed books unavailable</h1>' +
+                            '<p>The borrowed-book lists could not be initialized. Refresh and try again.</p>' +
+                            '</section>'
+                        );
+                        return;
+                    }
+                    window.returnUpdate1.init();
+                    window.returnUpdate1B.init();
+                }
+
+                if (page === 'notif.html') {
+                    if (!window.notifBoxJs1 || typeof window.notifBoxJs1.init !== 'function') {
+                        console.error('Notification list could not be initialized.');
+                        content.html(
+                            '<section class="library-error" role="alert">' +
+                            '<h1>Notifications unavailable</h1>' +
+                            '<p>The notification list could not be initialized. Refresh and try again.</p>' +
+                            '</section>'
+                        );
+                        return;
+                    }
+                    window.notifBoxJs1.init();
+                }
+
                 var offcanvas = document.getElementById('offcanvasExample');
                 if (offcanvas && window.bootstrap && window.bootstrap.Offcanvas) {
                     var instance = window.bootstrap.Offcanvas.getInstance(offcanvas);
@@ -353,9 +383,10 @@
 
         var preview = dialog.querySelector('img');
         var title = dialog.querySelector('p');
+        var bookTitle = this.closest('.borrow-box, .basta-card')?.querySelector('h3, h4')?.textContent.trim();
         preview.src = cover.currentSrc || cover.src;
-        preview.alt = cover.alt;
-        title.textContent = cover.alt.replace(/^Cover of\s*/i, '');
+        preview.alt = cover.alt || 'Book cover';
+        title.textContent = bookTitle || cover.alt.replace(/^Cover of\s*/i, '') || 'Book cover';
         dialog.showModal();
     });
 

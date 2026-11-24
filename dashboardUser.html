@@ -259,11 +259,6 @@
     box-shadow: none;
 }
 
-.notif-circle{
-    background-color: #fd1717; 
-    border: 2px solid #fd1717;
-    top:50%;
-}
     </style>
 </head>
 
@@ -360,6 +355,7 @@
                         <a href="javascript:;" id="offnotification" class="sidebar-link">
                             <i class="bi bi-bell"></i>
                             <span>Notification</span>
+                            <span class="notification-count" id="offnotification-count" data-notification-count hidden>0</span>
                         </a>
                     </li>
     
@@ -435,16 +431,9 @@
 
                 <li class="sidebar-item">
                     <a href="javascript:;" id="notification" class="sidebar-link">
-                      
-                            <i class="bi bi-bell"></i>
-                            <span class="position-relative pe-2">
-                                Notification
-                                <span class="position-absolute notif-circle start-100 translate-middle p-1 rounded-circle">
-                                  </span>
-                            </span>
-                            
-                        <!-- <span class="notif-count p-2 ml-auto d-flex align-items-center justify-content-center">3</span> -->
-                        
+                        <i class="bi bi-bell"></i>
+                        <span>Notification</span>
+                        <span class="notification-count" id="notification-count" data-notification-count hidden>0</span>
                     </a>
                 </li>
             </ul>
@@ -481,6 +470,29 @@
                             </div>
                         </section>
                     </div>
+                    <dialog class="library-book-dialog" id="library-book-dialog" aria-labelledby="library-book-dialog-title">
+                        <div class="library-book-dialog-content">
+                            <button class="library-dialog-close" type="button" aria-label="Close book details" data-close-book-dialog>&times;</button>
+                            <div class="library-book-dialog-heading">
+                                <img id="library-book-dialog-cover" src="publics/img/default.jpg" alt="">
+                                <div>
+                                    <p class="library-eyebrow">Catalog details</p>
+                                    <h2 id="library-book-dialog-title"></h2>
+                                    <p id="library-book-dialog-author"></p>
+                                    <span id="library-book-dialog-availability"></span>
+                                </div>
+                            </div>
+                            <dl class="library-book-details" id="library-book-dialog-details"></dl>
+                            <div class="library-book-dialog-description">
+                                <h3>About this book</h3>
+                                <p id="library-book-dialog-description"></p>
+                                <p id="library-book-dialog-context" hidden></p>
+                                <a id="library-book-dialog-source" href="#" target="_blank" rel="noopener noreferrer" hidden>
+                                    View verified publication details at Open Library
+                                </a>
+                            </div>
+                        </div>
+                    </dialog>
                 </div>
             </div>
 
