@@ -4,11 +4,12 @@ require 'dbconn.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
-function respond($isSuccess, $message, $value = [])
+function respond($isSuccess, $message, $value = [], $filters = [])
 {
     echo json_encode([
         'isSuccess' => $isSuccess,
         'value' => $value,
+        'filters' => $filters,
         'msg' => $message
     ]);
     exit;
@@ -30,15 +31,39 @@ if ($action === 'updateStudent') {
     $email = trim($_POST['email'] ?? '');
     $institution = trim($_POST['institution'] ?? '');
 
-    if ($studentID === '' || !in_array($gender, ['male', 'female', 'other'], true) ||
+    if ($studentID === '' || $gender === '' || $institution === '' ||
         !preg_match('/^\d{11}$/', $contactNumber) || !filter_var($email, FILTER_VALIDATE_EMAIL) ||
-        !in_array($institution, ['IMACS', 'ILA', 'IOE', 'ION', 'IOM'], true)) {
+        strlen($gender) > 30 || strlen($institution) > 100) {
         http_response_code(400);
         respond(false, 'Check the student details and try again.');
     }
 
     try {
         $conn->begin_transaction();
+
+        foreach ([
+            ['gender', $gender],
+            ['institution', $institution]
+        ] as [$column, $value]) {
+            $optionStmt = $conn->prepare(
+                "SELECT COUNT(*) FROM student WHERE LOWER(TRIM($column)) = LOWER(?)"
+            );
+            if (!$optionStmt) {
+                throw new RuntimeException('Unable to verify the selected student details.');
+            }
+            $optionStmt->bind_param('s', $value);
+            if (!$optionStmt->execute()) {
+                throw new RuntimeException('Unable to verify the selected student details.');
+            }
+            $optionStmt->bind_result($optionCount);
+            $optionStmt->fetch();
+            $optionStmt->close();
+            if ((int)$optionCount === 0) {
+                $conn->rollback();
+                http_response_code(400);
+                respond(false, 'Choose a gender and institution used by the student records.');
+            }
+        }
 
         foreach ([
             ['SELECT COUNT(*) FROM student WHERE studentID = ?', $studentID],
@@ -173,7 +198,7 @@ if ($action === 'deleteStudent') {
 }
 
 $stmt = $conn->prepare(
-    'SELECT studentID, gender, contactNumber, email, institution FROM student ORDER BY studentID'
+    'SELECT studentID, TRIM(gender), contactNumber, email, TRIM(institution) FROM student ORDER BY studentID'
 );
 if (!$stmt || !$stmt->execute()) {
     http_response_code(500);
@@ -192,6 +217,30 @@ while ($stmt->fetch()) {
     ];
 }
 $stmt->close();
+
+$filters = [];
+foreach ([
+    'gender' => 'gender',
+    'institution' => 'institution'
+] as $filterName => $column) {
+    $filterStmt = $conn->prepare(
+        "SELECT DISTINCT TRIM($column) FROM student
+         WHERE $column IS NOT NULL AND TRIM($column) <> ''
+         ORDER BY TRIM($column)"
+    );
+    if (!$filterStmt || !$filterStmt->execute()) {
+        http_response_code(500);
+        respond(false, 'Student filters could not be loaded.');
+    }
+
+    $filterStmt->bind_result($filterValue);
+    $filters[$filterName] = [];
+    while ($filterStmt->fetch()) {
+        $filters[$filterName][] = $filterValue;
+    }
+    $filterStmt->close();
+}
+
 $conn->close();
 
-respond(true, 'Student records loaded.', $students);
+respond(true, 'Student records loaded.', $students, $filters);

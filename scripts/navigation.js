@@ -165,6 +165,31 @@
         });
     };
 
+    var syncActiveNavigation = function (page) {
+        document.querySelectorAll('.sidebar-nav .sidebar-link[id]').forEach(function (link) {
+            var route = routes[link.id];
+            if (link.id === 'bookList' || link.id === 'offbookList') {
+                route = { page: sessionRole === 'admin' ? 'bookCards.html' : 'bookCardsUser.html' };
+            }
+
+            var isActive = Boolean(route && route.page === page);
+            if (isActive) {
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.removeAttribute('aria-current');
+            }
+
+            var dropdown = link.closest('.sidebar-dropdown');
+            if (isActive && dropdown) {
+                dropdown.classList.add('show');
+                document.querySelectorAll('[data-bs-target="#' + dropdown.id + '"]').forEach(function (toggle) {
+                    toggle.setAttribute('aria-expanded', 'true');
+                    toggle.classList.remove('collapsed');
+                });
+            }
+        });
+    };
+
     $(document).on('click', 'a[id], button[id]', function (event) {
         var id = this.id;
         if (id === 'logout' || id === 'offlogout') {
@@ -187,6 +212,7 @@
             window.location.replace('dashboardUser.html');
             return;
         }
+        syncActiveNavigation(route.page);
         if (route.reload) {
             window.location.href = route.page;
         } else {
@@ -242,6 +268,11 @@
                 }
 
                 sessionRole = session.role;
+                syncActiveNavigation(
+                    window.location.pathname.endsWith('/dashboardUser.html')
+                        ? 'dashboardUser.html'
+                        : 'dashboard.html'
+                );
                 var isAdminPage = window.location.pathname.endsWith('/dashboard.html');
                 if (isAdminPage && session.role !== 'admin') {
                     window.location.replace('dashboardUser.html');

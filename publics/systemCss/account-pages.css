@@ -6,6 +6,15 @@
     margin-bottom: 22px;
 }
 
+.student-list-page,
+.registration-page {
+    min-width: 0;
+}
+
+.student-list-page {
+    overflow-x: hidden;
+}
+
 .account-page-heading h1 {
     margin: 0 0 8px;
     color: var(--library-ink);
@@ -135,6 +144,10 @@
     background: #f7f7f3;
 }
 
+.account-filter-bar > button {
+    min-height: 44px;
+}
+
 .account-filter,
 .account-field {
     display: grid;
@@ -260,6 +273,53 @@
     margin-top: 14px;
     color: var(--library-secondary);
     font-size: 13px;
+}
+
+.student-list-page .dataTables_paginate .pagination {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.student-list-page .dataTables_paginate .paginate_button > a {
+    display: inline-flex;
+    min-width: 34px;
+    min-height: 34px;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 9px;
+    border: 1px solid var(--library-border);
+    border-radius: 6px;
+    background: var(--library-surface) !important;
+    color: var(--library-ink) !important;
+    line-height: 1.25;
+    text-decoration: none;
+}
+
+.student-list-page .dataTables_paginate .paginate_button > a:hover,
+.student-list-page .dataTables_paginate .paginate_button > a:focus-visible {
+    border-color: var(--library-accent);
+    background: var(--library-accent-soft) !important;
+    color: var(--library-accent) !important;
+}
+
+.student-list-page .dataTables_paginate .paginate_button.active > a {
+    border-color: var(--library-accent);
+    background: var(--library-accent) !important;
+    color: #fff !important;
+}
+
+.student-list-page .dataTables_paginate .paginate_button.disabled > a {
+    color: var(--library-secondary) !important;
+    opacity: 0.6;
+}
+
+.student-list-page .dataTables_paginate .paginate_button > a:focus-visible {
+    outline: 3px solid rgba(18, 107, 63, 0.2);
+    outline-offset: 2px;
 }
 
 .student-row-actions {
@@ -440,10 +500,30 @@
     }
 }
 
+@media (max-width: 420px) {
+    .account-panel {
+        padding: 16px 12px;
+    }
+
+    .account-filter-bar {
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .student-row-actions {
+        gap: 8px;
+    }
+}
+
 @media (max-width: 520px) {
     .account-filter,
     .account-filter-search {
         flex-basis: 100%;
+    }
+
+    .account-filter .form-control,
+    .account-field .form-control {
+        font-size: 16px;
     }
 
     .student-dialog-fields,

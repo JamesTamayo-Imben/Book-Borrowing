@@ -23,6 +23,36 @@
         message.className = 'account-message' + (text ? ' account-message--' + kind : '');
     };
 
+    var populateSelect = function (select, values, placeholder, formatLabel) {
+        var currentValue = select.value;
+        var options = document.createDocumentFragment();
+        var prompt = document.createElement('option');
+        prompt.value = '';
+        prompt.textContent = placeholder;
+        options.appendChild(prompt);
+
+        values.forEach(function (value) {
+            if (typeof value !== 'string' || value.trim() === '') {
+                return;
+            }
+            var option = document.createElement('option');
+            option.value = value;
+            option.textContent = formatLabel ? formatLabel(value) : value;
+            options.appendChild(option);
+        });
+
+        select.replaceChildren(options);
+        if (values.indexOf(currentValue) !== -1) {
+            select.value = currentValue;
+        }
+    };
+
+    var formatGender = function (value) {
+        return value.replace(/\b\w/g, function (character) {
+            return character.toUpperCase();
+        });
+    };
+
     var sendAction = function (payload) {
         return $.ajax({
             url: 'studentList.php',
@@ -77,6 +107,33 @@
                         showMessage(response && response.msg ? response.msg : 'Student records could not be loaded.', 'error');
                         return [];
                     }
+                    if (!response.filters || !Array.isArray(response.filters.gender) ||
+                        !Array.isArray(response.filters.institution)) {
+                        showMessage('Student filters could not be loaded. Refresh and try again.', 'error');
+                        return [];
+                    }
+                    populateSelect(
+                        document.getElementById('student-gender-filter'),
+                        response.filters.gender,
+                        'All genders',
+                        formatGender
+                    );
+                    populateSelect(
+                        document.getElementById('student-institution-filter'),
+                        response.filters.institution,
+                        'All institutions'
+                    );
+                    populateSelect(
+                        document.getElementById('edit-student-gender'),
+                        response.filters.gender,
+                        'Select gender',
+                        formatGender
+                    );
+                    populateSelect(
+                        document.getElementById('edit-student-institution'),
+                        response.filters.institution,
+                        'Select institution'
+                    );
                     return response.value;
                 },
                 error: function () {

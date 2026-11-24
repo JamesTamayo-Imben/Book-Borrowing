@@ -8,7 +8,7 @@
 
     <!-- <meta charset="utf-8" /> -->
     <title>Library Overview | Book Borrowing System</title>
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta content="Manage library inventory, circulation, and student accounts." name="description" />
     <meta content="Book Borrowing System" name="author" />
 
@@ -552,9 +552,9 @@
                         <article class="library-panel">
                             <h2>Collection availability</h2>
                             <p class="library-panel-intro">Copies ready to borrow</p>
-                            <p class="availability-count"><span data-stat="available">—</span> copies</p>
+                            <p class="availability-count"><strong data-stat="available">—</strong><span>copies</span></p>
                             <div class="availability-bar" role="progressbar" aria-label="Available copies" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0">
-                                <span data-stat="availability-bar" style="width:0%"></span>
+                                <span data-stat="availability-bar" style="transform:scaleX(0)"></span>
                             </div>
                             <div class="availability-caption">
                                 <span>Available</span>

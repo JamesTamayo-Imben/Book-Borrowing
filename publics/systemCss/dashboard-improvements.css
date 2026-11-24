@@ -59,17 +59,94 @@ textarea:focus-visible {
 .sidebar-link,
 .sidebar-link.for-text,
 .offcanvas .sidebar-link {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 12px;
     color: #d7ddd6 !important;
     border-radius: 8px;
-    margin: 2px 8px;
+    margin: 4px 12px;
     padding: 10px 16px;
+    transition: color 140ms ease, background-color 140ms ease, border-color 140ms ease;
 }
 
 .sidebar-link:hover,
-.sidebar-link:focus-visible,
-.sidebar-link[aria-current="page"] {
+.sidebar-link:focus-visible {
     background: rgba(255, 255, 255, 0.09) !important;
     color: #fff !important;
+}
+
+.sidebar-link[aria-current="page"] {
+    background: var(--library-accent) !important;
+    color: #fff !important;
+    box-shadow: inset 3px 0 0 #dcebdd;
+}
+
+.sidebar-link i {
+    display: inline-flex;
+    width: 20px;
+    flex: 0 0 20px;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+}
+
+.sidebar-link.has-dropdown::after {
+    margin-left: auto;
+}
+
+.sidebar-dropdown {
+    display: grid;
+    gap: 2px;
+    padding: 0 0 4px;
+}
+
+.sidebar-dropdown .sidebar-link {
+    min-height: 40px;
+    margin-left: 32px;
+    padding-left: 16px !important;
+    font-size: 14px;
+}
+
+.sidebar-dropdown .sidebar-link[aria-current="page"] {
+    box-shadow: inset 3px 0 0 #dcebdd;
+}
+
+.system-sidebar {
+    width: 264px;
+    padding-top: 20px;
+}
+
+#system-sidebar {
+    width: 264px;
+}
+
+.content {
+    margin-left: 264px;
+}
+
+.offcanvas.second-color {
+    width: min(88vw, 304px);
+}
+
+.offcanvas-body {
+    overflow-y: auto;
+}
+
+.sidebar-logo {
+    padding: 16px 20px 20px;
+}
+
+.userProfile {
+    padding: 0 16px 8px;
+    text-align: center;
+}
+
+.userProfile b {
+    max-width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
 }
 
 .userProfile .userPic {
@@ -99,8 +176,13 @@ textarea:focus-visible {
 
 .content {
     min-height: 100vh;
-    margin-left: 250px;
+    margin-left: 264px;
     padding: 24px clamp(12px, 2vw, 32px);
+}
+
+#content.content {
+    box-sizing: border-box;
+    padding: 24px clamp(16px, 2vw, 32px);
 }
 
 #main-content {
@@ -248,10 +330,24 @@ textarea:focus-visible {
 }
 
 .availability-count {
-    margin: 20px 0 8px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin: 20px 0 12px;
     color: var(--library-ink);
-    font-size: 28px;
+    font-size: 14px;
     font-variant-numeric: tabular-nums;
+}
+
+.availability-count strong {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.availability-count > span {
+    color: var(--library-secondary);
+    font-size: 14px;
 }
 
 .availability-bar {
@@ -263,9 +359,13 @@ textarea:focus-visible {
 
 .availability-bar span {
     display: block;
+    width: 100%;
     height: 100%;
     border-radius: inherit;
     background: var(--library-accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 420ms ease-out;
 }
 
 .availability-caption {
@@ -774,6 +874,19 @@ textarea:focus-visible {
         padding: 16px;
     }
 
+    #content.content {
+        padding: 16px;
+    }
+
+    .system-sidebar,
+    #system-sidebar {
+        width: 248px;
+    }
+
+    .content {
+        margin-left: 248px;
+    }
+
     .library-book-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
@@ -784,16 +897,31 @@ textarea:focus-visible {
 }
 
 @media (max-width: 768px) {
+    .system-sidebar,
+    #system-sidebar {
+        width: 264px;
+    }
+
     .content {
         margin-left: 0;
         padding: 16px 12px;
+    }
+
+    #content.content {
+        padding: 16px 12px !important;
+    }
+
+    .navbar-toggler {
+        min-width: 44px;
+        min-height: 44px;
+        justify-content: center;
     }
 
     .library-dashboard,
     .library-user-catalog,
     .library-catalog,
     .library-management {
-        padding: 12px 0 32px;
+        padding: 12px 4px 32px;
     }
 
     .library-page-heading {
@@ -863,6 +991,25 @@ textarea:focus-visible {
     .library-shelf-panel {
         padding: 16px;
     }
+}
+
+@keyframes library-page-enter {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.library-dashboard,
+.record-page,
+.student-list-page,
+.registration-page {
+    animation: library-page-enter 260ms ease-out both;
 }
 
 @media (prefers-reduced-motion: reduce) {

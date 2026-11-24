@@ -25,26 +25,18 @@
                 <label for="student-gender-filter">Gender</label>
                 <select id="student-gender-filter" class="form-control">
                     <option value="">All genders</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
                 </select>
             </div>
             <div class="account-filter">
                 <label for="student-institution-filter">Institution</label>
                 <select id="student-institution-filter" class="form-control">
                     <option value="">All institutions</option>
-                    <option value="IMACS">IMACS</option>
-                    <option value="ILA">ILA</option>
-                    <option value="IOE">IOE</option>
-                    <option value="ION">ION</option>
-                    <option value="IOM">IOM</option>
                 </select>
             </div>
             <button type="button" class="account-secondary-button" id="clear-student-filters">Clear filters</button>
         </div>
 
-        <div class="account-table-wrap">
+        <div class="account-table-wrap" role="region" aria-label="Student records table" tabindex="0">
             <table id="encounter" class="table account-table">
                 <thead>
                     <tr>
@@ -79,19 +71,13 @@
             <div class="account-field">
                 <label for="edit-student-gender">Gender</label>
                 <select class="form-control" id="edit-student-gender" name="gender" required>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
+                    <option value="" disabled selected>Select gender</option>
                 </select>
             </div>
             <div class="account-field">
                 <label for="edit-student-institution">Institution</label>
                 <select class="form-control" id="edit-student-institution" name="institution" required>
-                    <option value="IMACS">IMACS</option>
-                    <option value="ILA">ILA</option>
-                    <option value="IOE">IOE</option>
-                    <option value="ION">ION</option>
-                    <option value="IOM">IOM</option>
+                    <option value="" disabled selected>Select institution</option>
                 </select>
             </div>
             <div class="account-field account-field-wide">

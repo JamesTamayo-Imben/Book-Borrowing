@@ -43,12 +43,10 @@ a {
     height: 100svh;
     background-color: #ccced1;
     
-    transition: all 0.3s ease-in-out;
     display: inline-flex;
     flex-direction: column;
 }
 .offcanvas-body{
-    transition: all 0.3s ease-in-out;
     display: inline-flex;
     flex-direction: column;
     height: 100svh;
@@ -58,7 +56,6 @@ a {
     max-width: 264px;
     min-width: 264px;
     max-height: 100vh;
-    transition: all 0.3s ease-in-out;
     background-color: #000;
     display: inline-flex;
     flex-direction: column;
@@ -118,7 +115,7 @@ a {
 .sidebar-link {
     padding: .625rem 1.525rem;
     position: relative;
-    transition: all 0.3s;
+    transition: color 140ms ease, background-color 140ms ease;
     display: block;
     font-size: 0.88rem;
     color: #000;
@@ -148,11 +145,11 @@ a {
     right: 1.5rem;
     top: 1.4rem;
     transform: rotate(-135deg);
-    transition: all .2s ease-out;
+    transition: transform 160ms ease-out;
 }
 .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
     transform: rotate(45deg);
-    transition: all .2s ease-out;
+    transition: transform 160ms ease-out;
 }
 
 /* Screen size less than 768px */
@@ -160,7 +157,6 @@ a {
 @media (max-width:768px) {
     #system-sidebar {
       max-height: 100vh;
-      transition: all 0.4s ease-in-out;
       background-color: #000;
       display: inline-flex;
       flex-direction: column;

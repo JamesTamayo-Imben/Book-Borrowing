@@ -96,7 +96,7 @@
                     element.textContent = availablePercent + '%';
                 });
                 root.querySelectorAll('[data-stat="availability-bar"]').forEach(function (element) {
-                    element.style.width = availablePercent + '%';
+                    element.style.transform = 'scaleX(' + (availablePercent / 100) + ')';
                     element.parentElement.setAttribute('aria-valuemax', totalCopies);
                     element.parentElement.setAttribute('aria-valuenow', availableCopies);
                 });
